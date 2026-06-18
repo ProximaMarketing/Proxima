@@ -190,3 +190,24 @@ color:#d8ccb5;
     border:1px solid rgba(216,204,181,.2);
     border-radius:18px;
 }
+.process-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+    margin-top:50px;
+}
+
+.process-step{
+    border-left:2px solid #d8ccb5;
+    padding-left:20px;
+}
+
+.process-step span{
+    color:#d8ccb5;
+    font-size:.9rem;
+    letter-spacing:2px;
+}
+
+.process-step h4{
+    margin:15px 0;
+}
