@@ -174,7 +174,7 @@ color:#d8ccb5;
 }
 .services-grid {
     display:grid;
-    grid-template-columns:grid-template-columns: repeat(3, 2fr);
+    grid-template-columns:grid-template-columns: repeat(3, 1fr);
     gap:25px;
 }
 
