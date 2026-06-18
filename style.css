@@ -178,3 +178,15 @@ border-color:#d8ccb5;
 margin-bottom:15px;
 color:#d8ccb5;
 }
+.services-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.service-card {
+    background:#111;
+    padding:30px;
+    border:1px solid rgba(216,204,181,.2);
+    border-radius:18px;
+}
