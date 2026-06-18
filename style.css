@@ -193,8 +193,9 @@ color:#d8ccb5;
 .process-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:25px;
-    margin-top:50px;
+    gap:40px;
+    margin-top:80px;
+    position:relative;
 }
 
 .process-step{
