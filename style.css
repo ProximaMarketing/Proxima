@@ -190,15 +190,13 @@ color:#d8ccb5;
     border:1px solid rgba(216,204,181,.2);
     border-radius:18px;
 }
-.process-grid {
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap:25px;
-    margin-top:70px;
-}
-}
 .process-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:40px;
+    margin-top:70px;
     position:relative;
+    width:100%;
 }
 
 .process-grid::before{
@@ -212,13 +210,11 @@ color:#d8ccb5;
     z-index:0;
 }
 
-
 .process-step{
    border-left:2px solid #d8ccb5;
 padding-left:20px;
 }
 .process-step p{
-    max-width:220px;
     line-height:1.8;
     color:#bfbfbf;
 }
@@ -242,5 +238,4 @@ padding-left:20px;
 .process-step{
     position:relative;
     z-index:1;
-    background:#0b0b0b;
 }
