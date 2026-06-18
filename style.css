@@ -155,12 +155,7 @@ text-decoration:none;
 color:#f5f0e6;
 }
 
-.services-grid{
-margin-top:50px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-}
+grid-template-columns: repeat(3, 1fr);
 
 .service-card{
 background:#111;
