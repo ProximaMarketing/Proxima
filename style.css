@@ -192,14 +192,32 @@ color:#d8ccb5;
 }
 .process-grid{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(4,minmax(220px,1fr));
     gap:60px;
-    margin-top:80px;
+    margin-top:70px;
+}
+.process-grid{
+    position:relative;
+}
+
+.process-grid::before{
+    content:'';
+    position:absolute;
+    top:22px;
+    left:0;
+    width:100%;
+    height:1px;
+    background:rgba(216,204,181,.25);
 }
 }
 .process-step{
-    position:relative;
-    padding-top:40px;
+   border-left:2px solid #d8ccb5;
+padding-left:20px;
+}
+.process-step p{
+    max-width:220px;
+    line-height:1.8;
+    color:#bfbfbf;
 }
 .process-step span{
     display:block;
