@@ -378,4 +378,7 @@ color:#d8ccb5;
     margin-top: 40px;
     line-height: 1.4;
 }
+    .floating-menu{
+    display: none;
+}
 }
