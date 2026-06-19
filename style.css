@@ -356,8 +356,8 @@ color:#d8ccb5;
 
     /* Floating menu */
     .floating-menu{
-        right: 10px;
-        top: 10px;
+        right: 15px;
+        top: 90px;
     }
 
     .floating-menu a{
