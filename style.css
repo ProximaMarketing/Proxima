@@ -364,5 +364,18 @@ color:#d8ccb5;
         padding: 8px 14px;
         font-size: 0.9rem;
     }
+.arc{
+    width: 140%;
+    top: 180px;
+}
 
+.star{
+    top: 150px;
+    font-size: 2.5rem;
+}
+
+.subtitle{
+    margin-top: 40px;
+    line-height: 1.4;
+}
 }
