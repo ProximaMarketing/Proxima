@@ -140,8 +140,7 @@
 
     </section>
 
-    <script src="script.js"></script>
-<script>
+  <script>
 const steps = document.querySelectorAll('.process-step');
 
 const observer = new IntersectionObserver((entries) => {
@@ -150,24 +149,21 @@ const observer = new IntersectionObserver((entries) => {
       entry.target.classList.add('visible');
     }
   });
-}, {
-  threshold: 0.6
+},{
+  threshold:0.6
 });
-const floatingMenu = document.querySelector('.floating-menu');
-<div class="floating-menu">
-    ☰
-</div>
-window.addEventListener('scroll', () => {
 
-    if(window.scrollY > 300){
-        floatingMenu.classList.add('show');
-    } else {
-        floatingMenu.classList.remove('show');
-    }
-
-});
 steps.forEach(step => observer.observe(step));
- 
+
+const floatingMenu = document.querySelector('.floating-menu');
+
+window.addEventListener('scroll', () => {
+  if(window.scrollY > 300){
+    floatingMenu.classList.add('show');
+  } else {
+    floatingMenu.classList.remove('show');
+  }
+});
 </script>
 </body>
 </html>
