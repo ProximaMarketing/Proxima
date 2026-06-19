@@ -140,6 +140,20 @@
     </section>
 
     <script src="script.js"></script>
+<script>
+const steps = document.querySelectorAll('.process-step');
 
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.2
+});
+
+steps.forEach(step => observer.observe(step));
+</script>
 </body>
 </html>
