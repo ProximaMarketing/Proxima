@@ -325,14 +325,42 @@ color:#d8ccb5;
 }
 @media (max-width: 768px) {
 
-    /* Hero section */
+    /* Hero */
+    .hero{
+        padding-top: 80px;
+        min-height: auto;
+    }
+
     .hero h1{
         font-size: 3rem;
         line-height: 1.1;
     }
 
+    .hero h2{
+        font-size: 1.2rem;
+        line-height: 1.3;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
     .hero p{
         font-size: 1.1rem;
+    }
+
+    .subtitle{
+        font-size: 0.9rem;
+        letter-spacing: 4px;
+        line-height: 1.4;
+    }
+
+    /* Keep logo intact */
+    .arc{
+        width: 100%;
+        opacity: 0.85;
+    }
+
+    .star{
+        font-size: 3rem;
     }
 
     /* Services */
@@ -344,7 +372,7 @@ color:#d8ccb5;
         padding: 25px;
     }
 
-    /* Process section */
+    /* Process */
     .process-grid{
         grid-template-columns: 1fr;
         gap: 40px;
@@ -354,58 +382,15 @@ color:#d8ccb5;
         max-width: 100%;
     }
 
-    /* Floating menu */
-    .floating-menu{
-        right: 15px;
-        top: 90px;
+    /* Buttons */
+    .hero-buttons a{
+        width: 100%;
+        max-width: 320px;
     }
 
-    .floating-menu a{
-        padding: 8px 14px;
-        font-size: 0.9rem;
-    }
-.arc{
-    width: 140%;
-    top: 180px;
-}
-
-.star{
-    top: 150px;
-    font-size: 2.5rem;
-}
-
-.subtitle{
-    margin-top: 40px;
-    line-height: 1.4;
-}
+    /* Hide floating menu on phones */
     .floating-menu{
-    display: none;
-}
-    /* Mobile improvements */
-
-.floating-menu{
-    display:none;
-}
-
-.hero{
-    padding-top:80px;
-}
-
-.hero h1{
-    font-size:2.4rem;
-}
-
-.arc{
-    transform:scale(0.8);
-    opacity:0.7;
-}
-
-.star{
-    transform:scale(0.85);
-}
-
-.hero-buttons a{
-    width:100%;
-    max-width:320px;
+        display: none;
+    }
 }
 }
