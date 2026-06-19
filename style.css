@@ -285,20 +285,10 @@ color:#d8ccb5;
     align-items:center;
     justify-content:center;
     background:#111;
-    border:1px solid #d8ccb5;
-    color:#d8ccb5;
-    border-radius:50%;
-    cursor:pointer;
-
-    opacity:0;
-    visibility:hidden;
+    opacity:1;
+    visibility:visible;
 
     transition:all .3s ease;
 
     z-index:999;
-}
-
-.floating-menu.show{
-    opacity:1;
-    visibility:visible;
 }
