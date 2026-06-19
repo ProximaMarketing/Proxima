@@ -38,9 +38,11 @@ body {
     color: #f5f0e6;
 }
 
-.hero-content {
-    max-width: 800px;
-    z-index: 2;
+.hero-content{
+max-width:800px;
+position:relative;
+z-index:2;
+}
 }
 .hero-nav a {
     display:inline-block;
@@ -157,17 +159,16 @@ body {
 
 }
 .navbar{
-position:fixed;
+position:absolute;
 top:0;
 left:0;
-width:100%;
+right:0;
 padding:25px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-z-index:1000;
-background:rgba(5,5,5,0.85);
-backdrop-filter:blur(10px);
+z-index:100;
+background:transparent;
 }
 
 .nav-logo{
@@ -281,35 +282,25 @@ color:#d8ccb5;
     line-height:1.8;
 }
 .floating-menu{
-    position:fixed;
-    top:20px;
-    right:20px;
-    display:flex;
-    gap:10px;
-
-    opacity:0;
-    visibility:hidden;
-    transform:translateY(-20px);
-
-    transition:all .3s ease;
-    z-index:9999;
-}
-
-.floating-menu.show{
-    opacity:1;
-    visibility:visible;
-    transform:translateY(0);
+display:flex;
+gap:18px;
+align-items:center;
 }
 
 .floating-menu a{
-    text-decoration:none;
-    color:#111;
-    background:#d8cfbb;
-    padding:14px 28px;
-    border-radius:999px;
-    font-weight:600;
-    transition:0.3s;
+display:inline-block;
+text-decoration:none;
+color:#050505;
+background:#d8ccb5;
+padding:14px 28px;
+border-radius:999px;
+font-weight:600;
+transition:all .3s ease;
 }
+
+.floating-menu a:hover{
+transform:translateY(-2px);
+background:#e5dbc9;
 }
 @media (max-width: 768px) {
 
