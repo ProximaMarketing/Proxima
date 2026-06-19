@@ -282,20 +282,20 @@ color:#d8ccb5;
     line-height:1.8;
 }
 .floating-menu{
-display:flex;
-gap:18px;
-align-items:center;
+    display:flex;
+    gap:18px;
+    align-items:center;
 }
 
 .floating-menu a{
-display:inline-block;
-text-decoration:none;
-color:#050505;
-background:#d8ccb5;
-padding:14px 28px;
-border-radius:999px;
-font-weight:600;
-transition:all .3s ease;
+    display:inline-block;
+    text-decoration:none;
+    color:#050505;
+    background:#d8ccb5;
+    padding:14px 28px;
+    border-radius:999px;
+    font-weight:600;
+    transition:all .3s ease;
 }
 
 .floating-menu a:hover{
