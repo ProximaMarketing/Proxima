@@ -42,14 +42,21 @@ body {
     max-width: 800px;
     z-index: 2;
 }
-.hero-nav{
-    margin-top:40px;
-    display:flex;
-    justify-content:center;
-    gap:30px;
-    flex-wrap:wrap;
+.hero-nav a{
+    display:inline-block;
+    text-decoration:none;
+    color:#d8ccb5;
+    border:1px solid rgba(216,204,181,.3);
+    padding:12px 22px;
+    border-radius:999px;
+    background:rgba(255,255,255,.02);
+    transition:all .3s ease;
 }
-
+.hero-nav a:hover{
+    transform:translateY(-2px);
+    border-color:#d8ccb5;
+    background:rgba(216,204,181,.08);
+}
 .hero-nav a{
     color:#d8ccb5;
     text-decoration:none;
