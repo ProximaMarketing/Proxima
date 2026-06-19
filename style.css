@@ -42,7 +42,25 @@ body {
     max-width: 800px;
     z-index: 2;
 }
+.hero-nav{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
 
+.hero-nav a{
+    color:#d8ccb5;
+    text-decoration:none;
+    font-size:.9rem;
+    letter-spacing:.08em;
+    transition:opacity .3s ease;
+}
+
+.hero-nav a:hover{
+    opacity:.7;
+}
 .hero h1 {
     font-size: 6rem;
     font-weight: 800;
