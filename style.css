@@ -323,3 +323,46 @@ color:#d8ccb5;
     }
 
 }
+@media (max-width: 768px) {
+
+    /* Hero section */
+    .hero h1{
+        font-size: 3rem;
+        line-height: 1.1;
+    }
+
+    .hero p{
+        font-size: 1.1rem;
+    }
+
+    /* Services */
+    .services-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .service-card{
+        padding: 25px;
+    }
+
+    /* Process section */
+    .process-grid{
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .process-step{
+        max-width: 100%;
+    }
+
+    /* Floating menu */
+    .floating-menu{
+        right: 10px;
+        top: 10px;
+    }
+
+    .floating-menu a{
+        padding: 8px 14px;
+        font-size: 0.9rem;
+    }
+
+}
