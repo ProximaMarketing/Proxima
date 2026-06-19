@@ -195,16 +195,7 @@ color:#d8ccb5;
     width:100%;
 }
 
-.process-grid::before{
-    content:'';
-    position:absolute;
-    top:22px;
-    left:20px;
-    right:20px;
-    height:1px;
-    background:rgba(216,204,181,.25);
-    z-index:0;
-}
+
 
 .process-step{
     border-left:2px solid #d8ccb5;
