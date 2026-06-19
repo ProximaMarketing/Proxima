@@ -45,28 +45,19 @@ body {
 .hero-nav a{
     display:inline-block;
     text-decoration:none;
-    color:#d8ccb5;
-    border:1px solid rgba(216,204,181,.3);
+    color:#000;
+    border:1px solid #d8ccb5;
     padding:12px 22px;
     border-radius:999px;
-    background:rgba(255,255,255,.02);
+    background:#d8ccb5;
+    font-weight:600;
     transition:all .3s ease;
-}
-.hero-nav a:hover{
-    transform:translateY(-2px);
-    border-color:#d8ccb5;
-    background:rgba(216,204,181,.08);
-}
-.hero-nav a{
-    color:#d8ccb5;
-    text-decoration:none;
-    font-size:.9rem;
-    letter-spacing:.08em;
-    transition:opacity .3s ease;
 }
 
 .hero-nav a:hover{
-    opacity:.7;
+    transform:translateY(-2px);
+    background:#e5dbc9;
+    border-color:#e5dbc9;
 }
 .hero h1 {
     font-size: 6rem;
