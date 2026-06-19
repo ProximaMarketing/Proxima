@@ -97,14 +97,25 @@ body {
     transition: 0.3s;
 }
 
-.primary-btn {
+.primary-btn,
+.secondary-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 10px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
     background: #d8ccb5;
     color: #050505;
+    border: 1px solid #d8ccb5;
+    transition: all .3s ease;
 }
 
-.secondary-btn {
-    border: 1px solid #d8ccb5;
-    color: #d8ccb5;
+.primary-btn:hover,
+.secondary-btn:hover {
+    background: #e5dbc9;
+    border-color: #e5dbc9;
+    transform: translateY(-2px);
 }
 
 .section {
