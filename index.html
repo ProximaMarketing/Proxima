@@ -154,7 +154,9 @@ const observer = new IntersectionObserver((entries) => {
   threshold: 0.6
 });
 const floatingMenu = document.querySelector('.floating-menu');
-
+<div class="floating-menu">
+    ☰
+</div>
 window.addEventListener('scroll', () => {
 
     if(window.scrollY > 300){
@@ -165,9 +167,7 @@ window.addEventListener('scroll', () => {
 
 });
 steps.forEach(step => observer.observe(step));
- <div class="floating-menu">
-    ☰
-</div>
+ 
 </script>
 </body>
 </html>
