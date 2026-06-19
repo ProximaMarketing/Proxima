@@ -42,16 +42,19 @@ body {
     max-width: 800px;
     z-index: 2;
 }
-.hero-nav a{
+.hero-nav a {
     display:inline-block;
     text-decoration:none;
-    color:#000;
+    color:#050505;
     border:1px solid #d8ccb5;
     padding:12px 22px;
     border-radius:999px;
     background:#d8ccb5;
     font-weight:600;
     transition:all .3s ease;
+    opacity:1;
+    filter:none;
+    box-shadow:none;
 }
 
 .hero-nav a:hover{
