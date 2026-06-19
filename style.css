@@ -172,10 +172,12 @@ border-color:#d8ccb5;
 margin-bottom:15px;
 color:#d8ccb5;
 }
-.services-grid {
+.services-grid{
     display:grid;
-    grid-template-columns:grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:repeat(3,1fr);
     gap:25px;
+    margin-top:50px;
+    width:100%;
 }
 
 .service-card {
