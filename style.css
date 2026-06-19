@@ -277,18 +277,30 @@ color:#d8ccb5;
 }
 .floating-menu{
     position:fixed;
-    top:30px;
-    right:30px;
-    width:50px;
-    height:50px;
+    top:20px;
+    right:20px;
     display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#111;
-    opacity:1;
-    visibility:visible;
+    gap:10px;
+
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-20px);
 
     transition:all .3s ease;
+    z-index:9999;
+}
 
-    z-index:999;
+.floating-menu.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+.floating-menu a{
+    background:#d8ccb5;
+    color:#050505;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:999px;
+    font-weight:600;
 }
