@@ -161,13 +161,19 @@ const observer = new IntersectionObserver((entries) => {
 steps.forEach(step => observer.observe(step));
 
 const floatingMenu = document.querySelector('.floating-menu');
+const heroNav = document.querySelector('.hero-nav');
 
 window.addEventListener('scroll', () => {
-  if(window.scrollY > 50){
-    floatingMenu.classList.add('show');
-  } else {
-    floatingMenu.classList.remove('show');
-  }
+
+    const triggerPoint =
+        heroNav.offsetTop + heroNav.offsetHeight;
+
+    if(window.scrollY > triggerPoint){
+        floatingMenu.classList.add('show');
+    } else {
+        floatingMenu.classList.remove('show');
+    }
+
 });
 </script>
 </body>
