@@ -381,4 +381,31 @@ color:#d8ccb5;
     .floating-menu{
     display: none;
 }
+    /* Mobile improvements */
+
+.floating-menu{
+    display:none;
+}
+
+.hero{
+    padding-top:80px;
+}
+
+.hero h1{
+    font-size:2.4rem;
+}
+
+.arc{
+    transform:scale(0.8);
+    opacity:0.7;
+}
+
+.star{
+    transform:scale(0.85);
+}
+
+.hero-buttons a{
+    width:100%;
+    max-width:320px;
+}
 }
