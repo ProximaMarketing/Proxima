@@ -57,13 +57,13 @@ body {
 }
 
 .hero h2 {
-    margin-top: 30px;
+    margin-top: 40px;
     font-size: 3rem;
     font-weight: 300;
 }
 
 .hero-text {
-    margin-top: 20px;
+    margin-top: 40px;
     font-size: 1.2rem;
 }
 
@@ -103,7 +103,7 @@ body {
 
 .section h3 {
     font-size: 2.5rem;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .section p {
