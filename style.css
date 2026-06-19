@@ -325,72 +325,32 @@ color:#d8ccb5;
 }
 @media (max-width: 768px) {
 
-    /* Hero */
-    .hero{
-        padding-top: 80px;
-        min-height: auto;
-    }
-
-    .hero h1{
-        font-size: 3rem;
-        line-height: 1.1;
-    }
-
-    .hero h2{
-        font-size: 1.2rem;
-        line-height: 1.3;
-        max-width: 320px;
-        margin: 0 auto;
-    }
-
-    .hero p{
-        font-size: 1.1rem;
-    }
-
-    .subtitle{
-        font-size: 0.9rem;
-        letter-spacing: 4px;
-        line-height: 1.4;
-    }
-
-    /* Keep logo intact */
-    .arc{
-        width: 100%;
-        opacity: 0.85;
-    }
-
-    .star{
-        font-size: 3rem;
-    }
-
-    /* Services */
-    .services-grid{
-        grid-template-columns: 1fr;
-    }
-
-    .service-card{
-        padding: 25px;
-    }
-
-    /* Process */
-    .process-grid{
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .process-step{
-        max-width: 100%;
-    }
-
-    /* Buttons */
-    .hero-buttons a{
-        width: 100%;
-        max-width: 320px;
-    }
-
-    /* Hide floating menu on phones */
     .floating-menu{
-        display: none;
+        display:none;
     }
-}
+
+    .hero{
+        min-height:100vh;
+        padding:120px 20px 80px;
+    }
+
+    .hero-content{
+        transform:scale(0.8);
+        transform-origin:top center;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .hero-buttons a{
+        width:100%;
+        max-width:320px;
+    }
+
+    .services-grid,
+    .process-grid{
+        grid-template-columns:1fr;
+    }
 }
