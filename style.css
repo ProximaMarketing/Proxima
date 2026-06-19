@@ -159,31 +159,46 @@ z-index:2;
 
 }
 .navbar{
-position:absolute;
-top:0;
-left:0;
-right:0;
-padding:25px 8%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-z-index:100;
-background:transparent;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:25px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:1000;
 }
 
 .nav-logo{
-font-weight:700;
-letter-spacing:2px;
+    font-weight:700;
+    letter-spacing:2px;
 }
 
 .nav-links{
-display:flex;
-gap:30px;
+    display:flex;
+    gap:20px;
+
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-20px);
+
+    transition:all .3s ease;
+}
+
+.nav-links.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
 }
 
 .nav-links a{
-text-decoration:none;
-color:#f5f0e6;
+    text-decoration:none;
+    color:#050505;
+    background:#d8ccb5;
+    padding:12px 22px;
+    border-radius:999px;
+    font-weight:600;
 }
 
 .service-card{
