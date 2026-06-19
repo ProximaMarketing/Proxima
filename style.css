@@ -215,7 +215,7 @@ color:#d8ccb5;
 
     opacity:0;
     transform:translateY(25px);
-    transition:opacity .8s ease, transform .8s ease;
+    transition: opacity 1.2s ease, transform 1.2s ease;
 }
 .process-step.visible{
     opacity:1;
