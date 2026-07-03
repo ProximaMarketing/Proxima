@@ -437,61 +437,91 @@ border-color:#e5dbc9;
   }
 
 }
+/* ==========================
+   WHY MOST ARTISTS STALL
+========================== */
+
 .problem{
     padding:180px 0;
 }
 
 .problem .container{
     width:90%;
-    max-width:1200px;
+    max-width:1400px;
     margin:auto;
 }
 
-.problem h2{
-    font-size:72px;
-    color:#f6f2ea;
-    line-height:1.05;
-    margin-bottom:20px;
-}
-
-.problem-sub{
-    font-size:22px;
-    color:#bdbdbd;
-    max-width:700px;
-    line-height:1.7;
-    margin-bottom:80px;
-}
-
-.problem-grid{
+.problem-top{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:40px;
+    grid-template-columns:1.2fr 1fr;
+    gap:120px;
+    align-items:start;
 }
 
-.problem-item{
-    border-left:1px solid #b9b0a2;
-    padding-left:25px;
+.problem-left h2{
+    font-size:88px;
+    line-height:0.95;
+    color:#F4EFE7;
+    margin:20px 0 40px;
+    max-width:700px;
 }
 
-.problem-item span{
-    color:#b9b0a2;
-    font-size:14px;
-    letter-spacing:3px;
+.problem-text{
+    font-size:24px;
+    line-height:1.8;
+    color:#A9A9A9;
+    max-width:620px;
 }
 
-.problem-item h3{
-    color:#f6f2ea;
-    font-size:26px;
-    margin-top:10px;
+.problem-right{
+    display:flex;
+    flex-direction:column;
+    gap:70px;
 }
 
-@media(max-width:900px){
-    .problem-grid{
-        grid-template-columns:1fr;
-        gap:30px;
-    }
+.problem-point{
+    border-left:2px solid rgba(255,255,255,.65);
+    padding-left:28px;
+}
 
-    .problem h2{
-        font-size:46px;
-    }
+.problem-point span{
+    display:block;
+    color:#CFC3B2;
+    font-size:16px;
+    letter-spacing:2px;
+    margin-bottom:18px;
+}
+
+.problem-point h3{
+    font-size:46px;
+    color:#F4EFE7;
+    margin-bottom:15px;
+}
+
+.problem-point p{
+    color:#9E9E9E;
+    line-height:1.8;
+    font-size:20px;
+    max-width:380px;
+}
+
+@media (max-width:1000px){
+
+.problem-top{
+    grid-template-columns:1fr;
+    gap:80px;
+}
+
+.problem-left h2{
+    font-size:56px;
+}
+
+.problem-text{
+    font-size:20px;
+}
+
+.problem-point h3{
+    font-size:34px;
+}
+
 }
