@@ -744,3 +744,208 @@ FINAL CTA
     pointer-events:none;
 
 }
+/*==================================================
+FOOTER
+==================================================*/
+
+.footer{
+
+    padding:120px 0 40px;
+
+    border-top:1px solid var(--border);
+
+}
+
+.footer-top{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr 1fr;
+
+    gap:80px;
+
+    padding-bottom:60px;
+
+}
+
+.footer-brand{
+
+    max-width:420px;
+
+}
+
+.footer-logo{
+
+    position:relative;
+
+    display:inline-block;
+
+    margin-bottom:35px;
+
+}
+
+.footer-logo h3{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    letter-spacing:.18em;
+
+}
+
+.footer-star{
+
+    position:absolute;
+
+    left:50%;
+
+    top:-58px;
+
+    transform:translateX(-50%);
+
+    color:var(--accent);
+
+    font-size:.9rem;
+
+}
+
+.footer-arc{
+
+    position:absolute;
+
+    left:50%;
+
+    top:-42px;
+
+    transform:translateX(-50%);
+
+    width:130px;
+
+    height:65px;
+
+    border:1px solid rgba(216,198,165,.3);
+
+    border-bottom:none;
+
+    border-radius:130px 130px 0 0;
+
+}
+
+.footer-brand p{
+
+    max-width:340px;
+
+}
+
+.footer-column h4{
+
+    margin-bottom:24px;
+
+    font-size:1rem;
+
+    letter-spacing:.08em;
+
+    color:var(--text);
+
+}
+
+.footer-column a{
+
+    display:block;
+
+    margin-bottom:16px;
+
+    color:var(--text-light);
+
+    transition:var(--transition);
+
+}
+
+.footer-column a:hover{
+
+    color:var(--accent);
+
+    transform:translateX(6px);
+
+}
+
+.footer-bottom{
+
+    padding-top:35px;
+
+    border-top:1px solid var(--border);
+
+    text-align:center;
+
+}
+
+.footer-bottom p{
+
+    font-size:.95rem;
+
+}
+
+
+/*==================================================
+SECTION SPACING
+==================================================*/
+
+.hero{
+
+    padding-top:140px;
+
+}
+
+.intro,
+.capabilities,
+.process,
+.cta{
+
+    position:relative;
+
+}
+
+.intro::after,
+.capabilities::after,
+.process::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:0;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:92%;
+
+    max-width:1280px;
+
+    height:1px;
+
+    background:rgba(255,255,255,.05);
+
+}
+
+
+/*==================================================
+SUBTLE BACKGROUND VARIATION
+==================================================*/
+
+.capabilities{
+
+    background:rgba(255,255,255,.015);
+
+}
+
+.cta{
+
+    background:
+        radial-gradient(circle at center,
+        rgba(216,198,165,.05),
+        transparent 70%);
+
+}
