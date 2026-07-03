@@ -1,42 +1,32 @@
-/* =======================================
-   VARIABLES
-======================================= */
+/*==================================================
+  PROXIMA
+  STYLE SHEET
+==================================================*/
 
 :root{
 
     --bg:#090909;
-
-    --surface:#111111;
-
-    --surface-2:#181818;
-
-    --text:#F4EFE7;
-
-    --muted:#A8A39C;
-
+    --surface:#121212;
+    --text:#F5F1E8;
+    --text-light:#AAA6A0;
     --accent:#D8C6A5;
 
-    --border:rgba(216,198,165,.18);
+    --border:rgba(255,255,255,.08);
 
-    --radius:26px;
+    --container:1280px;
 
     --transition:.35s cubic-bezier(.22,1,.36,1);
 
-    --max-width:1380px;
-
 }
 
-
-/* =======================================
-   RESET
-======================================= */
+/*==================================================
+RESET
+==================================================*/
 
 *{
 
     margin:0;
-
     padding:0;
-
     box-sizing:border-box;
 
 }
@@ -50,59 +40,43 @@ html{
 body{
 
     background:var(--bg);
-
     color:var(--text);
 
-    font-family:'Inter',sans-serif;
+    font-family:"Inter",sans-serif;
 
     overflow-x:hidden;
-
-    -webkit-font-smoothing:antialiased;
 
 }
 
 img{
 
-    max-width:100%;
-
     display:block;
+    max-width:100%;
 
 }
 
 a{
 
-    color:inherit;
-
     text-decoration:none;
-
-}
-
-button{
-
-    font:inherit;
-
-}
-
-section{
-
-    position:relative;
+    color:inherit;
 
 }
 
 .container{
 
-    width:min(92%,var(--max-width));
+    width:min(92%,var(--container));
 
     margin:auto;
 
 }
-/* =======================================
-   TYPOGRAPHY
-======================================= */
+
+/*==================================================
+TYPOGRAPHY
+==================================================*/
 
 h1{
 
-    font-size:clamp(5rem,12vw,9rem);
+    font-size:clamp(5rem,11vw,9rem);
 
     font-weight:800;
 
@@ -114,58 +88,27 @@ h1{
 
 h2{
 
-    font-size:clamp(3rem,6vw,5.5rem);
-
-    font-weight:700;
+    font-size:clamp(2.8rem,6vw,5rem);
 
     line-height:1;
 
-}
-
-h3{
-
-    font-size:clamp(2rem,4vw,3.2rem);
-
     font-weight:700;
-
-}
-
-h4{
-
-    font-size:1.45rem;
-
-    font-weight:600;
 
 }
 
 p{
 
-    color:var(--muted);
+    color:var(--text-light);
 
     font-size:1.15rem;
 
-    line-height:1.9;
+    line-height:1.8;
 
 }
 
-.section-label{
-
-    display:inline-block;
-
-    color:var(--accent);
-
-    text-transform:uppercase;
-
-    letter-spacing:.28em;
-
-    font-size:.8rem;
-
-    margin-bottom:28px;
-
-}
-/* =======================================
-   NAVIGATION
-======================================= */
+/*==================================================
+NAVIGATION
+==================================================*/
 
 .navbar{
 
@@ -177,31 +120,15 @@ p{
 
     width:100%;
 
+    padding:28px 0;
+
     z-index:1000;
 
-    padding:30px 0;
-
-    transition:.4s ease;
-
-    pointer-events:none;
+    transition:.4s;
 
 }
 
-.navbar.scrolled{
-
-    backdrop-filter:blur(18px);
-
-    background:rgba(9,9,9,.75);
-
-    border-bottom:1px solid rgba(255,255,255,.04);
-
-}
-
-.nav-inner{
-
-    width:min(92%,1380px);
-
-    margin:auto;
+.nav-container{
 
     display:flex;
 
@@ -209,17 +136,15 @@ p{
 
     align-items:center;
 
-    pointer-events:auto;
-
 }
 
 .logo{
 
-    font-size:1.45rem;
+    font-size:1rem;
 
-    font-weight:800;
+    letter-spacing:.25em;
 
-    letter-spacing:.22em;
+    font-weight:700;
 
 }
 
@@ -229,21 +154,15 @@ p{
 
     gap:18px;
 
-    align-items:center;
-
 }
 
 .nav-links a{
 
     padding:14px 28px;
 
-    background:var(--accent);
-
-    color:#111;
-
     border-radius:999px;
 
-    font-weight:600;
+    border:1px solid var(--border);
 
     transition:var(--transition);
 
@@ -251,8 +170,201 @@ p{
 
 .nav-links a:hover{
 
+    background:rgba(255,255,255,.05);
+
     transform:translateY(-3px);
 
-    box-shadow:0 12px 30px rgba(216,198,165,.2);
+}
+
+/*==================================================
+HERO
+==================================================*/
+
+.hero{
+
+    position:relative;
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    overflow:hidden;
+
+}
+
+.hero-background{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    radial-gradient(circle at top,
+    rgba(216,198,165,.08),
+    transparent 65%);
+
+}
+
+.hero-wrapper{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+.hero-logo{
+
+    position:relative;
+
+    margin-bottom:80px;
+
+}
+
+.hero-star{
+
+    position:absolute;
+
+    left:50%;
+
+    top:-120px;
+
+    transform:translateX(-50%);
+
+    color:var(--accent);
+
+    font-size:1.3rem;
+
+}
+
+.hero-arc{
+
+    position:absolute;
+
+    left:50%;
+
+    top:-95px;
+
+    transform:translateX(-50%);
+
+    width:360px;
+
+    height:180px;
+
+    border:2px solid rgba(216,198,165,.28);
+
+    border-bottom:none;
+
+    border-radius:360px 360px 0 0;
+
+}
+
+.logo-subtitle{
+
+    display:block;
+
+    margin-top:26px;
+
+    letter-spacing:.35em;
+
+    text-transform:uppercase;
+
+    color:var(--accent);
+
+    font-size:.82rem;
+
+}
+
+.hero-copy{
+
+    max-width:760px;
+
+    margin:auto;
+
+}
+
+.hero-copy h2{
+
+    margin-bottom:30px;
+
+}
+
+.hero-copy p{
+
+    max-width:640px;
+
+    margin:auto;
+
+}
+
+.hero-buttons{
+
+    margin-top:55px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+}
+
+/*==================================================
+BUTTONS
+==================================================*/
+
+.button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:18px 34px;
+
+    border-radius:999px;
+
+    transition:var(--transition);
+
+    font-weight:600;
+
+}
+
+.button-primary{
+
+    background:var(--accent);
+
+    color:#111;
+
+}
+
+.button-primary:hover{
+
+    transform:translateY(-4px);
+
+}
+
+.button-secondary{
+
+    border:1px solid var(--border);
+
+}
+
+.button-secondary:hover{
+
+    background:rgba(255,255,255,.05);
+
+    transform:translateY(-4px);
 
 }
