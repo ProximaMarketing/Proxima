@@ -207,7 +207,34 @@ HERO
     overflow:hidden;
 
 }
+.hero::before{
 
+    content:"";
+
+    position:absolute;
+
+    width:900px;
+
+    height:900px;
+
+    left:50%;
+
+    top:-350px;
+
+    transform:translateX(-50%);
+
+    background:radial-gradient(
+        circle,
+        rgba(216,198,165,.08) 0%,
+        rgba(216,198,165,.03) 45%,
+        transparent 75%
+    );
+
+    pointer-events:none;
+
+    z-index:0;
+
+}
 .hero-background{
 
     position:absolute;
