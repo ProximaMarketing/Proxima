@@ -153,3 +153,337 @@ p {
     margin-bottom: 1.5rem;
 
 }
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+.navbar {
+
+    position: fixed;
+
+    top: 24px;
+
+    left: 50%;
+
+    transform: translateX(-50%) translateY(-25px);
+
+    width: min(92%, 1180px);
+
+    padding: 18px 28px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: rgba(10, 10, 10, 0.72);
+
+    backdrop-filter: blur(20px);
+
+    border: 1px solid var(--border);
+
+    border-radius: 999px;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: all .45s ease;
+
+    z-index: 1000;
+
+}
+
+.navbar.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateX(-50%) translateY(0);
+
+}
+
+.nav-container{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.logo{
+
+    font-size:1rem;
+
+    font-weight:700;
+
+    letter-spacing:.18em;
+
+}
+
+.nav-links{
+
+    display:flex;
+
+    gap:40px;
+
+    list-style:none;
+
+}
+
+.nav-links a{
+
+    color:var(--text-muted);
+
+    transition:var(--transition);
+
+    font-size:.95rem;
+
+}
+
+.nav-links a:hover{
+
+    color:var(--text);
+
+}
+
+.mobile-toggle{
+
+    display:none;
+
+    background:none;
+
+    border:none;
+
+    cursor:pointer;
+
+}
+
+.mobile-toggle span{
+
+    display:block;
+
+    width:26px;
+
+    height:2px;
+
+    background:var(--text);
+
+    margin:6px 0;
+
+}
+
+/* ==========================================
+   HERO
+========================================== */
+
+.hero{
+
+    position:relative;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    text-align:center;
+
+    padding:0 24px;
+
+}
+
+.hero-container{
+
+    max-width:850px;
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.hero-label{
+
+    color:var(--accent);
+
+    text-transform:uppercase;
+
+    letter-spacing:.3em;
+
+    font-size:.85rem;
+
+    margin-bottom:28px;
+
+}
+
+.hero h2{
+
+    margin-bottom:32px;
+
+}
+
+.hero-description{
+
+    margin:0 auto;
+
+    max-width:620px;
+
+    font-size:1.15rem;
+
+}
+
+.hero-buttons{
+
+    margin-top:50px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+}
+
+/* ==========================================
+   HERO LOGO
+========================================== */
+
+.hero-logo{
+
+    position:relative;
+
+    margin-bottom:60px;
+
+}
+
+.hero-logo h1{
+
+    font-size:clamp(4rem,10vw,7rem);
+
+    letter-spacing:.18em;
+
+}
+
+.hero-arc{
+
+    position:absolute;
+
+    width:360px;
+
+    height:180px;
+
+    border:2px solid rgba(216,198,165,.28);
+
+    border-bottom:none;
+
+    border-radius:360px 360px 0 0;
+
+    left:50%;
+
+    top:-110px;
+
+    transform:translateX(-50%);
+
+    animation:arcFloat 14s ease-in-out infinite;
+
+}
+
+.hero-star{
+
+    position:absolute;
+
+    left:50%;
+
+    top:-135px;
+
+    transform:translateX(-50%);
+
+    color:var(--accent);
+
+    font-size:1.3rem;
+
+    animation:starFloat 6s ease-in-out infinite;
+
+}
+
+.hero-background{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    radial-gradient(circle at top,
+    rgba(216,198,165,.05),
+    transparent 60%);
+
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:16px 34px;
+
+    border-radius:999px;
+
+    transition:var(--transition);
+
+    font-weight:600;
+
+    letter-spacing:.03em;
+
+}
+
+.button-primary{
+
+    background:var(--accent);
+
+    color:#111;
+
+}
+
+.button-primary:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 15px 45px rgba(216,198,165,.18);
+
+}
+
+.button-secondary{
+
+    border:1px solid var(--border);
+
+    color:var(--text);
+
+}
+
+.button-secondary:hover{
+
+    background:rgba(255,255,255,.04);
+
+    transform:translateY(-4px);
+
+}
