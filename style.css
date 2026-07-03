@@ -179,7 +179,17 @@ NAVIGATION
 /*==================================================
 HERO
 ==================================================*/
+.hero-divider{
 
+    width:120px;
+
+    height:1px;
+
+    background:rgba(216,198,165,.35);
+
+    margin:48px auto 60px;
+
+}
 .hero{
 
     position:relative;
