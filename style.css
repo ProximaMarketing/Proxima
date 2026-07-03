@@ -922,7 +922,135 @@ FOOTER
     font-size:.95rem;
 
 }
+/*==================================================
+ARTIST APPLICATION
+==================================================*/
 
+.application{
+
+    padding:180px 0;
+
+}
+
+.application-header{
+
+    max-width:760px;
+
+    margin:0 auto 80px;
+
+    text-align:center;
+
+}
+
+.application-header h2{
+
+    margin:24px 0;
+
+}
+
+.application-header p{
+
+    max-width:620px;
+
+    margin:0 auto;
+
+}
+
+.application-form{
+
+    max-width:900px;
+
+    margin:0 auto;
+
+}
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:24px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    margin-bottom:28px;
+
+}
+
+.form-group label{
+
+    margin-bottom:12px;
+
+    font-size:.9rem;
+
+    letter-spacing:.08em;
+
+    color:var(--accent);
+
+    text-transform:uppercase;
+
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+
+    background:rgba(255,255,255,.02);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:18px 20px;
+
+    color:var(--text);
+
+    font-size:1rem;
+
+    font-family:inherit;
+
+    transition:var(--transition);
+
+}
+
+.form-group textarea{
+
+    resize:vertical;
+
+    min-height:160px;
+
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+
+    outline:none;
+
+    border-color:var(--accent);
+
+    background:rgba(255,255,255,.04);
+
+}
+
+.application-form button{
+
+    margin-top:24px;
+
+    width:100%;
+
+    padding:20px;
+
+    font-size:1rem;
+
+}
 
 /*==================================================
 SECTION SPACING
