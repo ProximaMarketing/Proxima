@@ -1213,3 +1213,47 @@ SMALL PHONES
     }
 
 }
+/*==================================================
+SCROLLED NAVBAR
+==================================================*/
+
+.navbar{
+
+    transition:.35s ease;
+
+}
+
+.navbar.scrolled{
+
+    background:rgba(9,9,9,.85);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+
+    padding:18px 0;
+
+}
+
+
+/*==================================================
+SCROLL PROGRESS BAR
+==================================================*/
+
+.scroll-progress{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    height:2px;
+
+    width:0;
+
+    background:var(--accent);
+
+    z-index:9999;
+
+}
