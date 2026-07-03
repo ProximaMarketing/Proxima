@@ -437,3 +437,116 @@ border-color:#e5dbc9;
   }
 
 }
+/* ===========================
+   PHILOSOPHY
+=========================== */
+
+.philosophy{
+
+    padding:180px 0;
+
+}
+
+.philosophy .container{
+
+    width:90%;
+    max-width:1400px;
+    margin:auto;
+
+}
+
+.section-label{
+
+    color:#cfc6b8;
+    letter-spacing:4px;
+    font-size:13px;
+    margin-bottom:30px;
+
+}
+
+.philosophy-header h2{
+
+    font-size:72px;
+    line-height:1;
+    color:#f6f2ea;
+    margin-bottom:15px;
+
+}
+
+.philosophy-header h3{
+
+    font-size:72px;
+    line-height:1;
+    color:#b9b0a2;
+    font-weight:600;
+    margin-bottom:120px;
+
+}
+
+.philosophy-grid{
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:120px;
+
+}
+
+.philosophy-text p{
+
+    font-size:22px;
+    line-height:1.8;
+    color:#bdbdbd;
+    margin-bottom:40px;
+
+}
+
+.point{
+
+    border-left:1px solid #b9b0a2;
+    padding-left:35px;
+    margin-bottom:70px;
+
+}
+
+.point span{
+
+    color:#b9b0a2;
+    letter-spacing:3px;
+    display:block;
+    margin-bottom:15px;
+
+}
+
+.point h4{
+
+    font-size:32px;
+    margin-bottom:18px;
+    color:#f6f2ea;
+
+}
+
+.point p{
+
+    color:#9d9d9d;
+    font-size:19px;
+    line-height:1.8;
+
+}
+
+@media(max-width:900px){
+
+.philosophy-header h2,
+.philosophy-header h3{
+
+font-size:46px;
+
+}
+
+.philosophy-grid{
+
+grid-template-columns:1fr;
+gap:80px;
+
+}
+
+}
