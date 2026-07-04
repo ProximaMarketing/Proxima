@@ -113,37 +113,28 @@ form.addEventListener("submit", async function(e){
 
     try{
 
-        const response = await fetch(SCRIPT_URL,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(formData)
-        });
+    const response = await fetch(SCRIPT_URL, {
+    method: "POST",
+    body: new URLSearchParams(formData)
+});
 
-        const result = await response.json();
+const result = await response.json();
 
-        if(result.success){
+if(result.success){
 
-            form.reset();
+    form.reset();
 
-            success.classList.add("show");
+    success.classList.add("show");
 
-            success.scrollIntoView({
-                behavior:"smooth"
-            });
+    success.scrollIntoView({
+        behavior:"smooth"
+    });
 
-        }else{
+}else{
 
-            alert("Something went wrong. Please try again.");
+    alert("Something went wrong. Please try again.");
 
-        }
-
-    }catch(error){
-
-        alert("Unable to submit your application. Please try again.");
-
-    }
+}
 
     button.disabled = false;
     button.textContent = "Submit Application";
