@@ -102,41 +102,55 @@ const form = document.getElementById("applicationForm");
 const button = document.getElementById("submitButton");
 const success = document.getElementById("successMessage");
 
-form.addEventListener("submit", async function(e){
+if(form){
 
-    e.preventDefault();
+    form.addEventListener("submit", async function(e){
 
-    button.disabled = true;
-    button.textContent = "Submitting...";
+        e.preventDefault();
 
-    const formData = Object.fromEntries(new FormData(form).entries());
+        button.disabled = true;
+        button.textContent = "Submitting...";
 
-    try{
+        const formData = Object.fromEntries(
+            new FormData(form).entries()
+        );
 
-    const response = await fetch(SCRIPT_URL, {
-    method: "POST",
-    body: new URLSearchParams(formData)
-});
+        try{
 
-const result = await response.json();
+            const response = await fetch(SCRIPT_URL,{
+                method:"POST",
+                body:new URLSearchParams(formData)
+            });
 
-if(result.success){
+            const result = await response.json();
 
-    form.reset();
+            if(result.success){
 
-    success.classList.add("show");
+                form.reset();
 
-    success.scrollIntoView({
-        behavior:"smooth"
+                success.classList.add("show");
+
+                success.scrollIntoView({
+                    behavior:"smooth"
+                });
+
+            }else{
+
+                alert("Something went wrong.");
+
+            }
+
+        }catch(error){
+
+            console.error(error);
+
+            alert("Unable to submit application.");
+
+        }
+
+        button.disabled = false;
+        button.textContent = "Submit Application";
+
     });
 
-}else{
-
-    alert("Something went wrong. Please try again.");
-
 }
-
-    button.disabled = false;
-    button.textContent = "Submit Application";
-
-});
