@@ -96,3 +96,56 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
     });
 
 });
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwdbsCxqpj2l8xlcs9AzkHiYH5txcJfg3VkHI2OePnEGVMVXFUKAOvr6iWX_pkd1NA/exec";
+
+const form = document.getElementById("applicationForm");
+const button = document.getElementById("submitButton");
+const success = document.getElementById("successMessage");
+
+form.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    button.disabled = true;
+    button.textContent = "Submitting...";
+
+    const formData = Object.fromEntries(new FormData(form).entries());
+
+    try{
+
+        const response = await fetch(SCRIPT_URL,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if(result.success){
+
+            form.reset();
+
+            success.classList.add("show");
+
+            success.scrollIntoView({
+                behavior:"smooth"
+            });
+
+        }else{
+
+            alert("Something went wrong. Please try again.");
+
+        }
+
+    }catch(error){
+
+        alert("Unable to submit your application. Please try again.");
+
+    }
+
+    button.disabled = false;
+    button.textContent = "Submit Application";
+
+});
