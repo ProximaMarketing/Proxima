@@ -445,107 +445,150 @@ ARTIST APPLICATION
 
         </div>
 
-        <form class="application-form">
+       <form id="applicationForm" class="application-form">
 
-            <div class="form-grid">
+    <div class="form-grid">
 
-           <div class="form-group">
-    <label>Full Name *</label>
-    <input
-        type="text"
-        name="fullName"
-        required>
-</div>
+        <div class="form-group">
 
-                <div class="form-group">
-                    <label>Artist Name</label>
-                    <input type="text">
-                </div>
+            <label>Full Name *</label>
 
-                <div class="form-group">
-                    <label>Email Address*</label>
-                  <input
-    type="email"
-    name="email"
-    required>
-                </div>
+            <input
+                type="text"
+                name="fullName"
+                required>
 
-                <div class="form-group">
-                    <label>Phone Number (Optional)</label>
-                    <input type="tel">
-                </div>
+        </div>
 
-            </div>
+        <div class="form-group">
 
-            <div class="form-group">
+            <label>Artist Name *</label>
 
-                <label>Spotify Profile*</label>
+            <input
+                type="text"
+                name="artistName"
+                required>
 
-                <input
-    type="url"
-    name="spotify"
-    required>
+        </div>
 
-            </div>
+        <div class="form-group">
 
-            <div class="form-grid">
+            <label>Email Address *</label>
 
-                <div class="form-group">
+            <input
+                type="email"
+                name="email"
+                required>
 
-                    <label>Instagram</label>
+        </div>
 
-                    <input type="url">
+        <div class="form-group">
 
-                </div>
+            <label>Phone Number (Optional)</label>
 
-                <div class="form-group">
+            <input
+                type="tel"
+                name="phone">
 
-                    <label>TikTok</label>
+        </div>
 
-                    <input type="url">
+    </div>
 
-                </div>
+    <div class="form-group">
 
-            </div>
+        <label>Spotify Profile *</label>
 
-            <div class="form-group">
+        <input
+            type="url"
+            name="spotify"
+            required>
 
-                <label>
-                    Tell us about your music
-                </label>
+    </div>
 
-                <textarea rows="5"></textarea>
+    <div class="form-grid">
 
-            </div>
+        <div class="form-group">
 
-            <div class="form-group">
+            <label>Instagram</label>
 
-                <label>
-                    What are your goals over the next 12 months?
-                </label>
+            <input
+                type="url"
+                name="instagram">
 
-                <textarea rows="5"></textarea>
+        </div>
 
-            </div>
+        <div class="form-group">
 
-            <div class="form-group">
+            <label>TikTok</label>
 
-                <label>
-                    Why do you want to work with Proxima?
-                </label>
+            <input
+                type="url"
+                name="tiktok">
 
-                <textarea rows="5"></textarea>
+        </div>
 
-            </div>
+    </div>
 
-            <button type="submit" class="button button-primary">
+    <div class="form-group">
 
-                Submit Application
+        <label>Tell us about your music *</label>
 
-            </button>
+        <textarea
+            name="about"
+            rows="5"
+            required></textarea>
 
-        </form>
+    </div>
 
+    <div class="form-group">
+
+        <label>What are your goals over the next 12 months? *</label>
+
+        <textarea
+            name="goals"
+            rows="5"
+            required></textarea>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Why do you want to work with Proxima? *</label>
+
+        <textarea
+            name="why"
+            rows="5"
+            required></textarea>
+
+    </div>
+
+    <button
+        type="submit"
+        id="submitButton"
+        class="button button-primary">
+
+        Submit Application
+
+    </button>
+
+    <div
+        id="successMessage"
+        class="success-message">
+
+        <h3>✓ Application Submitted</h3>
+
+        <p>
+
+            Thank you for applying to Proxima.
+
+            We'll review your application and get back to you within
+            3–5 business days.
+
+        </p>
+
+    </div>
+
+</form>
     </div>
 
 </section>
