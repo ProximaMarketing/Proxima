@@ -1422,3 +1422,34 @@ SCROLL PROGRESS BAR
     z-index:9999;
 
 }
+.success-message{
+
+    display:none;
+
+    margin-top:40px;
+
+    padding:35px;
+
+    border-radius:20px;
+
+    border:1px solid rgba(216,198,165,.3);
+
+    background:rgba(216,198,165,.06);
+
+    text-align:center;
+
+}
+
+.success-message.show{
+
+    display:block;
+
+}
+
+#submitButton:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
