@@ -36,7 +36,6 @@
     }
   }, { passive: true });
   const solarSystem = document.querySelector("#solarSystem");
-  const planetField = document.querySelector("#planetField");
   const planetLinks = Array.from(document.querySelectorAll(".planet-link"));
   const planetBodies = planetLinks.map(link => link.querySelector(".planet-body"));
   let previousFocusIndices = [];
@@ -455,7 +454,7 @@
 
     const selectedIndex = Math.max(0, Math.min(
       journeySections.length - 1,
-      Math.floor(continuousPlanetProgress + 0.38)
+      Math.floor(continuousPlanetProgress + 0.5)
     ));
     if (
       selectedIndex !== activePlanetIndex ||
