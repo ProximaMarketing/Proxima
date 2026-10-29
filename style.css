@@ -863,45 +863,77 @@ body.journey-complete .solar-guide .solar-system {
   z-index: 8;
   top: 50%;
   left: clamp(28px, 6vw, 88px);
-  width: min(42vw, 560px);
+  width: min(46vw, 610px);
   max-width: calc(100vw - 56px);
-  max-height: calc(100svh - 176px);
-  padding: clamp(24px, 3vw, 42px);
+  max-height: calc(100svh - 160px);
+  padding: clamp(28px, 3.6vw, 48px);
   box-sizing: border-box;
   overflow: auto;
   overscroll-behavior: contain;
   color: var(--text);
-  background: linear-gradient(135deg, rgba(20,19,17,.88), rgba(9,9,10,.76));
-  border: 1px solid rgba(216,198,165,.2);
-  border-radius: 4px;
-  box-shadow: 0 24px 80px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.035);
-  backdrop-filter: blur(16px) saturate(115%);
-  -webkit-backdrop-filter: blur(16px) saturate(115%);
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(232,214,180,.12), transparent 48%),
+    linear-gradient(135deg, rgba(36,34,31,.64), rgba(14,15,17,.52) 58%, rgba(24,26,28,.62));
+  border: 1px solid rgba(239,226,201,.28);
+  border-radius: 18px;
+  box-shadow:
+    0 28px 90px rgba(0,0,0,.32),
+    0 0 44px rgba(216,198,165,.055),
+    inset 0 1px 0 rgba(255,255,255,.17),
+    inset 0 -1px 0 rgba(255,255,255,.025);
+  backdrop-filter: blur(28px) saturate(145%);
+  -webkit-backdrop-filter: blur(28px) saturate(145%);
   transform: translateY(-48%);
   pointer-events: auto;
   animation: briefing-arrive .48s cubic-bezier(.2,.7,.2,1) both;
   scrollbar-width: thin;
 }
 .solar-briefing[hidden] { display: none !important; }
-.solar-briefing-index { margin: 0 0 12px; color: var(--accent); font-size: .64rem; font-weight: 600; letter-spacing: .18em; line-height: 1.5; }
+.solar-briefing-index {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  color: var(--accent);
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  line-height: 1.5;
+}
+.solar-briefing-index::after {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(216,198,165,.8), rgba(216,198,165,0));
+}
 .solar-briefing h2 {
-  max-width: 14ch;
-  margin: 0 0 14px;
-  font: 500 clamp(2.1rem, 3.5vw, 3.65rem)/1.04 "Manrope", sans-serif;
+  max-width: 16ch;
+  margin: 0 0 18px;
+  font: 500 clamp(2.2rem, 3.7vw, 3.8rem)/1.05 "Manrope", sans-serif;
   letter-spacing: -.055em;
   text-wrap: balance;
   overflow-wrap: normal;
 }
 .solar-briefing-copy {
-  max-width: 44ch;
-  margin: 0 0 20px;
-  color: #d0ccc4;
-  font-size: clamp(1.02rem, 1.25vw, 1.18rem);
-  line-height: 1.72;
+  max-width: 48ch;
+  margin: 0 0 24px;
+  color: rgba(245,242,235,.86);
+  font-size: clamp(1.04rem, 1.3vw, 1.22rem);
+  line-height: 1.75;
   text-wrap: pretty;
 }
 .solar-briefing-meta { margin: 0 0 26px; padding-top: 14px; border-top: 1px solid rgba(216,198,165,.16); color: var(--subtle); font-size: .62rem; line-height: 1.6; letter-spacing: .1em; text-transform: uppercase; text-wrap: balance; }
-.solar-briefing-link { display: inline-flex; align-items: center; line-height: 1.55; }
+.solar-briefing-link {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.55;
+  padding: 10px 0 5px;
+  border-bottom: 1px solid rgba(216,198,165,.5);
+  text-decoration: none;
+  transition: color .2s ease, border-color .2s ease;
+}
+.solar-briefing-link:hover { color: var(--accent); border-color: var(--accent); }
 
 /* The scroll sections are invisible triggers; the actual copy lives in the briefing. */
 .experience-content { position: relative; z-index: 2; min-width: 0; pointer-events: none; }
@@ -1001,16 +1033,18 @@ body.journey-complete .solar-guide .solar-system {
     bottom: max(22px, env(safe-area-inset-bottom));
     width: auto;
     max-width: none;
-    max-height: min(48svh, 350px);
+    max-height: min(52svh, 410px);
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 18px 20px 20px;
-    border: 1px solid rgba(216,198,165,.2);
-    border-radius: 8px;
-    background: linear-gradient(145deg, rgba(17,17,16,.97), rgba(8,8,9,.97));
-    box-shadow: 0 16px 48px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.035);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    padding: 22px 22px 24px;
+    border: 1px solid rgba(239,226,201,.28);
+    border-radius: 16px;
+    background:
+      radial-gradient(ellipse at 0% 0%, rgba(232,214,180,.12), transparent 52%),
+      linear-gradient(145deg, rgba(36,34,31,.66), rgba(14,15,17,.64));
+    box-shadow: 0 22px 60px rgba(0,0,0,.4), 0 0 34px rgba(216,198,165,.045), inset 0 1px 0 rgba(255,255,255,.15);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
     transform: none;
   }
   .solar-briefing-index { margin-bottom: 9px; font-size: .59rem; }
