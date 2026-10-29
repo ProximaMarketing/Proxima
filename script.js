@@ -29,7 +29,6 @@
   const solarSystem = document.querySelector("#solarSystem");
   const planetLinks = Array.from(document.querySelectorAll(".planet-link"));
   const planetBodies = planetLinks.map(link => link.querySelector(".planet-body"));
-  let previousFocusIndices = [];
   const solarStatus = document.querySelector("#solarStatus");
   const solarChapterNumber = document.querySelector("#solarChapterNumber");
   const mobileKeyLinks = Array.from(document.querySelectorAll(".solar-key-link"));
@@ -71,7 +70,7 @@
     process: { title: "Find the signal. Follow it forward.", copy: "Bring the moving parts together, choose the next practical step, then learn from the results and evolve the plan with purpose.", meta: "06 — Learn, refine, repeat" }
   };
   let activePlanetIndex = -1;
-  let continuousPlanetProgress = 0;
+  let continuousPlanetProgress = 0; // Discrete index: one input selects one planet.
   let briefingTransitionToken = 0;
   let briefingSwapTimer = 0;
   let leaderTransitionTimer = 0;
@@ -105,7 +104,6 @@
         planetBodies[index].style.setProperty("--focus-scale", (stageMetrics.baseDiameter / stageMetrics.focusDiameter).toFixed(4));
       }
     });
-    previousFocusIndices = [];
     stageMetrics.documentHeight = document.documentElement.scrollHeight;
     chapterDocumentTops = journeySections.map(item => item.target.getBoundingClientRect().top + window.scrollY);
     const fitTarget = document.getElementById("fit");
@@ -135,7 +133,6 @@
       if (body) body.style.setProperty("--focus-scale", scale.toFixed(4));
       link.classList.toggle("is-near", planetIndex === index);
     });
-    previousFocusIndices = [index];
     lastRenderedPlanetIndex = index;
   };
   const updatePlanetAnnotation = () => {
@@ -327,8 +324,6 @@
       updatePlanetAnnotation();
     }
 
-    if (changed && !reducedMotion) {
-    }
   };
 
   const endPlanetJourney = () => {
@@ -345,6 +340,8 @@
   let pendingNavigationId = null;
   let pendingNavigationDirection = null;
   let nextPlanetInputAt = 0;
+  let wheelGestureActive = false;
+  let wheelGestureUnlockTimer = 0;
   let touchStartY = null;
   let touchStartTarget = null;
   let captureTouchGesture = false;
@@ -365,7 +362,7 @@
       pendingNavigationId = null;
       pendingNavigationDirection = null;
     }
-    if (fromInput) nextPlanetInputAt = performance.now() + (reducedMotion ? 180 : 720);
+    if (fromInput) nextPlanetInputAt = performance.now() + (reducedMotion ? 140 : 340);
     return true;
   };
 
@@ -390,7 +387,7 @@
     if (now < nextPlanetInputAt) return true;
 
     const nextIndex = activePlanetIndex + direction;
-    nextPlanetInputAt = now + (reducedMotion ? 220 : 760);
+    nextPlanetInputAt = now + (reducedMotion ? 140 : 340);
 
     if (nextIndex < 0) {
       pendingNavigationId = null;
@@ -415,9 +412,15 @@
 
   const handleWheel = event => {
     if (!isPlanetJourneyActive() || event.ctrlKey || Math.abs(event.deltaY) < 12) return;
-    const direction = event.deltaY > 0 ? 1 : -1;
     event.preventDefault();
-    stepPlanet(direction);
+    window.clearTimeout(wheelGestureUnlockTimer);
+    if (wheelGestureActive) {
+      wheelGestureUnlockTimer = window.setTimeout(() => { wheelGestureActive = false; }, 280);
+      return;
+    }
+    wheelGestureActive = true;
+    wheelGestureUnlockTimer = window.setTimeout(() => { wheelGestureActive = false; }, 280);
+    stepPlanet(event.deltaY > 0 ? 1 : -1);
   };
   window.addEventListener("wheel", handleWheel, { passive: false });
 
