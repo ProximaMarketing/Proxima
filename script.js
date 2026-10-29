@@ -32,6 +32,12 @@
   const solarStatus = document.querySelector("#solarStatus");
   const solarChapterNumber = document.querySelector("#solarChapterNumber");
   const mobileKeyLinks = Array.from(document.querySelectorAll(".solar-key-link"));
+  planetLinks.forEach(link => {
+    const body = link.querySelector(".planet-body");
+    if (body) body.addEventListener("animationend", event => {
+      if (event.animationName === "planet-arrival") link.classList.remove("is-zooming");
+    });
+  });
   const journeySections = planetLinks.map(link => ({
     link,
     id: link.dataset.target,
@@ -63,6 +69,7 @@
     const rotation = activePlanetIndex < 0
       ? 0
       : 90 - activePlanetIndex * 360 / Math.max(1, planetLinks.length);
+    solarSystem.style.setProperty("--solar-rotation", rotation + "deg");
     const orbitRadius = Math.min(solarSystem.clientWidth, solarSystem.clientHeight) * 0.365;
     planetLinks.forEach((link, index) => {
       const angle = (index / planetLinks.length) * Math.PI * 2 - Math.PI / 2 + rotation * Math.PI / 180;
@@ -113,7 +120,6 @@
       link.classList.remove("is-zooming");
       void link.offsetWidth;
       link.classList.add("is-zooming");
-      window.setTimeout(() => link.classList.remove("is-zooming"), 950);
     }
     lastZoomedId = id;
   };
