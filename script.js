@@ -78,7 +78,7 @@
       link.classList.toggle("label-left", Math.cos(angle) < -0.18);
     });
   };
-  window.addEventListener("resize", updateSolarSystem, { passive: true });
+  window.addEventListener("resize", updateScrollUI, { passive: true });
 
   const setActivePlanet = id => {
     const index = journeySections.findIndex(item => item.id === id);
