@@ -130,10 +130,13 @@
   if (briefing) briefing.hidden = true;
   if (solarGuide) solarGuide.classList.remove("has-active-planet");
   let pendingNavigationId = null;
+  let pendingNavigationDirection = null;
   const travelToPlanet = id => {
     const target = document.getElementById(id);
     if (!target) return;
+    const targetDocumentTop = target.getBoundingClientRect().top + window.scrollY;
     pendingNavigationId = id;
+    pendingNavigationDirection = targetDocumentTop > window.scrollY + 1 ? "down" : targetDocumentTop < window.scrollY - 1 ? "up" : "here";
     setActivePlanet(id);
     target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
   };
@@ -145,8 +148,12 @@
     event.preventDefault();
     travelToPlanet(link.dataset.target);
   }));
-  window.addEventListener("wheel", () => { pendingNavigationId = null; }, { passive: true });
-  window.addEventListener("touchmove", () => { pendingNavigationId = null; }, { passive: true });
+  const cancelPendingNavigation = () => {
+    pendingNavigationId = null;
+    pendingNavigationDirection = null;
+  };
+  window.addEventListener("wheel", cancelPendingNavigation, { passive: true });
+  window.addEventListener("touchmove", cancelPendingNavigation, { passive: true });
 
   const clearActivePlanet = () => {
     activePlanetIndex = -1;
@@ -172,8 +179,11 @@
 
     if (pendingNavigationId) {
       const pendingTarget = document.getElementById(pendingNavigationId);
-      if (pendingTarget && switchLine < topOf(pendingTarget)) return;
+      const targetViewportTop = pendingTarget ? pendingTarget.getBoundingClientRect().top : 0;
+      if (pendingTarget && pendingNavigationDirection === "down" && targetViewportTop > window.innerHeight * 0.32) return;
+      if (pendingTarget && pendingNavigationDirection === "up" && targetViewportTop < 0) return;
       pendingNavigationId = null;
+      pendingNavigationDirection = null;
     }
 
     // Process is the final planet. Once the following artist-fit chapter arrives, hand over to the normal page.
