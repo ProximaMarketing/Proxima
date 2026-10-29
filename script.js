@@ -20,7 +20,6 @@
     updateSolarSystem();
     ticking = false;
   };
-  window.addEventListener("resize", updateSolarSystem, { passive: true });
   window.addEventListener("scroll", () => {
     if (!ticking) {
       window.requestAnimationFrame(updateScrollUI);
@@ -55,6 +54,7 @@
       link.classList.toggle("label-left", Math.cos(angle) < -0.18);
     });
   };
+  window.addEventListener("resize", updateSolarSystem, { passive: true });
 
   const setActivePlanet = id => {
     journeySections.forEach(item => {
