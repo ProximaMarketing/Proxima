@@ -131,6 +131,15 @@
       solarSystem.style.setProperty("--solar-rotation", rotationValue);
     }
 
+    const directionDegrees = rotation * Math.PI / 180;
+    planetLinks.forEach((link, index) => {
+      const baseAngle = (index / planetLinks.length) * Math.PI * 2 - Math.PI / 2;
+      const shouldLabelLeft = Math.cos(baseAngle + directionDegrees) < -0.18;
+      if (link.classList.contains("label-left") !== shouldLabelLeft) {
+        link.classList.toggle("label-left", shouldLabelLeft);
+      }
+    });
+
     const leftIndex = Math.min(planetLinks.length - 1, Math.floor(progress));
     const fraction = progress - leftIndex;
     const eased = fraction * fraction * (3 - 2 * fraction);
@@ -164,7 +173,7 @@
 
     const current = journeySections[activePlanetIndex];
     const profile = current && anchorProfiles[current.id];
-    const body = current && current.link.querySelector(".planet-body");
+    const body = current ? planetBodies[activePlanetIndex] : null;
     if (!profile || !body || !solarSystem) return;
 
     // These two boxes are cached and invalidated only when the viewport or briefing content changes.
