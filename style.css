@@ -556,3 +556,48 @@ body.is-zooming .solar-system { width: min(125vw, 125vh, 1300px); height: min(12
   .planet-link.is-zooming .planet-body { animation: none !important; }
   .solar-guide-heading, .solar-system { transition: none !important; }
 }
+
+
+/* Scroll-triggered planet chapters: reveal one briefing at a time. */
+.solar-guide { transition: opacity .7s ease, visibility .7s ease; }
+.solar-guide-heading { transition: opacity .45s ease, transform .65s cubic-bezier(.2,.7,.2,1); }
+.solar-guide.has-active-planet .solar-guide-heading { opacity: .2; transform: translate(-50%,-10px); }
+.solar-system { transition: width .7s cubic-bezier(.2,.7,.2,1), height .7s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1), top .85s cubic-bezier(.2,.7,.2,1); }
+.solar-guide.has-active-planet .solar-system { transform: translate(-50%,-50%) translateX(24%) scale(.82); }
+.planet-link.is-active .planet-body { transform: translate(-50%,-50%) scale(1.65); box-shadow: inset -5px -4px 7px rgba(0,0,0,.4), 0 0 24px rgba(216,198,165,.28), 0 0 54px rgba(216,198,165,.13); filter: brightness(1.22); }
+.solar-briefing { position: absolute; z-index: 6; left: clamp(28px, 7vw, 112px); top: 50%; transform: translateY(-44%); width: min(34vw, 420px); max-width: calc(100% - 56px); padding: clamp(22px, 3vw, 38px) 0; pointer-events: auto; animation: briefing-arrive .65s cubic-bezier(.2,.7,.2,1) both; }
+.solar-briefing[hidden] { display: none !important; }
+.solar-briefing-index { margin: 0 0 20px; color: var(--accent); font-size: .68rem; font-weight: 600; letter-spacing: .2em; }
+.solar-briefing h2 { margin: 0 0 22px; max-width: 560px; font: 500 clamp(2.1rem, 4.2vw, 4.2rem)/.99 "Manrope", sans-serif; letter-spacing: -.065em; }
+.solar-briefing-copy { max-width: 395px; margin: 0 0 18px; color: #d0ccc4; font-size: clamp(.98rem, 1.2vw, 1.13rem); line-height: 1.75; }
+.solar-briefing-meta { margin: 0 0 25px; color: var(--subtle); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; }
+.solar-briefing-link { display: inline-flex; gap: 8px; align-items: center; }
+@keyframes briefing-arrive { from { opacity: 0; transform: translateY(calc(-44% + 16px)); filter: blur(4px); } to { opacity: 1; transform: translateY(-44%); filter: blur(0); } }
+/* The journey sections act as scroll triggers; only the current planet's briefing is shown. */
+.experience-content > #approach > .container,
+.experience-content .services .section-heading,
+.experience-content .planet-chapter > *,
+.experience-content > #process > .container { visibility: hidden; opacity: 0; pointer-events: none; }
+.experience-content .services .section-heading { min-height: 0; height: 0; overflow: hidden; margin: 0; }
+.experience-content > #approach { min-height: 100svh; }
+.experience-content .planet-chapter { min-height: 100svh; }
+.experience-content > #process > .container { min-height: 0; }
+.solar-guide.is-ended, body.journey-complete .solar-guide { opacity: 0; visibility: hidden; pointer-events: none; }
+@media (max-width: 760px) {
+  .solar-guide.has-active-planet .solar-guide-heading { opacity: .15; }
+  .solar-guide.has-active-planet .solar-system { top: 39%; transform: translate(-50%,-50%) scale(.72); }
+  .solar-briefing { top: auto; bottom: clamp(70px, 10vh, 100px); left: 24px; width: calc(100% - 48px); max-width: 560px; padding: 18px 0; transform: none; }
+  .solar-briefing-index { margin-bottom: 10px; }
+  .solar-briefing h2 { font-size: clamp(1.8rem, 7.8vw, 2.8rem); margin-bottom: 12px; }
+  .solar-briefing-copy { font-size: .88rem; line-height: 1.55; margin-bottom: 10px; }
+  .solar-briefing-meta { margin-bottom: 12px; font-size: .58rem; }
+  .solar-briefing-link { font-size: .8rem; }
+  @keyframes briefing-arrive { from { opacity: 0; transform: translateY(14px); filter: blur(3px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+}
+@media (max-width: 480px) {
+  .solar-briefing { bottom: 62px; }
+  .solar-guide.has-active-planet .solar-system { top: 37%; transform: translate(-50%,-50%) scale(.66); }
+  .solar-briefing h2 { font-size: clamp(1.7rem, 7.4vw, 2.25rem); }
+  .solar-briefing-copy { max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .solar-briefing { animation: none !important; } .solar-guide.has-active-planet .solar-system { transform: translate(-50%,-50%); } }
