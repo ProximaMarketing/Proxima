@@ -52,12 +52,12 @@
   const briefingCopy = document.querySelector("#solarBriefingCopy");
   const briefingMeta = document.querySelector("#solarBriefingMeta");
   const chapterContent = {
-    approach: { title: "A direction of your own.", copy: "Identity, content and release strategy — connected around what makes you different.", meta: "Strategy · Direction" },
-    identity: { title: "Artist identity", copy: "Define what makes you distinct, then express it through a consistent creative direction.", meta: "Positioning · Visuals" },
-    release: { title: "Release strategy", copy: "Build anticipation before release day, then keep the momentum moving afterwards.", meta: "Planning · Campaigns" },
-    content: { title: "Content direction", copy: "Create content that feels like you — not another trend you have to chase.", meta: "Creative · Content" },
-    audience: { title: "Audience development", copy: "Find the people your music connects with, and give them a reason to stay.", meta: "Discovery · Community" },
-    process: { title: "Find the signal. Follow it forward.", copy: "Listen, find the focus, build a practical plan, then learn and evolve together.", meta: "Listen · Plan · Evolve" }
+    approach: { title: "A direction of your own.", copy: "One connected plan for your identity, releases and content — built around what makes your music different.", meta: "01 — Find your direction" },
+    identity: { title: "Make your difference recognisable.", copy: "Clarify your sound, story and visual world, so every part of your presence feels unmistakably yours.", meta: "02 — Define your identity" },
+    release: { title: "Give every release a reason to travel.", copy: "Turn a release date into a campaign: build anticipation, plan the moments around launch, and keep the story moving afterwards.", meta: "03 — Build release momentum" },
+    content: { title: "Make content sound and feel like you.", copy: "Create a repeatable creative direction for short-form content without chasing every trend or starting from a blank page each time.", meta: "04 — Create with intention" },
+    audience: { title: "Reach the people who get it.", copy: "Learn what resonates, recognise the signals in your performance, and build a stronger connection with the listeners most likely to stay.", meta: "05 — Grow real connection" },
+    process: { title: "Find the signal. Follow it forward.", copy: "Bring the moving parts together, choose the next practical step, then learn from the results and evolve the plan with purpose.", meta: "06 — Learn, refine, repeat" }
   };
   let activePlanetIndex = -1;
 
