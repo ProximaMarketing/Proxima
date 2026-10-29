@@ -139,8 +139,14 @@
     setActivePlanet(id);
     target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
   };
-  planetLinks.forEach(link => link.addEventListener("click", () => travelToPlanet(link.dataset.target)));
-  mobileKeyLinks.forEach(link => link.addEventListener("click", () => travelToPlanet(link.dataset.target)));
+  planetLinks.forEach(link => link.addEventListener("click", event => {
+    event.preventDefault();
+    travelToPlanet(link.dataset.target);
+  }));
+  mobileKeyLinks.forEach(link => link.addEventListener("click", event => {
+    event.preventDefault();
+    travelToPlanet(link.dataset.target);
+  }));
   window.addEventListener("wheel", () => { pendingNavigationId = null; }, { passive: true });
   window.addEventListener("touchmove", () => { pendingNavigationId = null; }, { passive: true });
 
