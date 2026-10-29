@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261029-star-chart-02">
-  <script src="script.js?v=20261029-star-chart-02" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261029-flow-01">
+  <script src="script.js?v=20261029-flow-01" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -62,11 +62,13 @@
           <p class="solar-guide-hint">Scroll to travel between worlds.</p>
         </div>
         <div class="solar-briefing" id="solarBriefing" aria-live="polite" aria-atomic="true" hidden>
-          <p class="solar-briefing-index" id="solarBriefingIndex">01 / 06</p>
-          <h2 id="solarBriefingTitle"></h2>
-          <p class="solar-briefing-copy" id="solarBriefingCopy"></p>
-          <p class="solar-briefing-meta" id="solarBriefingMeta"></p>
-          <a class="inline-link solar-briefing-link" href="#application">Start an application</a>
+          <div class="solar-briefing-content" id="solarBriefingContent">
+            <p class="solar-briefing-index" id="solarBriefingIndex">01 / 06</p>
+            <h2 id="solarBriefingTitle"></h2>
+            <p class="solar-briefing-copy" id="solarBriefingCopy"></p>
+            <p class="solar-briefing-meta" id="solarBriefingMeta"></p>
+            <a class="inline-link solar-briefing-link" href="#application">Start an application</a>
+          </div>
         </div>
         <svg class="planet-annotation" id="planetAnnotation" aria-hidden="true">
           <defs>
@@ -76,6 +78,7 @@
               <stop offset="100%" stop-color="#e8d8b5" stop-opacity=".92"></stop>
             </linearGradient>
           </defs>
+          <path id="planetLeaderPrevious" d=""></path>
           <path id="planetLeader" pathLength="1" d=""></path>
           <circle id="planetAnchorRing" cx="0" cy="0" r="6.5"></circle>
           <circle id="planetAnchorDot" cx="0" cy="0" r="2.1"></circle>
