@@ -1071,3 +1071,28 @@ body.is-zooming .solar-system { width: min(125vw, 125vh, 1300px); height: min(12
     animation: none !important;
   }
 }
+
+
+/* Tablet and compact desktop: give the copy/form a full column before it becomes cramped. */
+@media (min-width: 761px) and (max-width: 980px) {
+  .experience-content .fit-grid,
+  .experience-content .faq-grid,
+  .experience-content .application-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+  }
+  .experience-content .application-copy { position: static; }
+  .experience-content .application-form { padding: clamp(24px, 3.2vw, 36px); }
+  .experience-content .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 18px; }
+  .experience-content .fit-heading { max-width: 620px; }
+  .experience-content .faq-intro { max-width: 620px; }
+}
+@media (max-width: 760px) {
+  .planet-link:not(.is-active) .planet-body {
+    width: clamp(15px, 4.5vw, 20px) !important;
+    height: clamp(15px, 4.5vw, 20px) !important;
+  }
+  .solar-briefing h2,
+  .solar-briefing-copy,
+  .solar-briefing-meta { overflow-wrap: break-word; }
+}
