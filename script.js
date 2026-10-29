@@ -108,6 +108,7 @@
       briefingMeta.textContent = content.meta;
       if (briefingIndex) briefingIndex.textContent = String(index + 1).padStart(2, "0") + " / 06";
     }
+    document.body.classList.add("journey-started");
     if (solarGuide) {
       solarGuide.classList.add("has-active-planet");
       solarGuide.classList.remove("is-ended");
@@ -129,6 +130,9 @@
 
   if (briefing) briefing.hidden = true;
   if (solarGuide) solarGuide.classList.remove("has-active-planet");
+  document.querySelectorAll('a[href="#journey"], a[href="#approach"]').forEach(link => {
+    link.addEventListener("click", () => document.body.classList.add("journey-started"));
+  });
   let pendingNavigationId = null;
   let pendingNavigationDirection = null;
   const travelToPlanet = id => {
@@ -164,7 +168,7 @@
     mobileKeyLinks.forEach(link => link.removeAttribute("aria-current"));
     if (briefing) briefing.hidden = true;
     if (solarGuide) solarGuide.classList.remove("has-active-planet", "is-ended");
-    document.body.classList.remove("journey-complete");
+    document.body.classList.remove("journey-complete", "journey-started");
     if (solarStatus) solarStatus.textContent = "Scroll to travel between worlds.";
     if (solarChapterNumber) solarChapterNumber.textContent = "01";
     updateSolarSystem();
