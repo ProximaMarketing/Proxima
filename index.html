@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261029-glass-02">
-  <script src="script.js?v=20261029-purpose-01" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261029-star-chart-01">
+  <script src="script.js?v=20261029-star-chart-01" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -68,6 +68,19 @@
           <p class="solar-briefing-meta" id="solarBriefingMeta"></p>
           <a class="inline-link solar-briefing-link" href="#application">Start an application</a>
         </div>
+        <svg class="planet-annotation" id="planetAnnotation" aria-hidden="true">
+          <defs>
+            <linearGradient id="planetLeaderGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#e8d8b5" stop-opacity=".95"></stop>
+              <stop offset="52%" stop-color="#d7e0e6" stop-opacity=".8"></stop>
+              <stop offset="100%" stop-color="#e8d8b5" stop-opacity=".92"></stop>
+            </linearGradient>
+          </defs>
+          <path id="planetLeader" pathLength="1" d=""></path>
+          <circle id="planetAnchorRing" cx="0" cy="0" r="6.5"></circle>
+          <circle id="planetAnchorDot" cx="0" cy="0" r="2.1"></circle>
+          <circle id="planetLeaderEnd" cx="0" cy="0" r="3"></circle>
+        </svg>
         <div class="solar-system" id="solarSystem">
           <div class="solar-orbit solar-orbit-one" aria-hidden="true"></div>
           <div class="solar-orbit solar-orbit-two" aria-hidden="true"></div>
