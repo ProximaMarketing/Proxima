@@ -368,7 +368,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 .solar-orbit {
   position:absolute; top:50%; left:50%; border:1px solid rgba(216,198,165,.19); border-radius:50%; pointer-events:none;
   transform:translate(-50%,-50%) rotate(calc(-22deg + var(--solar-rotation,0deg))) scaleY(.66);
-  transition:transform 680ms cubic-bezier(.2,.7,.2,1),border-color .4s ease;
+  transition:transform 620ms cubic-bezier(.2,.7,.2,1),border-color .4s ease;
 }
 .solar-orbit-one { width:60%; height:60%; border-color:rgba(216,198,165,.3); }
 .solar-orbit-two { width:82%; height:82%; transform:translate(-50%,-50%) rotate(calc(42deg + var(--solar-rotation,0deg))) scaleY(.7); }
