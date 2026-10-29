@@ -31,7 +31,7 @@ p { color: var(--muted); }
 .skip-link:focus { transform: translateY(0); }
 .scroll-progress { position: fixed; z-index: 1500; inset: 0 auto auto 0; width: 100%; height: 2px; background: var(--accent); pointer-events: none; transform: scaleX(0); transform-origin: left center; pointer-events: none; }
 .site-header { position: fixed; inset: 0 0 auto; z-index: 1000; border-bottom: 1px solid transparent; transition: background .3s ease, border-color .3s ease, backdrop-filter .3s ease; }
-.site-header.scrolled { background: rgba(9,9,9,.86); border-color: var(--line); backdrop-filter: blur(18px); }
+.site-header.scrolled { background: rgba(9,9,9,.86); border-color: var(--line); backdrop-filter: blur(8px); }
 .navbar { min-height: 86px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .site-header:not(.scrolled) .navbar { min-height: 94px; }
 .navbar .wordmark { font-size: 1.28rem; letter-spacing: .22em; }
@@ -74,7 +74,7 @@ h1 { font-size: clamp(3.25rem, 6.5vw, 6.55rem); line-height: .99; letter-spacing
 .status-dot, .response-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px rgba(216,198,165,.45); flex: 0 0 auto; }
 .hero-art { position: relative; isolation: isolate; width: min(100%, 500px); aspect-ratio: 1; justify-self: end; display: grid; place-items: center; }
 .starfield { position: absolute; z-index: -1; inset: -8%; opacity: .86; pointer-events: none; background-image: radial-gradient(1px 1px at 8% 22%, rgba(245,232,204,.95) 50%, transparent 100%), radial-gradient(1.5px 1.5px at 21% 74%, rgba(245,232,204,.8) 50%, transparent 100%), radial-gradient(1px 1px at 33% 12%, rgba(245,232,204,.75) 50%, transparent 100%), radial-gradient(2px 2px at 44% 88%, rgba(245,232,204,.8) 50%, transparent 100%), radial-gradient(1px 1px at 57% 19%, rgba(245,232,204,.95) 50%, transparent 100%), radial-gradient(1px 1px at 72% 31%, rgba(245,232,204,.7) 50%, transparent 100%), radial-gradient(1.5px 1.5px at 89% 53%, rgba(245,232,204,.85) 50%, transparent 100%), radial-gradient(1px 1px at 77% 82%, rgba(245,232,204,.8) 50%, transparent 100%), radial-gradient(1px 1px at 13% 48%, rgba(245,232,204,.6) 50%, transparent 100%), radial-gradient(1px 1px at 60% 68%, rgba(245,232,204,.7) 50%, transparent 100%), radial-gradient(ellipse at 50% 50%, rgba(216,198,165,.09), transparent 62%); mask-image: radial-gradient(ellipse at center, #000 38%, transparent 73%); }
-.starfield::after { content: ""; position: absolute; inset: 12%; background: radial-gradient(2px 2px at 16% 36%, rgba(255,248,226,.95) 45%, transparent 100%), radial-gradient(2px 2px at 79% 24%, rgba(255,248,226,.9) 45%, transparent 100%), radial-gradient(1.5px 1.5px at 67% 76%, rgba(255,248,226,.9) 45%, transparent 100%); filter: drop-shadow(0 0 5px rgba(216,198,165,.55)); }
+.starfield::after { content: ""; position: absolute; inset: 12%; background: radial-gradient(2px 2px at 16% 36%, rgba(255,248,226,.95) 45%, transparent 100%), radial-gradient(2px 2px at 79% 24%, rgba(255,248,226,.9) 45%, transparent 100%), radial-gradient(1.5px 1.5px at 67% 76%, rgba(255,248,226,.9) 45%, transparent 100%);  }
 .hero-art::before { content: ""; position: absolute; inset: 16%; border: 1px solid rgba(216,198,165,.12); border-radius: 50%; }
 .orbit { position: absolute; border: 1px solid rgba(216,198,165,.25); border-radius: 50%; }
 .orbit-one { inset: 8%; transform: rotate(-27deg) scaleY(.71); }
@@ -502,7 +502,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 .solar-briefing-content {
   opacity:1; transform:translateY(0); 
   transition:opacity .16s ease,transform .16s cubic-bezier(.2,.7,.2,1);
-  will-change:opacity,transform,filter;
+  
 }
 .solar-briefing-content.is-changing { opacity:.12; transform:translateY(7px); transition-duration:.1s; }
 .solar-briefing[hidden] { display:none !important; }
