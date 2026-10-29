@@ -19,6 +19,7 @@
     if (header) header.classList.toggle("scrolled", window.scrollY > 18);
     syncPlanetFromScroll();
     updateSolarSystem();
+    updatePlanetAnnotation();
     ticking = false;
   };
   window.addEventListener("scroll", () => {
@@ -51,6 +52,20 @@
   const briefingTitle = document.querySelector("#solarBriefingTitle");
   const briefingCopy = document.querySelector("#solarBriefingCopy");
   const briefingMeta = document.querySelector("#solarBriefingMeta");
+  const annotation = document.querySelector("#planetAnnotation");
+  const leaderPath = document.querySelector("#planetLeader");
+  const anchorRing = document.querySelector("#planetAnchorRing");
+  const anchorDot = document.querySelector("#planetAnchorDot");
+  const leaderEnd = document.querySelector("#planetLeaderEnd");
+  // Stable but different anchor points make each subject feel individually mapped.
+  const anchorProfiles = {
+    approach: { desktop: 158, mobile: 72, targetX: .24, targetY: .23 },
+    identity: { desktop: 188, mobile: 108, targetX: .76, targetY: .40 },
+    release: { desktop: 205, mobile: 58, targetX: .32, targetY: .58 },
+    content: { desktop: 169, mobile: 126, targetX: .68, targetY: .31 },
+    audience: { desktop: 195, mobile: 91, targetX: .49, targetY: .65 },
+    process: { desktop: 216, mobile: 62, targetX: .23, targetY: .77 }
+  };
   const chapterContent = {
     approach: { title: "A direction of your own.", copy: "One connected plan for your identity, releases and content — built around what makes your music different.", meta: "01 — Find your direction" },
     identity: { title: "Make your difference recognisable.", copy: "Clarify your sound, story and visual world, so every part of your presence feels unmistakably yours.", meta: "02 — Define your identity" },
@@ -77,6 +92,79 @@
       link.classList.toggle("label-left", Math.cos(angle) < -0.18);
     });
   };
+  const updatePlanetAnnotation = () => {
+    if (!annotation || !leaderPath || activePlanetIndex < 0 || !briefing || briefing.hidden ||
+        (solarGuide && (solarGuide.classList.contains("is-ended") || !solarGuide.classList.contains("has-active-planet")))) {
+      if (annotation) annotation.classList.remove("is-drawn");
+      return;
+    }
+
+    const current = journeySections[activePlanetIndex];
+    const profile = current && anchorProfiles[current.id];
+    const body = current && current.link.querySelector(".planet-body");
+    if (!profile || !body) return;
+
+    const planet = body.getBoundingClientRect();
+    const card = briefing.getBoundingClientRect();
+    if (!planet.width || !planet.height || !card.width || !card.height) return;
+
+    const mobile = window.matchMedia("(max-width: 760px)").matches;
+    const angle = (mobile ? profile.mobile : profile.desktop) * Math.PI / 180;
+    const sx = planet.left + planet.width / 2 + Math.cos(angle) * planet.width * .46;
+    const sy = planet.top + planet.height / 2 + Math.sin(angle) * planet.height * .46;
+    let tx, ty, path;
+    if (mobile) {
+      // Land on a different point along the card's top edge for each planet.
+      tx = card.left + card.width * profile.targetX;
+      ty = card.top + 1;
+      const spanY = Math.max(24, ty - sy);
+      const c1x = sx + (tx - sx) * .12;
+      const c1y = sy + spanY * .58;
+      const c2x = tx - (tx - sx) * .12;
+      const c2y = ty - spanY * .28;
+      path = "M " + sx.toFixed(1) + " " + sy.toFixed(1) +
+        " C " + c1x.toFixed(1) + " " + c1y.toFixed(1) +
+        ", " + c2x.toFixed(1) + " " + c2y.toFixed(1) +
+        ", " + tx.toFixed(1) + " " + ty.toFixed(1);
+    } else {
+      // On desktop, the annotation connects the planet's left rim to the glass panel's right edge.
+      tx = card.right - 1;
+      ty = card.top + Math.min(card.height - 26, Math.max(80, card.height * profile.targetY));
+      const spanX = Math.max(24, sx - tx);
+      const c1x = sx - spanX * .28;
+      const c2x = tx + spanX * .24;
+      path = "M " + sx.toFixed(1) + " " + sy.toFixed(1) +
+        " C " + c1x.toFixed(1) + " " + sy.toFixed(1) +
+        ", " + c2x.toFixed(1) + " " + ty.toFixed(1) +
+        ", " + tx.toFixed(1) + " " + ty.toFixed(1);
+    }
+
+    annotation.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
+    leaderPath.setAttribute("d", path);
+    [[anchorRing, sx, sy], [anchorDot, sx, sy], [leaderEnd, tx, ty]].forEach(([node, x, y]) => {
+      if (!node) return;
+      node.setAttribute("cx", x.toFixed(1));
+      node.setAttribute("cy", y.toFixed(1));
+    });
+  };
+
+  const animatePlanetAnnotation = () => {
+    if (!annotation || !leaderPath) return;
+    annotation.classList.remove("is-drawn");
+    updatePlanetAnnotation();
+    requestAnimationFrame(() => {
+      updatePlanetAnnotation();
+      annotation.classList.add("is-drawn");
+    });
+    if (reducedMotion) return;
+    const started = performance.now();
+    const followTransition = now => {
+      updatePlanetAnnotation();
+      if (now - started < 820 && activePlanetIndex >= 0) requestAnimationFrame(followTransition);
+    };
+    requestAnimationFrame(followTransition);
+  };
+
   window.addEventListener("resize", updateScrollUI, { passive: true });
 
   const setActivePlanet = id => {
@@ -115,6 +203,8 @@
     }
     document.body.classList.remove("journey-complete");
     updateSolarSystem();
+    updatePlanetAnnotation();
+    if (changed) animatePlanetAnnotation();
     if (changed && !reducedMotion) {
       const link = journeySections[index].link;
       link.classList.remove("is-zooming");
@@ -126,6 +216,7 @@
   const endPlanetJourney = () => {
     document.body.classList.add("journey-complete");
     if (solarGuide) solarGuide.classList.add("is-ended");
+    if (annotation) annotation.classList.remove("is-drawn");
   };
 
   if (briefing) briefing.hidden = true;
@@ -171,7 +262,9 @@
     document.body.classList.remove("journey-complete", "journey-started");
     if (solarStatus) solarStatus.textContent = "Scroll to travel between worlds.";
     if (solarChapterNumber) solarChapterNumber.textContent = "01";
+    if (annotation) annotation.classList.remove("is-drawn");
     updateSolarSystem();
+    updatePlanetAnnotation();
   };
 
   const syncPlanetFromScroll = () => {
