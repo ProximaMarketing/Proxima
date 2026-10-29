@@ -30,6 +30,7 @@
   const solarSystem = document.querySelector("#solarSystem");
   const planetLinks = Array.from(document.querySelectorAll(".planet-link"));
   const solarStatus = document.querySelector("#solarStatus");
+  const mobileKeyLinks = Array.from(document.querySelectorAll(".solar-key-link"));
   const journeySections = planetLinks.map(link => ({
     link,
     id: link.dataset.target,
@@ -62,6 +63,10 @@
       if (isActive) item.link.setAttribute("aria-current", "location");
       else item.link.removeAttribute("aria-current");
     });
+    mobileKeyLinks.forEach(link => {
+      if (link.dataset.target === id) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
     if (solarStatus) {
       const active = journeySections.find(item => item.id === id);
       solarStatus.textContent = active ? "Exploring: " + active.label : "Follow the orbit to explore.";
@@ -69,6 +74,7 @@
   };
 
   planetLinks.forEach(link => link.addEventListener("click", () => setActivePlanet(link.dataset.target)));
+  mobileKeyLinks.forEach(link => link.addEventListener("click", () => setActivePlanet(link.dataset.target)));
   if ("IntersectionObserver" in window) {
     const sectionObserver = new IntersectionObserver(entries => {
       const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
