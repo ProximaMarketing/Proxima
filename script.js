@@ -17,6 +17,7 @@
     const scrollRatio = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
     if (progress) progress.style.width = (scrollRatio * 100) + "%";
     if (header) header.classList.toggle("scrolled", window.scrollY > 18);
+    syncPlanetFromScroll();
     updateSolarSystem();
     ticking = false;
   };
@@ -57,32 +58,12 @@
 
   const updateSolarSystem = () => {
     if (!solarSystem) return;
-    // Use the viewport's position between chapter anchors to move the orbit continuously.
-    const focusY = window.scrollY + window.innerHeight * 0.5;
-    const stops = journeySections.map(item => ({
-      id: item.id,
-      y: item.target.getBoundingClientRect().top + window.scrollY + item.target.offsetHeight * 0.5
-    }));
-    let travelIndex = 0;
-    if (stops.length > 1 && focusY > stops[0].y) {
-      const last = stops.length - 1;
-      if (focusY >= stops[last].y) {
-        travelIndex = last;
-      } else {
-        for (let i = 0; i < last; i += 1) {
-          if (focusY >= stops[i].y && focusY <= stops[i + 1].y) {
-            const span = Math.max(1, stops[i + 1].y - stops[i].y);
-            const amount = (focusY - stops[i].y) / span;
-            travelIndex = i + amount;
-            break;
-          }
-        }
-      }
-    }
-    const rotation = reducedMotion
-      ? 90 - Math.round(travelIndex) * 360 / planetLinks.length
-      : 90 - travelIndex * 360 / planetLinks.length;
-    const orbitRadius = solarSystem.clientWidth * 0.365;
+    // The selected planet is always brought to the same focal point.
+    // Rotation changes once per chapter, so the orbit glides instead of jittering with every scroll tick.
+    const rotation = activePlanetIndex < 0
+      ? 0
+      : 90 - activePlanetIndex * 360 / Math.max(1, planetLinks.length);
+    const orbitRadius = Math.min(solarSystem.clientWidth, solarSystem.clientHeight) * 0.365;
     planetLinks.forEach((link, index) => {
       const angle = (index / planetLinks.length) * Math.PI * 2 - Math.PI / 2 + rotation * Math.PI / 180;
       link.style.setProperty("--x", (Math.cos(angle) * orbitRadius).toFixed(2) + "px");
@@ -144,44 +125,74 @@
 
   if (briefing) briefing.hidden = true;
   if (solarGuide) solarGuide.classList.remove("has-active-planet");
-  planetLinks.forEach(link => link.addEventListener("click", () => {
-    const id = link.dataset.target;
-    setActivePlanet(id);
+  let pendingNavigationId = null;
+  const travelToPlanet = id => {
     const target = document.getElementById(id);
-    if (target) target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
-  }));
-  mobileKeyLinks.forEach(link => link.addEventListener("click", () => {
-    const id = link.dataset.target;
+    if (!target) return;
+    pendingNavigationId = id;
     setActivePlanet(id);
-    const target = document.getElementById(id);
-    if (target) target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
-  }));
+    target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+  };
+  planetLinks.forEach(link => link.addEventListener("click", () => travelToPlanet(link.dataset.target)));
+  mobileKeyLinks.forEach(link => link.addEventListener("click", () => travelToPlanet(link.dataset.target)));
+  window.addEventListener("wheel", () => { pendingNavigationId = null; }, { passive: true });
+  window.addEventListener("touchmove", () => { pendingNavigationId = null; }, { passive: true });
 
-  if ("IntersectionObserver" in window) {
-    const chapterTargets = [
-      document.getElementById("approach"),
-      document.getElementById("identity"),
-      document.getElementById("release"),
-      document.getElementById("content"),
-      document.getElementById("audience"),
-      document.getElementById("process"),
-      document.getElementById("fit"),
-      document.getElementById("faq"),
-      document.getElementById("application")
-    ].filter(Boolean);
-    const sectionObserver = new IntersectionObserver(entries => {
-      const visible = entries.filter(entry => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (!visible) return;
-      const id = visible.target.id;
-      if (chapterContent[id]) {
-        if (lastZoomedId !== id || document.body.classList.contains("journey-complete") || (solarGuide && solarGuide.classList.contains("is-ended"))) setActivePlanet(id);
-      } else if (["fit", "faq", "application"].includes(id)) {
-        endPlanetJourney();
-      }
-    }, { rootMargin: "-32% 0px -32% 0px", threshold: [0, .1, .25, .5, .75] });
-    chapterTargets.forEach(target => sectionObserver.observe(target));
-  }
+  const clearActivePlanet = () => {
+    activePlanetIndex = -1;
+    lastZoomedId = "";
+    journeySections.forEach(item => {
+      item.link.classList.remove("is-active", "is-zooming");
+      item.link.removeAttribute("aria-current");
+    });
+    mobileKeyLinks.forEach(link => link.removeAttribute("aria-current"));
+    if (briefing) briefing.hidden = true;
+    if (solarGuide) solarGuide.classList.remove("has-active-planet", "is-ended");
+    document.body.classList.remove("journey-complete");
+    if (solarStatus) solarStatus.textContent = "Scroll to travel between worlds.";
+    if (solarChapterNumber) solarChapterNumber.textContent = "01";
+    updateSolarSystem();
+  };
+
+  const syncPlanetFromScroll = () => {
+    if (!journeySections.length) return;
+    const switchLine = window.scrollY + window.innerHeight * 0.68;
+    const topOf = target => target.getBoundingClientRect().top + window.scrollY;
+    const fitTarget = document.getElementById("fit");
+    const fitTop = fitTarget ? topOf(fitTarget) : Number.POSITIVE_INFINITY;
+
+    if (pendingNavigationId) {
+      const pendingTarget = document.getElementById(pendingNavigationId);
+      if (pendingTarget && switchLine < topOf(pendingTarget)) return;
+      pendingNavigationId = null;
+    }
+
+    // Process is the final planet. Once the following artist-fit chapter arrives, hand over to the normal page.
+    if (switchLine >= fitTop) {
+      endPlanetJourney();
+      return;
+    }
+
+    if (switchLine < topOf(journeySections[0].target)) {
+      if (activePlanetIndex !== -1 || document.body.classList.contains("journey-complete")) clearActivePlanet();
+      return;
+    }
+
+    let selectedIndex = 0;
+    for (let i = 1; i < journeySections.length; i += 1) {
+      if (topOf(journeySections[i].target) <= switchLine) selectedIndex = i;
+      else break;
+    }
+
+    if (
+      selectedIndex !== activePlanetIndex ||
+      document.body.classList.contains("journey-complete") ||
+      (solarGuide && solarGuide.classList.contains("is-ended"))
+    ) {
+      setActivePlanet(journeySections[selectedIndex].id);
+    }
+  };
+
   updateSolarSystem();
   updateScrollUI();
 
