@@ -94,6 +94,10 @@
     if (solarChapterNumber) solarChapterNumber.textContent = String(index + 1).padStart(2, "0");
     const content = chapterContent[id];
     if (content && briefing && briefingTitle && briefingCopy && briefingMeta) {
+      if (changed) {
+        briefing.hidden = true;
+        void briefing.offsetWidth;
+      }
       briefing.hidden = false;
       briefingTitle.textContent = content.title;
       briefingCopy.textContent = content.copy;
@@ -154,7 +158,7 @@
       if (!visible) return;
       const id = visible.target.id;
       if (chapterContent[id]) {
-        if (lastZoomedId !== id) setActivePlanet(id);
+        if (lastZoomedId !== id || document.body.classList.contains("journey-complete") || (solarGuide && solarGuide.classList.contains("is-ended"))) setActivePlanet(id);
       } else if (["fit", "faq", "application"].includes(id)) {
         endPlanetJourney();
       }
