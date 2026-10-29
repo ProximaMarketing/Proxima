@@ -70,7 +70,7 @@
     process: { title: "Find the signal. Follow it forward.", copy: "Bring the moving parts together, choose the next practical step, then learn from the results and evolve the plan with purpose.", meta: "06 — Learn, refine, repeat" }
   };
   let activePlanetIndex = -1;
-  let continuousPlanetProgress = 0; // Discrete index: one input selects one planet.
+  let planetProgress = 0; // Discrete index: one input selects one planet.
   let briefingTransitionToken = 0;
   let briefingSwapTimer = 0;
   let leaderTransitionTimer = 0;
@@ -116,7 +116,7 @@
   let lastRenderedPlanetIndex = -1;
   const updateSolarSystem = () => {
     if (!solarSystem || !planetLinks.length) return;
-    const index = Math.max(0, Math.min(planetLinks.length - 1, Math.round(continuousPlanetProgress)));
+    const index = Math.max(0, Math.min(planetLinks.length - 1, Math.round(planetProgress)));
     if (lastRenderedPlanetIndex === index) return;
 
     const rotation = 90 - index * 360 / planetLinks.length;
@@ -295,7 +295,7 @@
     }
 
     activePlanetIndex = index;
-    continuousPlanetProgress = index;
+    planetProgress = index;
     journeySections.forEach((item, itemIndex) => {
       const isActive = itemIndex === index;
       item.link.classList.toggle("is-active", isActive);
@@ -338,7 +338,6 @@
     link.addEventListener("click", () => document.body.classList.add("journey-started"));
   });
   let pendingNavigationId = null;
-  let pendingNavigationDirection = null;
   let nextPlanetInputAt = 0;
   let wheelGestureActive = false;
   let wheelGestureUnlockTimer = 0;
@@ -353,14 +352,12 @@
     const targetDocumentTop = chapterDocumentTops[index] || (target.getBoundingClientRect().top + window.scrollY);
     const targetScrollTop = Math.max(0, targetDocumentTop - window.innerHeight * 0.32);
     pendingNavigationId = id;
-    pendingNavigationDirection = targetScrollTop > window.scrollY + 1 ? "down" : targetScrollTop < window.scrollY - 1 ? "up" : "here";
-    continuousPlanetProgress = index;
+    planetProgress = index;
     setActivePlanet(id);
     if (Math.abs(window.scrollY - targetScrollTop) > 3) {
       window.scrollTo({ top: targetScrollTop, behavior: reducedMotion ? "auto" : "smooth" });
     } else {
       pendingNavigationId = null;
-      pendingNavigationDirection = null;
     }
     if (fromInput) nextPlanetInputAt = performance.now() + (reducedMotion ? 140 : 340);
     return true;
@@ -391,7 +388,6 @@
 
     if (nextIndex < 0) {
       pendingNavigationId = null;
-      pendingNavigationDirection = null;
       clearActivePlanet();
       window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
       return true;
@@ -399,7 +395,6 @@
 
     if (nextIndex >= journeySections.length) {
       pendingNavigationId = null;
-      pendingNavigationDirection = null;
       endPlanetJourney();
       const nextTop = Math.max(0, fitDocumentTop - window.innerHeight * 0.18);
       window.scrollTo({ top: nextTop, behavior: reducedMotion ? "auto" : "smooth" });
@@ -477,7 +472,7 @@
   }, { passive: true });
 
   window.addEventListener("keydown", event => {
-    if (!isPlanetJourneyActive() || isControlTarget(event.target) || event.altKey || event.ctrlKey || event.metaKey) return;
+    if (!isPlanetJourneyActive() || isControlTarget(event.target) || event.repeat || event.altKey || event.ctrlKey || event.metaKey) return;
     const downKeys = ["ArrowDown", "PageDown", " "];
     const upKeys = ["ArrowUp", "PageUp"];
     if (downKeys.includes(event.key)) {
@@ -490,7 +485,7 @@
   });
   const clearActivePlanet = () => {
     activePlanetIndex = -1;
-    continuousPlanetProgress = 0;
+    planetProgress = 0;
     lastRenderedPlanetIndex = -1;
     window.clearTimeout(briefingSwapTimer);
     window.clearTimeout(leaderTransitionTimer);
@@ -522,7 +517,6 @@
       const targetViewportTop = pendingIndex >= 0 ? chapterDocumentTops[pendingIndex] - scrollY : 0;
       if (pendingIndex >= 0 && Math.abs(targetViewportTop - activationOffset) > 5) return;
       pendingNavigationId = null;
-      pendingNavigationDirection = null;
     }
 
     if (fitDocumentTop - scrollY <= window.innerHeight * 0.14) {
@@ -540,7 +534,7 @@
       if (chapterDocumentTops[i] <= switchLine) selectedIndex = i;
       else break;
     }
-    continuousPlanetProgress = selectedIndex;
+    planetProgress = selectedIndex;
     if (
       selectedIndex !== activePlanetIndex ||
       document.body.classList.contains("journey-complete") ||
