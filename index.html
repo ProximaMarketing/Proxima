@@ -19,27 +19,6 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="scroll-progress" aria-hidden="true"></div>
-  <div class="journey-constellation" aria-hidden="true">
-    <svg viewBox="0 0 1440 5600" preserveAspectRatio="none">
-      <defs>
-        <radialGradient id="starGlow">
-          <stop offset="0" stop-color="#f5e8cc" stop-opacity=".9"/>
-          <stop offset="1" stop-color="#d8c6a5" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
-      <path class="journey-halo" d="M1280 0 C1390 270 1120 410 1190 610 S1030 850 760 930 C430 1030 130 1010 150 1280 S430 1510 1030 1660 C1320 1740 1290 1980 980 2160 S530 2320 240 2490 C40 2630 190 2890 620 3060 S1240 3120 1190 3380 C1140 3640 780 3780 440 3950 S160 4170 390 4370 C620 4560 990 4570 1160 4830 S850 5270 380 5600"/>
-      <path class="journey-path" d="M1280 0 C1390 270 1120 410 1190 610 S1030 850 760 930 C430 1030 130 1010 150 1280 S430 1510 1030 1660 C1320 1740 1290 1980 980 2160 S530 2320 240 2490 C40 2630 190 2890 620 3060 S1240 3120 1190 3380 C1140 3640 780 3780 440 3950 S160 4170 390 4370 C620 4560 990 4570 1160 4830 S850 5270 380 5600"/>
-      <g class="journey-stars">
-        <circle cx="1280" cy="0" r="5"/><circle cx="1190" cy="610" r="4"/>
-        <circle cx="760" cy="930" r="5"/><circle cx="150" cy="1280" r="4"/>
-        <circle cx="1030" cy="1660" r="5"/><circle cx="240" cy="2490" r="4"/>
-        <circle cx="620" cy="3060" r="5"/><circle cx="1190" cy="3380" r="4"/>
-        <circle cx="440" cy="3950" r="5"/><circle cx="390" cy="4370" r="4"/>
-        <circle cx="1160" cy="4830" r="5"/><circle cx="380" cy="5600" r="5"/>
-      </g>
-    </svg>
-  </div>
-
   <header class="site-header">
     <nav class="navbar container" aria-label="Main navigation">
       <a class="wordmark" href="#top" aria-label="PROXIMA home">PROXIMA</a>
@@ -62,31 +41,41 @@
         <div class="hero-copy">
           <p class="eyebrow"><span class="eyebrow-line"></span> Independent music marketing</p>
           <h1>Make your music<br><span class="serif-accent">mean something.</span></h1>
-          <p class="hero-lede">A clear identity. A considered release. An audience that stays.</p>
+          <p class="hero-lede">One artist. Many moving parts. One connected plan.</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#application">Start an application</a>
-            <a class="text-link" href="#approach">Get to know PROXIMA</a>
+            <a class="text-link" href="#approach">Explore the system</a>
           </div>
-          
-        </div>
-        <div class="hero-art" aria-label="A constellation-inspired PROXIMA visual identity">
-          <div class="starfield" aria-hidden="true"></div>
-          <div class="orbit orbit-one"></div>
-          <div class="orbit orbit-two"></div>
-          <div class="orbit orbit-three"></div>
-          <div class="orbit-core"><span class="core-name">PROXIMA</span><span class="core-caption">THE NEXT THING</span></div>
-          <span class="orbit-label orbit-label-top">IDENTITY</span>
-          <span class="orbit-label orbit-label-right">CONNECTION</span>
-          <span class="orbit-label orbit-label-bottom">MOMENTUM</span>
-          <span class="orbit-label orbit-label-left">STRATEGY</span>
         </div>
       </div>
       <div class="hero-bottom container">
-        <span>Independent artists. Distinct voices.</span>
-        <a href="#services">Explore PROXIMA</a>
+        <span>Artist identity, release, content and audience.</span>
+        <a href="#approach">Scroll to explore</a>
       </div>
     </section>
 
+    <div class="experience-layout" id="journey">
+      <aside class="solar-guide" aria-label="PROXIMA solar system navigation">
+        <div class="solar-guide-heading">
+          <p class="eyebrow">Explore PROXIMA</p>
+          <h2>Every part<br><span class="serif-accent">in orbit.</span></h2>
+          <p class="solar-guide-hint">Scroll to rotate. Choose a planet to explore.</p>
+        </div>
+        <div class="solar-system" id="solarSystem">
+          <div class="solar-orbit solar-orbit-one" aria-hidden="true"></div>
+          <div class="solar-orbit solar-orbit-two" aria-hidden="true"></div>
+          <div class="solar-orbit solar-orbit-three" aria-hidden="true"></div>
+          <a class="solar-star" href="#application" aria-label="Start your artist application"><span class="star-shape" aria-hidden="true"></span><span class="star-label">APPLY</span></a>
+          <a class="planet-link" data-target="approach" href="#approach" style="--orbit-index:0"><span class="planet-body planet-dawn" aria-hidden="true"></span><span class="planet-label">Approach</span></a>
+          <a class="planet-link" data-target="identity" href="#identity" style="--orbit-index:1"><span class="planet-body planet-identity" aria-hidden="true"></span><span class="planet-label">Identity</span></a>
+          <a class="planet-link" data-target="release" href="#release" style="--orbit-index:2"><span class="planet-body planet-release" aria-hidden="true"></span><span class="planet-label">Releases</span></a>
+          <a class="planet-link" data-target="content" href="#content" style="--orbit-index:3"><span class="planet-body planet-content" aria-hidden="true"></span><span class="planet-label">Content</span></a>
+          <a class="planet-link" data-target="audience" href="#audience" style="--orbit-index:4"><span class="planet-body planet-audience" aria-hidden="true"></span><span class="planet-label">Audience</span></a>
+          <a class="planet-link" data-target="process" href="#process" style="--orbit-index:5"><span class="planet-body planet-process" aria-hidden="true"></span><span class="planet-label">Process</span></a>
+        </div>
+        <div class="solar-guide-footer"><span class="solar-live-dot"></span><span id="solarStatus" aria-live="polite">The journey starts with your approach.</span></div>
+      </aside>
+      <div class="experience-content">
     <section class="intro section-pad" id="approach">
       <div class="container intro-grid reveal">
         <div>
@@ -117,25 +106,25 @@
           <p class="section-intro">One connected plan, built around your music.</p>
         </div>
         <div class="service-grid">
-          <article class="service-card reveal">
+          <article class="service-card reveal" id="identity">
             <div class="service-card-top"><span class="service-number">01</span></div>
             <h3>Artist identity</h3>
             <p>Clarify what makes you distinct, then give it a consistent creative direction.</p>
             <span class="service-tag">Positioning · Visual direction</span>
           </article>
-          <article class="service-card reveal">
+          <article class="service-card reveal" id="release">
             <div class="service-card-top"><span class="service-number">02</span></div>
             <h3>Release strategy</h3>
             <p>Plan the build-up, release and follow-through before the moment arrives.</p>
             <span class="service-tag">Planning · Campaign structure</span>
           </article>
-          <article class="service-card reveal">
+          <article class="service-card reveal" id="content">
             <div class="service-card-top"><span class="service-number">03</span></div>
             <h3>Content direction</h3>
             <p>Build content around your sound, not the algorithm of the week.</p>
             <span class="service-tag">Creative direction · Content</span>
           </article>
-          <article class="service-card reveal">
+          <article class="service-card reveal" id="audience">
             <div class="service-card-top"><span class="service-number">04</span></div>
             <h3>Audience development</h3>
             <p>Find the people your music speaks to and give them a reason to stay.</p>
@@ -146,7 +135,7 @@
       </div>
     </section>
 
-    <section class="fit section-pad">
+    <section class="fit section-pad" id="fit">
       <div class="container fit-grid reveal">
         <div class="fit-heading">
           <p class="eyebrow">Who this is for</p>
@@ -178,7 +167,7 @@
       </div>
     </section>
 
-    <section class="faq section-pad">
+    <section class="faq section-pad" id="faq">
       <div class="container faq-grid">
         <div class="faq-intro reveal"><p class="eyebrow">Good questions</p><h2>Before you<br><span class="serif-accent">reach out.</span></h2></div>
         <div class="faq-list reveal">
@@ -227,6 +216,8 @@
         </form>
       </div>
     </section>
+      </div>
+    </div>
   </main>
 
   <footer class="site-footer">
