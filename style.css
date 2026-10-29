@@ -368,7 +368,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 .solar-orbit {
   position:absolute; top:50%; left:50%; border:1px solid rgba(216,198,165,.19); border-radius:50%; pointer-events:none;
   transform:translate(-50%,-50%) rotate(calc(-22deg + var(--solar-rotation,0deg))) scaleY(.66);
-  transition:transform .72s var(--ease),border-color .4s ease;
+  transition:border-color .4s ease;
 }
 .solar-orbit-one { width:60%; height:60%; border-color:rgba(216,198,165,.3); }
 .solar-orbit-two { width:82%; height:82%; transform:translate(-50%,-50%) rotate(calc(42deg + var(--solar-rotation,0deg))) scaleY(.7); }
@@ -388,13 +388,13 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 .planet-link {
   position:absolute; z-index:4; top:50%; left:50%; width:90px; height:90px; display:block; border-radius:50%; text-decoration:none;
   transform:translate(calc(-50% + var(--x,0px)),calc(-50% + var(--y,0px)));
-  transition:transform .72s var(--ease); pointer-events:auto; will-change:transform;
+  transition:none; pointer-events:auto; will-change:transform;
 }
 .planet-body {
-  position:absolute; top:50%; left:50%; display:block; width:23px; height:23px; overflow:hidden;
+  position:absolute; top:50%; left:50%; display:block; width:23px; height:23px; overflow:hidden; transform:translate(-50%,-50%) scale(var(--focus-scale,1));
   border:1px solid rgba(255,255,255,.28); border-radius:50%; transform:translate(-50%,-50%); isolation:isolate;
   box-shadow:inset -5px -4px 7px rgba(0,0,0,.58),inset 3px 3px 5px rgba(255,255,255,.25),0 0 16px rgba(216,198,165,.08);
-  transition:width .72s var(--ease),height .72s var(--ease),box-shadow .5s ease,filter .5s ease;
+  transition:box-shadow .32s ease,filter .32s ease;
 }
 .planet-body::before {
   content:""; position:absolute; z-index:1; inset:-2px; border-radius:inherit; pointer-events:none;
@@ -413,7 +413,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 .planet-process { background:radial-gradient(circle at 30% 24%,#f3e3b1 0,#c1a568 18%,#897647 45%,#4d422c 72%,#19160f 100%); }
 .planet-link.is-active { z-index:20; }
 .planet-link.is-active .planet-body {
-  width:clamp(250px,34vw,440px); height:clamp(250px,34vw,440px); filter:brightness(1.08) saturate(1.08);
+  filter:brightness(1.08) saturate(1.08);
   box-shadow:inset -36px -28px 55px rgba(0,0,0,.54),inset 20px 16px 32px rgba(255,255,255,.16),0 0 34px rgba(216,198,165,.28),0 0 105px rgba(216,198,165,.14);
 }
 .planet-link.is-active .planet-body::before { opacity:1; transform:translateX(12%) rotate(-12deg); }
@@ -439,9 +439,15 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 #planetLeader {
   fill:none; stroke:url(#planetLeaderGradient); stroke-width:1.15; stroke-linecap:round; stroke-linejoin:round;
   path-length:1; stroke-dasharray:1; stroke-dashoffset:1; filter:drop-shadow(0 0 4px rgba(216,226,238,.28));
-  transition:stroke-dashoffset .55s cubic-bezier(.2,.7,.2,1);
+  transition:stroke-dashoffset .3s cubic-bezier(.2,.7,.2,1),opacity .22s ease;
 }
-.planet-annotation.is-drawn #planetLeader { stroke-dashoffset:0; }
+.planet-annotation.is-drawn #planetLeader { stroke-dashoffset:0; opacity:1; }
+#planetLeaderPrevious {
+  fill:none; stroke:url(#planetLeaderGradient); stroke-width:1.15; stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray:none; stroke-dashoffset:0; opacity:0; filter:drop-shadow(0 0 4px rgba(216,226,238,.24));
+  transition:opacity .34s ease;
+}
+.planet-annotation.is-switching #planetLeaderPrevious { opacity:.78; }
 #planetAnchorRing { fill:rgba(10,10,12,.35); stroke:rgba(232,222,202,.9); stroke-width:1; filter:drop-shadow(0 0 5px rgba(220,230,240,.45)); }
 #planetAnchorDot { fill:#f5ead1; }
 #planetLeaderEnd { fill:rgba(13,14,16,.9); stroke:rgba(232,222,202,.84); stroke-width:1; filter:drop-shadow(0 0 4px rgba(220,230,240,.25)); }
@@ -458,6 +464,12 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
   transform:translateY(-48%); pointer-events:auto; animation:briefing-arrive .42s var(--ease) both; scrollbar-width:thin;
   transition:opacity .18s ease,visibility .18s ease;
 }
+.solar-briefing-content {
+  opacity:1; transform:translateY(0); filter:blur(0);
+  transition:opacity .2s ease,transform .2s cubic-bezier(.2,.7,.2,1),filter .2s ease;
+  will-change:opacity,transform,filter;
+}
+.solar-briefing-content.is-changing { opacity:.12; transform:translateY(7px); filter:blur(1.5px); }
 .solar-briefing[hidden] { display:none !important; }
 .solar-briefing::before { content:""; display:block; width:38px; height:2px; margin:0 0 18px; background:linear-gradient(90deg,var(--accent),rgba(216,198,165,0)); }
 .solar-briefing-index { display:flex; align-items:center; gap:12px; margin:0 0 18px; color:var(--accent); font-size:.68rem; font-weight:600; letter-spacing:.2em; line-height:1.5; }
@@ -484,14 +496,14 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 .experience-content > .services,
 .experience-content > #process,
 .experience-content .planet-chapter { pointer-events:none; background:transparent !important; }
-.experience-content > #approach { min-height:100svh; }
+.experience-content > #approach { min-height:76svh; height:76svh; padding:0; }
 .experience-content > .services { display:block; padding:0; margin:0; }
 .experience-content .services > .container { width:100%; max-width:none; margin:0; }
 .experience-content .services .section-heading { height:0; min-height:0; overflow:hidden; margin:0; }
 .experience-content .service-grid { display:block; margin:0; }
-.experience-content .planet-chapter { position:relative; display:block; width:100%; min-height:100svh; height:100svh; margin:0; padding:0 !important; border:0 !important; border-radius:0; outline:0; overflow:hidden; box-shadow:none !important; }
+.experience-content .planet-chapter { position:relative; display:block; width:100%; min-height:76svh; height:76svh; margin:0; padding:0 !important; border:0 !important; border-radius:0; outline:0; overflow:hidden; box-shadow:none !important; }
 .experience-content .planet-chapter::before,.experience-content .planet-chapter::after { content:none !important; display:none !important; }
-.experience-content > #process { min-height:100svh; }
+.experience-content > #process { min-height:76svh; height:76svh; padding:0; }
 .experience-content > #fit { background:#0a0a0b; }
 .experience-content > #faq { background:#0b0b0c; }
 .experience-content > #application { background:#09090a; }
@@ -533,7 +545,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
   .star-label { margin-top:41px; font-size:.48rem; }
   .planet-link { width:48px; height:48px; }
   .planet-link:not(.is-active) .planet-body { width:17px; height:17px; }
-  .planet-link.is-active .planet-body { width:min(61vw,29vh,250px); height:min(61vw,29vh,250px); box-shadow:inset -20px -18px 28px rgba(0,0,0,.54),inset 12px 10px 20px rgba(255,255,255,.17),0 0 26px rgba(216,198,165,.24),0 0 76px rgba(216,198,165,.15); }
+  .planet-link.is-active .planet-body { box-shadow:inset -20px -18px 28px rgba(0,0,0,.54),inset 12px 10px 20px rgba(255,255,255,.17),0 0 26px rgba(216,198,165,.24),0 0 76px rgba(216,198,165,.15); }
   .solar-briefing {
     top:auto; left:18px; right:18px; bottom:max(22px,env(safe-area-inset-bottom)); width:auto; max-width:none;
     max-height:min(43svh,360px); overflow-y:auto; overflow-x:hidden; padding:22px 22px 24px;
