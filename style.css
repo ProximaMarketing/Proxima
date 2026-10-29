@@ -942,6 +942,16 @@ body.journey-complete .solar-guide { opacity: 0; visibility: hidden; pointer-eve
 @media (max-width: 760px) {
   .hero { min-height: 100svh; height: 100svh; }
   .hero-grid { left: 23px; right: 23px; bottom: clamp(116px, 16vh, 150px); width: auto; }
+  .experience-content .fit-grid,
+  .experience-content .faq-grid,
+  .experience-content .application-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    width: 100%;
+  }
+  .experience-content .application-form { width: 100%; min-width: 0; max-width: 100%; }
+  .experience-content .form-grid { grid-template-columns: minmax(0, 1fr); }
   .hero-copy { max-width: 460px; }
   .hero-copy h1 { max-width: 12ch; font-size: clamp(2.6rem, 10vw, 4rem); }
   .hero-lede { max-width: 32ch; font-size: .93rem; }
