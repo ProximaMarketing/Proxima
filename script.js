@@ -190,8 +190,10 @@
       pendingNavigationDirection = null;
     }
 
-    // Process is the final planet. Once the following artist-fit chapter arrives, hand over to the normal page.
-    if (switchLine >= fitTop) {
+    // Begin the hand-off as soon as the next section enters the lower edge of the viewport.
+    // This lets the galaxy disappear before the following section's heading reaches the briefing panel.
+    const fitViewportTop = fitTarget ? fitTarget.getBoundingClientRect().top : Number.POSITIVE_INFINITY;
+    if (fitViewportTop <= window.innerHeight * 0.92) {
       endPlanetJourney();
       return;
     }
