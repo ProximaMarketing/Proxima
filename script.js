@@ -106,17 +106,18 @@
 
     const planet = body.getBoundingClientRect();
     const card = briefing.getBoundingClientRect();
-    if (!planet.width || !planet.height || !card.width || !card.height) return;
+    const frame = annotation.getBoundingClientRect();
+    if (!planet.width || !planet.height || !card.width || !card.height || !frame.width || !frame.height) return;
 
     const mobile = window.matchMedia("(max-width: 760px)").matches;
     const angle = (mobile ? profile.mobile : profile.desktop) * Math.PI / 180;
-    const sx = planet.left + planet.width / 2 + Math.cos(angle) * planet.width * .485;
-    const sy = planet.top + planet.height / 2 + Math.sin(angle) * planet.height * .485;
+    const sx = planet.left + planet.width / 2 + Math.cos(angle) * planet.width * .485 - frame.left;
+    const sy = planet.top + planet.height / 2 + Math.sin(angle) * planet.height * .485 - frame.top;
     let tx, ty, path;
     if (mobile) {
       // Land on a different point along the card's top edge for each planet.
-      tx = card.left + card.width * profile.targetX;
-      ty = card.top - 1;
+      tx = card.left + card.width * profile.targetX - frame.left;
+      ty = card.top - 1 - frame.top;
       const spanY = Math.max(24, ty - sy);
       const c1x = sx + (tx - sx) * .12;
       const c1y = sy + spanY * .58;
@@ -128,8 +129,8 @@
         ", " + tx.toFixed(1) + " " + ty.toFixed(1);
     } else {
       // On desktop, the annotation connects the planet's left rim to the glass panel's right edge.
-      tx = card.right + 1;
-      ty = card.top + Math.min(card.height - 26, Math.max(80, card.height * profile.targetY));
+      tx = card.right + 1 - frame.left;
+      ty = card.top + Math.min(card.height - 26, Math.max(80, card.height * profile.targetY)) - frame.top;
       const spanX = Math.max(24, sx - tx);
       const c1x = sx - spanX * .28;
       const c2x = tx + spanX * .24;
@@ -139,7 +140,7 @@
         ", " + tx.toFixed(1) + " " + ty.toFixed(1);
     }
 
-    annotation.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
+    annotation.setAttribute("viewBox", "0 0 " + frame.width + " " + frame.height);
     leaderPath.setAttribute("d", path);
     [[anchorRing, sx, sy], [anchorDot, sx, sy], [leaderEnd, tx, ty]].forEach(([node, x, y]) => {
       if (!node) return;
