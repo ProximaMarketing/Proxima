@@ -524,7 +524,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
   .solar-guide-heading h2 { font-size:clamp(1.45rem,5.5vw,1.85rem); }
   .solar-guide-hint { font-size:.68rem; }
   .solar-system { left:50%; top:37%; width:min(88vw,50vh); height:min(88vw,50vh); }
-  .solar-guide.has-active-planet .solar-system { left:50%; top:30%; transform:translate(-50%,-50%) scale(.78); }
+  .solar-guide.has-active-planet .solar-system { left:calc(50% - 52px); top:30%; transform:translate(-50%,-50%) scale(.78); }
   .solar-orbit-one { width:58%; height:58%; }
   .solar-orbit-two { width:80%; height:80%; }
   .solar-orbit-three { width:98%; height:98%; }
@@ -560,7 +560,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
   .hero-bottom { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:end; gap:12px; font-size:.61rem; line-height:1.4; }
   .hero-bottom span { max-width:28ch; }
   .solar-guide .solar-system { top:35%; width:min(86vw,43vh); height:min(86vw,43vh); }
-  .solar-guide.has-active-planet .solar-system { top:28%; transform:translate(-50%,-50%) scale(.76); }
+  .solar-guide.has-active-planet .solar-system { left:calc(50% - 52px); top:28%; transform:translate(-50%,-50%) scale(.76); }
   .solar-briefing { left:14px; right:14px; bottom:max(16px,env(safe-area-inset-bottom)); max-height:min(43svh,330px); padding:18px 18px 20px; }
   .solar-briefing h2 { font-size:clamp(1.65rem,6.8vw,2.15rem); line-height:1.07; }
   .solar-briefing-copy { font-size:.9rem; line-height:1.5; }
