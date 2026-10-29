@@ -955,7 +955,7 @@ body.journey-complete .solar-guide { opacity: 0; visibility: hidden; pointer-eve
     bottom: max(22px, env(safe-area-inset-bottom));
     width: auto;
     max-width: none;
-    max-height: min(42svh, 330px);
+    max-height: min(48svh, 350px);
     overflow-y: auto;
     overflow-x: hidden;
     padding: 18px 20px 20px;
@@ -983,7 +983,7 @@ body.journey-complete .solar-guide { opacity: 0; visibility: hidden; pointer-eve
   .hero-bottom span { max-width: 28ch; }
   .solar-guide .solar-system { top: 35%; width: min(86vw, 43vh); height: min(86vw, 43vh); }
   .solar-guide.has-active-planet .solar-system { top: 28%; transform: translate(-50%,-50%) scale(.76); }
-  .solar-briefing { left: 14px; right: 14px; bottom: max(16px, env(safe-area-inset-bottom)); max-height: min(45svh, 320px); padding: 16px 16px 18px; }
+  .solar-briefing { left: 14px; right: 14px; bottom: max(16px, env(safe-area-inset-bottom)); max-height: min(48svh, 350px); padding: 16px 16px 18px; }
   .solar-briefing h2 { font-size: clamp(1.55rem, 6.6vw, 2rem); line-height: 1.08; }
   .solar-briefing-copy { font-size: .87rem; line-height: 1.48; }
   .solar-briefing-meta { font-size: .55rem; }
@@ -1002,8 +1002,8 @@ body.journey-complete .solar-guide { opacity: 0; visibility: hidden; pointer-eve
   .solar-system { width: min(64vw, 66vh, 680px); height: min(64vw, 66vh, 680px); }
 }
 @keyframes briefing-arrive {
-  from { opacity: 0; transform: translateY(12px); filter: blur(2px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  from { opacity: 0; filter: blur(2px); }
+  to { opacity: 1; filter: blur(0); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
