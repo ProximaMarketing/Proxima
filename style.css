@@ -404,3 +404,16 @@ h1 { font-size: clamp(3.25rem, 6.5vw, 6.55rem); line-height: .99; letter-spacing
   .experience-content > section:first-child { padding-top: 54px; }
 }
 @media (prefers-reduced-motion: reduce) { .planet-link, .planet-body, .planet-label, .solar-star { transition: none !important; } }
+
+
+.solar-mobile-key { display: none; }
+.solar-key-link { color: var(--muted); text-decoration: none; text-transform: uppercase; letter-spacing: .08em; font-size: .56rem; padding: 5px 6px; border: 1px solid rgba(216,198,165,.14); border-radius: 2px; }
+.solar-key-link[aria-current="location"] { color: var(--text); border-color: rgba(216,198,165,.62); background: rgba(216,198,165,.08); }
+@media (max-width: 760px) {
+  .solar-guide { height: 214px; min-height: 214px; max-height: 214px; grid-template-rows: minmax(0,1fr) auto; }
+  .solar-mobile-key { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; width: 100%; }
+}
+@media (max-width: 480px) {
+  .solar-guide { height: 202px; min-height: 202px; max-height: 202px; grid-template-rows: minmax(0,1fr) auto; }
+  .solar-key-link { font-size: .51rem; padding: 4px 5px; letter-spacing: .04em; }
+}
