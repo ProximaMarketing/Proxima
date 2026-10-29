@@ -1008,3 +1008,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 @media (prefers-reduced-motion:reduce) {
   .mission-plus::after { transition:none !important; }
 }
+
+
+.fit-heading .inline-link { display:flex; width:fit-content; margin-top:16px; }
+@media (max-width:760px) { .fit-heading .inline-link { margin-top:14px; } }
