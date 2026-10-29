@@ -364,7 +364,7 @@
     window.clearTimeout(leaderTransitionTimer);
     if (briefingContent) briefingContent.classList.remove("is-changing");
     journeySections.forEach(item => {
-      item.link.classList.remove("is-active", "is-zooming");
+      item.link.classList.remove("is-active", "is-near");
       item.link.removeAttribute("aria-current");
     });
     mobileKeyLinks.forEach(link => link.removeAttribute("aria-current"));
