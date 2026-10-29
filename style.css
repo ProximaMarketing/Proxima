@@ -291,63 +291,116 @@ h1 { font-size: clamp(3.25rem, 6.5vw, 6.55rem); line-height: .99; letter-spacing
 }
 
 
-/* PROXIMA journey revision: a single constellation links the page. */
-body { position: relative; }
-.journey-constellation { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: .7; }
-.journey-constellation svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.journey-constellation path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.journey-halo { stroke: rgba(216,198,165,.12); stroke-width: 18; filter: blur(14px); }
-.journey-path { stroke: rgba(216,198,165,.52); stroke-width: 1.15; stroke-dasharray: 6000; stroke-dashoffset: 6000; filter: drop-shadow(0 0 4px rgba(216,198,165,.16)); }
-.journey-stars circle { fill: #ead9b8; opacity: .65; filter: drop-shadow(0 0 7px rgba(216,198,165,.7)); }
-.site-header { position: fixed; inset: 0 0 auto; z-index: 1000; }
-main, .site-footer { position: relative; z-index: 1; }
-.intro { background: rgba(12,12,11,.79); }
-.services { background: rgba(9,9,9,.78); }
-.fit { background: rgba(19,18,15,.88); }
-.process { background: rgba(11,11,10,.78); }
-.faq { background: rgba(18,17,15,.88); }
-.application-section { background: rgba(10,10,9,.88); }
-.site-footer { background: rgba(8,8,8,.94); }
-.wordmark { letter-spacing: .2em; }
-.hero-copy h1 { max-width: 660px; }
-.hero-lede { max-width: 410px; }
-.hero-art { filter: saturate(.85); }
-.hero-art .orbit-one { transform: rotate(-32deg) scaleY(.68); }
-.hero-art .orbit-two { transform: rotate(38deg) scaleY(.74); }
-.service-card { background: rgba(11,11,10,.36); }
-.service-card-top { margin-bottom: 34px; }
-.service-card h3 { margin-bottom: 10px; }
-.service-card p { max-width: 32ch; }
-.service-tag { display: inline-block; padding-top: 2px; }
-.fit-check { display: none; }
-.fit-item { grid-template-columns: 1fr; }
-.application-note { grid-template-columns: 1fr; }
-.application-note p { color: var(--text); }
-.section-heading-centered > p:not(.eyebrow) { max-width: 360px; margin-inline: auto; color: var(--muted); font-size: .9rem; }
-.footer-wordmark { letter-spacing: .2em; }
-@media (max-width: 760px) {
-  .journey-constellation { opacity: .22; }
-  .journey-halo { stroke-width: 28; }
-  .journey-path { stroke-width: 1.5; }
-  .hero-art { filter: none; }
-  .service-card { background: rgba(11,11,10,.56); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .journey-path { stroke-dasharray: none; stroke-dashoffset: 0; }
-}
+/* Clear headline above a scroll-led solar-system navigation */
+.hero { min-height: min(800px, 88vh); display: flex; flex-direction: column; justify-content: center; }
+.hero-grid { grid-template-columns: minmax(0, 1fr); }
+.hero-copy { max-width: 760px; }
+.hero-copy h1 { max-width: 760px; }
+.hero-lede { max-width: 540px; }
+.hero-bottom { margin-top: auto; }
 
+.experience-layout {
+  width: min(calc(100% - 64px), 1440px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(300px, .76fr) minmax(0, 1.24fr);
+  gap: clamp(38px, 5.6vw, 92px);
+  align-items: stretch;
+}
+.experience-content { min-width: 0; }
+.experience-content > section .container { width: 100%; }
+.experience-content > section:first-child { padding-top: 76px; }
+.solar-guide {
+  position: sticky; top: 92px; align-self: start;
+  height: calc(100svh - 118px); min-height: 570px; max-height: 820px;
+  display: flex; flex-direction: column; justify-content: center; padding: 20px 0 16px;
+}
+.solar-guide-heading { position: relative; z-index: 2; margin: 0 auto 10px; max-width: 390px; width: 100%; padding-left: 5px; }
+.solar-guide-heading .eyebrow { margin-bottom: 12px; }
+.solar-guide-heading h2 { font: 500 clamp(2rem, 3.15vw, 3.1rem)/1.02 "Manrope", sans-serif; letter-spacing: -.065em; margin: 0 0 10px; }
+.solar-guide-hint { font-size: .78rem; margin: 0; max-width: 255px; }
+.solar-system { position: relative; width: min(100%, 450px); aspect-ratio: 1; margin: 0 auto; isolation: isolate; }
+.solar-system::before { content: ""; position: absolute; inset: 20%; border-radius: 50%; background: radial-gradient(circle, rgba(216,198,165,.045), transparent 72%); pointer-events: none; }
+.solar-orbit { position: absolute; border: 1px solid rgba(216,198,165,.18); border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%,-50%) rotate(-22deg) scaleY(.66); pointer-events: none; }
+.solar-orbit-one { width: 60%; height: 60%; border-color: rgba(216,198,165,.3); }
+.solar-orbit-two { width: 82%; height: 82%; transform: translate(-50%,-50%) rotate(42deg) scaleY(.7); }
+.solar-orbit-three { width: 98%; height: 98%; transform: translate(-50%,-50%) rotate(-55deg) scaleY(.65); border-style: dashed; border-color: rgba(216,198,165,.11); }
+.solar-star { position: absolute; z-index: 5; top: 50%; left: 50%; width: 78px; height: 78px; transform: translate(-50%,-50%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border: 1px solid rgba(234,217,184,.72); border-radius: 50%; background: radial-gradient(circle at 40% 35%, #f2dfb9 0, #c8a773 20%, #7f6947 36%, rgba(31,27,19,.95) 70%); box-shadow: 0 0 24px rgba(216,198,165,.25), 0 0 70px rgba(216,198,165,.12), inset 0 0 14px rgba(255,247,220,.4); color: #fff3d9; text-decoration: none; transition: box-shadow .25s ease, transform .25s ease; }
+.solar-star:hover { transform: translate(-50%,-50%) scale(1.06); box-shadow: 0 0 30px rgba(216,198,165,.42), 0 0 90px rgba(216,198,165,.2); }
+.star-shape { position: absolute; inset: 16px; background: radial-gradient(circle, #fff8e5 0, #ebd4a5 42%, rgba(216,198,165,0) 74%); clip-path: polygon(50% 0,61% 36%,100% 50%,62% 61%,50% 100%,39% 62%,0 50%,38% 39%); filter: drop-shadow(0 0 8px #ead9b8); }
+.star-label { position: relative; z-index: 1; margin-top: 48px; font-size: .52rem; line-height: 1; letter-spacing: .17em; font-weight: 800; text-shadow: 0 1px 6px #080808; }
+.planet-link { position: absolute; z-index: 4; left: 50%; top: 50%; --x: 0px; --y: 0px; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))); display: block; width: 90px; height: 90px; text-decoration: none; border-radius: 50%; transition: transform .55s cubic-bezier(.2,.7,.2,1); outline-offset: 3px; }
+.planet-body { position: absolute; left: 50%; top: 50%; width: 23px; height: 23px; transform: translate(-50%,-50%); border-radius: 50%; display: block; border: 1px solid rgba(255,255,255,.28); box-shadow: inset -5px -4px 7px rgba(0,0,0,.58), inset 3px 3px 5px rgba(255,255,255,.25), 0 0 16px rgba(216,198,165,.08); transition: transform .25s ease, box-shadow .25s ease, filter .25s ease; }
+.planet-dawn { width: 29px; height: 29px; background: radial-gradient(circle at 32% 28%, #e9d9b8 0 7%, #9a8563 40%, #393024 75%); }
+.planet-identity { background: radial-gradient(circle at 34% 28%, #c9d0c4, #68736a 42%, #252d29 76%); }
+.planet-release { width: 28px; height: 28px; background: radial-gradient(circle at 34% 27%, #e9b99b, #a56850 45%, #38241e 78%); }
+.planet-content { background: radial-gradient(circle at 32% 26%, #d4c8ed, #8575a9 45%, #342b49 77%); }
+.planet-audience { width: 26px; height: 26px; background: radial-gradient(circle at 30% 28%, #c1ddeb, #608c9b 45%, #24363c 78%); }
+.planet-process { width: 20px; height: 20px; background: radial-gradient(circle at 32% 28%, #ddd0a5, #9b8a56 48%, #39321d 78%); }
+.planet-label { position: absolute; top: 50%; left: calc(50% + 22px); transform: translateY(-50%); color: var(--muted); padding: 5px 7px; background: rgba(9,9,9,.86); border: 1px solid rgba(216,198,165,.13); border-radius: 2px; font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; transition: color .25s ease, background .25s ease, border-color .25s ease; }
+.planet-link.label-left .planet-label { left: auto; right: calc(50% + 22px); text-align: right; }
+.planet-link.is-active { z-index: 6; }
+.planet-link.is-active .planet-body { transform: translate(-50%,-50%) scale(1.3); box-shadow: 0 0 23px rgba(216,198,165,.35), inset -5px -4px 7px rgba(0,0,0,.45); filter: brightness(1.15); }
+.planet-link.is-active .planet-label { color: var(--text); background: #181610; border-color: rgba(216,198,165,.55); }
+.solar-guide-footer { width: min(100%, 450px); margin: 4px auto 0; display: flex; align-items: center; gap: 9px; padding: 12px 5px 0; border-top: 1px solid var(--line); color: var(--subtle); font-size: .7rem; }
+.solar-live-dot { width: 5px; height: 5px; border-radius: 50%; flex: 0 0 auto; background: var(--accent); box-shadow: 0 0 12px rgba(216,198,165,.6); }
+.experience-content > section { scroll-margin-top: 88px; }
+#identity, #release, #content, #audience { scroll-margin-top: 130px; }
+.experience-content .intro { background: rgba(12,12,11,.28); }
+.experience-content .services { background: rgba(9,9,9,.22); }
+.experience-content .fit { background: rgba(19,18,15,.42); }
+.experience-content .process { background: rgba(11,11,10,.24); }
+.experience-content .faq { background: rgba(18,17,15,.42); }
+.experience-content .application-section { background: rgba(10,10,9,.4); }
+.experience-content .principle-strip { gap: 18px; margin-top: 54px; }
+.experience-content .service-grid { grid-template-columns: 1fr; }
+.experience-content .service-card { min-height: auto; padding: 25px 25px 23px; }
+.experience-content .service-card-top { margin-bottom: 18px; }
+.experience-content .service-card p { max-width: 420px; }
+.experience-content .section-heading { display: block; }
+.experience-content .section-intro { margin-top: 16px; }
+.experience-content .process-steps { grid-template-columns: 1fr; gap: 30px; }
+.experience-content .step-line { margin: 14px 0 20px; }
+.experience-content .application-layout { grid-template-columns: 1fr; gap: 36px; }
+.experience-content .application-copy { position: static; }
+.experience-content .application-note { max-width: 480px; }
+.experience-content .application-form { padding: 26px 24px; }
+.experience-content .form-grid { grid-template-columns: 1fr; gap: 0; }
 
-/* Keep the service offer focused and give the constellation room to breathe. */
-.service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; border: 0; }
-.service-card { min-height: 245px; border: 1px solid var(--line); padding: 30px 32px; background: rgba(11,11,10,.52); }
-.service-card-top { margin-bottom: 28px; }
-.service-card::after { height: 1px; }
-.service-footnote { margin-top: 20px; }
+@media (max-width: 1080px) {
+  .experience-layout { width: min(calc(100% - 44px), 1000px); grid-template-columns: minmax(260px, .68fr) minmax(0, 1fr); gap: 30px; }
+  .solar-guide { min-height: 520px; }
+  .solar-guide-heading h2 { font-size: clamp(1.9rem, 3vw, 2.6rem); }
+  .solar-system { width: 100%; }
+  .experience-content .service-card { padding-inline: 20px; }
+}
 @media (max-width: 760px) {
-  .service-grid { gap: 10px; }
-  .service-card { padding: 22px 20px; }
+  .experience-layout { display: flex; flex-direction: column; width: 100%; gap: 0; }
+  .solar-guide { position: sticky; top: 72px; z-index: 30; height: 190px; min-height: 190px; max-height: 190px; width: 100%; padding: 9px 16px 8px; display: grid; grid-template-columns: 1fr 170px; gap: 12px; align-items: center; border-bottom: 1px solid var(--line); background: rgba(9,9,9,.94); backdrop-filter: blur(16px); }
+  .solar-guide-heading { margin: 0; padding: 0; min-width: 0; }
+  .solar-guide-heading .eyebrow { font-size: .55rem; margin-bottom: 6px; }
+  .solar-guide-heading h2 { font-size: 1.45rem; margin-bottom: 7px; }
+  .solar-guide-hint { font-size: .66rem; line-height: 1.45; max-width: 165px; }
+  .solar-system { width: 170px; height: 170px; margin: 0; }
+  .solar-orbit-one { width: 60%; height: 60%; }
+  .solar-orbit-two { width: 82%; height: 82%; }
+  .solar-orbit-three { width: 98%; height: 98%; }
+  .solar-star { width: 43px; height: 43px; }
+  .star-shape { inset: 9px; }
+  .star-label { margin-top: 29px; font-size: .34rem; letter-spacing: .08em; }
+  .planet-link { width: 36px; height: 36px; }
+  .planet-body { width: 12px !important; height: 12px !important; }
+  .planet-label { display: none; }
+  .solar-guide-footer { display: none; }
+  .experience-content > section:first-child { padding-top: 62px; }
+  .experience-content > section .container { width: min(100% - 38px, var(--container)); }
+  .experience-content .application-form { padding: 24px 20px; }
 }
 @media (max-width: 480px) {
-  .service-grid { grid-template-columns: 1fr; }
-  .service-card { min-height: 0; }
+  .solar-guide { height: 166px; min-height: 166px; max-height: 166px; grid-template-columns: minmax(0,1fr) 154px; padding-inline: 14px; gap: 6px; }
+  .solar-system { width: 154px; height: 154px; }
+  .solar-guide-heading h2 { font-size: 1.3rem; }
+  .solar-guide-hint { font-size: .62rem; }
+  .experience-content > section:first-child { padding-top: 54px; }
 }
+@media (prefers-reduced-motion: reduce) { .planet-link, .planet-body, .planet-label, .solar-star { transition: none !important; } }
