@@ -294,6 +294,15 @@ h1 { font-size: clamp(3.25rem, 6.5vw, 6.55rem); line-height: .99; letter-spacing
    One coherent layer for the intro, galaxy, annotations and mobile layout.
    ========================================================== */
 html { width:100%; max-width:100%; overflow-x:clip; scroll-behavior:smooth; }
+html.planet-snapping { scroll-snap-type:y mandatory; scroll-padding-top:0; }
+html.planet-snapping .hero,
+html.planet-snapping .experience-content > #approach,
+html.planet-snapping .experience-content .planet-chapter,
+html.planet-snapping .experience-content > #process,
+html.planet-snapping .experience-content > #fit {
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+}
 body { width:100%; max-width:100%; overflow-x:clip; }
 main, .experience-layout, .experience-content { min-width:0; max-width:100%; }
 
