@@ -29,7 +29,7 @@ p { color: var(--muted); }
 .section-pad { padding: clamp(88px, 11vw, 148px) 0; }
 .skip-link { position: fixed; z-index: 10000; top: 12px; left: 12px; padding: 12px 18px; background: var(--accent); color: #111; transform: translateY(-160%); }
 .skip-link:focus { transform: translateY(0); }
-.scroll-progress { position: fixed; z-index: 1500; inset: 0 auto auto 0; width: 0; height: 2px; background: var(--accent); pointer-events: none; }
+.scroll-progress { position: fixed; z-index: 1500; inset: 0 auto auto 0; width: 100%; height: 2px; background: var(--accent); pointer-events: none; transform: scaleX(0); transform-origin: left center; pointer-events: none; }
 .site-header { position: fixed; inset: 0 0 auto; z-index: 1000; border-bottom: 1px solid transparent; transition: background .3s ease, border-color .3s ease, backdrop-filter .3s ease; }
 .site-header.scrolled { background: rgba(9,9,9,.86); border-color: var(--line); backdrop-filter: blur(18px); }
 .navbar { min-height: 86px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
@@ -388,14 +388,14 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 .planet-link {
   position:absolute; z-index:4; top:50%; left:50%; width:90px; height:90px; display:block; border-radius:50%; text-decoration:none;
   transform:translate(calc(-50% + var(--x,0px)),calc(-50% + var(--y,0px)));
-  transition:none; pointer-events:auto; will-change:transform;
+  transition:none; pointer-events:auto;
 }
 .planet-body {
   position:absolute; top:50%; left:50%; display:block; width:23px; height:23px; overflow:hidden;
   transform:translate(-50%,-50%) scale(var(--focus-scale,1));
   border:1px solid rgba(255,255,255,.28); border-radius:50%; isolation:isolate;
   box-shadow:inset -5px -4px 7px rgba(0,0,0,.58),inset 3px 3px 5px rgba(255,255,255,.25),0 0 16px rgba(216,198,165,.08);
-  transition:box-shadow .32s ease,filter .32s ease;
+  transition:box-shadow .24s ease;
 }
 .planet-body::before {
   content:""; position:absolute; z-index:1; inset:-2px; border-radius:inherit; pointer-events:none;
@@ -448,7 +448,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
     repeating-linear-gradient(158deg,rgba(255,226,159,.14) 0 6%,transparent 6% 16%,rgba(55,43,19,.16) 16% 22%,transparent 22% 32%),
     radial-gradient(circle at 30% 24%,#f3e3b1 0,#c1a568 18%,#897647 45%,#4d422c 72%,#19160f 100%);
 }
-.planet-link.is-active { z-index:20; }
+.planet-link.is-active { z-index:12; }
 .planet-link.is-active .planet-body {
   
   box-shadow:inset -24px -20px 32px rgba(0,0,0,.48),inset 10px 8px 18px rgba(255,255,255,.12),0 0 18px rgba(216,198,165,.18),0 0 42px rgba(216,198,165,.1);
@@ -456,8 +456,6 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 .planet-link.is-active .planet-body::before { opacity:.78; }
 .planet-link.is-active .planet-body::after { border-color:rgba(226,216,196,.55); box-shadow:inset 0 0 9px rgba(204,223,239,.2),0 0 18px rgba(167,198,220,.16); }
 .planet-link:hover .planet-body,.planet-link:focus-visible .planet-body { box-shadow:inset -6px -5px 8px rgba(0,0,0,.42),inset 3px 3px 5px rgba(255,255,255,.2),0 0 18px rgba(216,198,165,.18); }
-.planet-link.is-zooming .planet-body { animation:planet-arrival .58s var(--ease) both; }
-@keyframes planet-arrival { 0%{filter:brightness(1)} 45%{filter:brightness(1.3)} 100%{filter:brightness(1.08)} }
 .planet-label {
   position:absolute; top:50%; left:calc(50% + 22px); padding:5px 7px; color:var(--muted);
   background:rgba(9,9,9,.86); border:1px solid rgba(216,198,165,.13); border-radius:2px;
@@ -496,7 +494,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
   box-sizing:border-box; overflow:auto; overscroll-behavior:contain; color:var(--text);
   background:radial-gradient(ellipse at 0% 0%,rgba(232,214,180,.13),transparent 48%),linear-gradient(135deg,rgba(36,34,31,.69),rgba(14,15,17,.58) 58%,rgba(24,26,28,.66));
   border:1px solid rgba(239,226,201,.3); border-radius:18px;
-  box-shadow:0 28px 90px rgba(0,0,0,.36),0 0 42px rgba(216,198,165,.06),inset 0 1px 0 rgba(255,255,255,.16),inset 0 -1px 0 rgba(255,255,255,.03);
+  box-shadow:0 18px 52px rgba(0,0,0,.30),0 0 24px rgba(216,198,165,.045),inset 0 1px 0 rgba(255,255,255,.13);
   backdrop-filter:blur(10px) saturate(112%); -webkit-backdrop-filter:blur(10px) saturate(112%);
   transform:translateY(-48%); pointer-events:auto; animation:briefing-arrive .42s var(--ease) both; scrollbar-width:thin;
   transition:opacity .18s ease,visibility .18s ease;
@@ -582,7 +580,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
   .star-label { margin-top:41px; font-size:.48rem; }
   .planet-link { width:48px; height:48px; }
   .planet-link .planet-body { width:17px; height:17px; }
-  .planet-link.is-active .planet-body { box-shadow:inset -16px -13px 22px rgba(0,0,0,.5),inset 8px 7px 14px rgba(255,255,255,.13),0 0 20px rgba(216,198,165,.2),0 0 46px rgba(216,198,165,.12); }
+  .planet-link.is-active .planet-body { box-shadow:inset -14px -11px 18px rgba(0,0,0,.48),inset 7px 6px 12px rgba(255,255,255,.12),0 0 18px rgba(216,198,165,.18),0 0 38px rgba(216,198,165,.1); }
   .solar-briefing {
     top:auto; left:18px; right:18px; bottom:max(22px,env(safe-area-inset-bottom)); width:auto; max-width:none;
     max-height:min(43svh,360px); overflow-y:auto; overflow-x:hidden; padding:22px 22px 24px;
