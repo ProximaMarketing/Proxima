@@ -553,7 +553,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
     border:1px solid rgba(239,226,201,.3); border-radius:16px;
     background:radial-gradient(ellipse at 0% 0%,rgba(232,214,180,.10),transparent 52%),linear-gradient(145deg,rgba(29,28,26,.97),rgba(14,15,17,.96));
     box-shadow:0 12px 28px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.09);
-    backdrop-filter:blur(10px) saturate(112%); -webkit-backdrop-filter:blur(10px) saturate(112%); transform:none;
+      transform:none;
   }
   .solar-briefing::before { margin-bottom:15px; }
   .solar-briefing-index { margin-bottom:10px; }
