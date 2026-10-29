@@ -168,7 +168,7 @@
 
   const syncPlanetFromScroll = () => {
     if (!journeySections.length) return;
-    const switchLine = window.scrollY + window.innerHeight * 0.68;
+    const switchLine = window.scrollY + window.innerHeight * 0.32;
     const topOf = target => target.getBoundingClientRect().top + window.scrollY;
     const fitTarget = document.getElementById("fit");
     const fitTop = fitTarget ? topOf(fitTarget) : Number.POSITIVE_INFINITY;
