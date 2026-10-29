@@ -399,8 +399,9 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
   transition:none; pointer-events:auto;
 }
 .planet-body {
-  position:absolute; top:50%; left:50%; display:block; width:23px; height:23px;
-  overflow:hidden; transform:translate(-50%,-50%) scale(var(--focus-scale,1));
+  position:absolute; top:50%; left:50%; display:block;
+  width:var(--planet-render-size,300px); height:var(--planet-render-size,300px);
+  overflow:hidden; transform:translate(-50%,-50%) scale(var(--focus-scale,.077));
   border:1px solid rgba(255,255,255,.22); border-radius:50%; background-color:#65584a;
 }
 .planet-body::before {
@@ -546,7 +547,6 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
   .star-shape { inset:12px; }
   .star-label { margin-top:41px; font-size:.48rem; }
   .planet-link { width:48px; height:48px; }
-  .planet-link .planet-body { width:17px; height:17px; }
   .planet-link.is-active .planet-body { border-color:rgba(255,248,229,.52); }
   .solar-briefing {
     top:auto; left:18px; right:18px; bottom:max(22px,env(safe-area-inset-bottom)); width:auto; max-width:none;
