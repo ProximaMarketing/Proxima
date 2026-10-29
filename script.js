@@ -68,12 +68,12 @@
     process: { desktop: 216, mobile: 62, targetX: .23, targetY: .77 }
   };
   const chapterContent = {
-    approach: { title: "A direction of your own.", copy: "One connected plan for your identity, releases and content — built around what makes your music different.", meta: "01 — Find your direction" },
-    identity: { title: "Make your difference recognisable.", copy: "Clarify your sound, story and visual world, so every part of your presence feels unmistakably yours.", meta: "02 — Define your identity" },
-    release: { title: "Give every release a reason to travel.", copy: "Turn a release date into a campaign: build anticipation, plan the moments around launch, and keep the story moving afterwards.", meta: "03 — Build release momentum" },
-    content: { title: "Make content sound and feel like you.", copy: "Create a repeatable creative direction for short-form content without chasing every trend or starting from a blank page each time.", meta: "04 — Create with intention" },
-    audience: { title: "Reach the people who get it.", copy: "Learn what resonates, recognise the signals in your performance, and build a stronger connection with the listeners most likely to stay.", meta: "05 — Grow real connection" },
-    process: { title: "Find the signal. Follow it forward.", copy: "Bring the moving parts together, choose the next practical step, then learn from the results and evolve the plan with purpose.", meta: "06 — Learn, refine, repeat" }
+    approach: { title: "A direction of your own.", copy: "Independent artists often manage music, visuals and promotion as separate jobs. The aim is to make those decisions support the same direction.", meta: "01 — Set the direction" },
+    identity: { title: "Make the project recognisable.", copy: "Decide what people should recognise: the feeling, story and visual cues that belong to this artist.", meta: "02 — Define the identity" },
+    release: { title: "Give the release a clear rhythm.", copy: "Plan the run-up, launch and follow-through around what the artist can sustain and what listeners need to know.", meta: "03 — Shape the release" },
+    content: { title: "Create with purpose, not pressure.", copy: "Develop a handful of formats the artist can return to and adapt, without making every post from scratch.", meta: "04 — Build a content language" },
+    audience: { title: "Notice what makes people care.", copy: "Look beyond follower totals. Where data is available, notice which moments earn saves, shares, replies and clicks.", meta: "05 — Read the response" },
+    process: { title: "Make the next move count.", copy: "Start with a conversation, agree the priorities, then use real feedback to decide what should happen next.", meta: "06 — Review and adjust" }
   };
   let activePlanetIndex = -1;
   let briefingTransitionToken = 0;
