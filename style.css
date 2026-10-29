@@ -289,3 +289,48 @@ h1 { font-size: clamp(3.25rem, 6.5vw, 6.55rem); line-height: .99; letter-spacing
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+
+/* PROXIMA journey revision: a single constellation links the page. */
+body { position: relative; }
+.journey-constellation { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: .7; }
+.journey-constellation svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.journey-constellation path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.journey-halo { stroke: rgba(216,198,165,.12); stroke-width: 18; filter: blur(14px); }
+.journey-path { stroke: rgba(216,198,165,.52); stroke-width: 1.15; stroke-dasharray: 6000; stroke-dashoffset: 6000; filter: drop-shadow(0 0 4px rgba(216,198,165,.16)); }
+.journey-stars circle { fill: #ead9b8; opacity: .65; filter: drop-shadow(0 0 7px rgba(216,198,165,.7)); }
+.site-header, main, .site-footer { position: relative; z-index: 1; }
+.intro { background: rgba(12,12,11,.79); }
+.services { background: rgba(9,9,9,.78); }
+.fit { background: rgba(19,18,15,.88); }
+.process { background: rgba(11,11,10,.78); }
+.faq { background: rgba(18,17,15,.88); }
+.application-section { background: rgba(10,10,9,.88); }
+.site-footer { background: rgba(8,8,8,.94); }
+.wordmark { letter-spacing: .2em; }
+.hero-copy h1 { max-width: 660px; }
+.hero-lede { max-width: 410px; }
+.hero-art { filter: saturate(.85); }
+.hero-art .orbit-one { transform: rotate(-32deg) scaleY(.68); }
+.hero-art .orbit-two { transform: rotate(38deg) scaleY(.74); }
+.service-card { background: rgba(11,11,10,.36); }
+.service-card-top { margin-bottom: 34px; }
+.service-card h3 { margin-bottom: 10px; }
+.service-card p { max-width: 32ch; }
+.service-tag { display: inline-block; padding-top: 2px; }
+.fit-check { display: none; }
+.fit-item { grid-template-columns: 1fr; }
+.application-note { grid-template-columns: 1fr; }
+.application-note p { color: var(--text); }
+.section-heading-centered > p:not(.eyebrow) { max-width: 360px; margin-inline: auto; color: var(--muted); font-size: .9rem; }
+.footer-wordmark { letter-spacing: .2em; }
+@media (max-width: 760px) {
+  .journey-constellation { opacity: .22; }
+  .journey-halo { stroke-width: 28; }
+  .journey-path { stroke-width: 1.5; }
+  .hero-art { filter: none; }
+  .service-card { background: rgba(11,11,10,.56); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-path { stroke-dasharray: none; stroke-dashoffset: 0; }
+}
