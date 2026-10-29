@@ -569,7 +569,7 @@ body.is-zooming .solar-system { width: min(125vw, 125vh, 1300px); height: min(12
 /* PROXIMA planet journey — consolidated responsive styles */
 .hero {
   position: relative;
-  z-index: 2;
+  z-index: 6;
   height: 100svh;
   min-height: 680px;
   padding: 0;
