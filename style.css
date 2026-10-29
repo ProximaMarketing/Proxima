@@ -504,6 +504,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 .experience-content .planet-chapter { pointer-events:none; background:transparent !important; }
 .experience-content > #approach { min-height:76svh; height:76svh; padding:0; }
 .experience-content > .services { display:block; padding:0; margin:0; }
+.experience-content .services > .container > .service-footnote { display:none !important; }
 .experience-content .services > .container { width:100%; max-width:none; margin:0; }
 .experience-content .services .section-heading { height:0; min-height:0; overflow:hidden; margin:0; }
 .experience-content .service-grid { display:block; margin:0; }
@@ -608,6 +609,6 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 @keyframes briefing-arrive { from { opacity:0; transform:translateY(8px); } to { opacity:1; } }
 @media (prefers-reduced-motion:reduce) {
   html { scroll-behavior:auto; }
-  .solar-guide,.solar-guide-heading,.solar-system,.solar-orbit,.planet-link,.planet-body,.solar-briefing { transition:none !important; animation:none !important; }
+  .solar-guide,.solar-guide-heading,.solar-system,.solar-field,.planet-field,.solar-orbit,.planet-link,.planet-body,.solar-briefing { transition:none !important; animation:none !important; }
   #planetLeader { transition:none !important; }
 }
