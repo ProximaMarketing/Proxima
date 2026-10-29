@@ -60,7 +60,6 @@
     process: { title: "Find the signal. Follow it forward.", copy: "We listen to your music, find the focus, build a practical plan, then learn and evolve with you.", meta: "Listen · Focus · Plan · Evolve" }
   };
   let activePlanetIndex = -1;
-  let lastZoomedId = "";
 
   const updateSolarSystem = () => {
     if (!solarSystem) return;
@@ -121,7 +120,6 @@
       void link.offsetWidth;
       link.classList.add("is-zooming");
     }
-    lastZoomedId = id;
   };
 
   const endPlanetJourney = () => {
@@ -152,7 +150,6 @@
 
   const clearActivePlanet = () => {
     activePlanetIndex = -1;
-    lastZoomedId = "";
     journeySections.forEach(item => {
       item.link.classList.remove("is-active", "is-zooming");
       item.link.removeAttribute("aria-current");
