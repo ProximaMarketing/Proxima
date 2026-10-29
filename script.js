@@ -384,7 +384,7 @@
     if (!journeySections.length || !chapterDocumentTops.length) return;
     const scrollY = window.scrollY;
     const switchLine = scrollY + window.innerHeight * 0.32;
-    if (activePlanetIndex >= 0 && fitDocumentTop - scrollY <= 12) { endPlanetJourney(); return; }
+    if (activePlanetIndex >= 0 && fitDocumentTop - scrollY <= 2) { endPlanetJourney(); return; }
     if (document.body.classList.contains("journey-complete")) {
       if (scrollY <= 20) {
         clearActivePlanet();
