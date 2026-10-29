@@ -359,7 +359,7 @@
     } else {
       pendingNavigationId = null;
     }
-    if (fromInput) nextPlanetInputAt = performance.now() + (reducedMotion ? 140 : 340);
+    if (fromInput) nextPlanetInputAt = performance.now() + (reducedMotion ? 140 : 300);
     return true;
   };
 
@@ -410,7 +410,7 @@
     event.preventDefault();
     window.clearTimeout(wheelGestureUnlockTimer);
     if (wheelGestureActive) {
-      wheelGestureUnlockTimer = window.setTimeout(() => { wheelGestureActive = false; }, 280);
+      wheelGestureUnlockTimer = window.setTimeout(() => { wheelGestureActive = false; }, 340);
       return;
     }
     wheelGestureActive = true;
