@@ -417,3 +417,142 @@ h1 { font-size: clamp(3.25rem, 6.5vw, 6.55rem); line-height: .99; letter-spacing
   .solar-guide { height: 202px; min-height: 202px; max-height: 202px; grid-template-rows: minmax(0,1fr) auto; }
   .solar-key-link { font-size: .51rem; padding: 4px 5px; letter-spacing: .04em; }
 }
+
+
+/* Immersive galaxy journey: the system is the stage, chapters travel through it. */
+.experience-layout { display: block; width: 100%; margin: 0; }
+.solar-guide {
+  position: fixed; inset: 0; z-index: 1; width: 100%; height: 100svh;
+  min-height: 0; max-height: none; padding: 0; display: block;
+  overflow: hidden; background:
+    radial-gradient(ellipse at 50% 50%, rgba(80,65,42,.12), transparent 34%),
+    radial-gradient(ellipse at 50% 50%, #0b0b0c 0, #080809 68%, #050505 100%);
+  pointer-events: none;
+}
+.solar-guide::before, .solar-guide::after {
+  content: ""; position: absolute; border-radius: 50%; pointer-events: none;
+  background-image: radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.75) 50%, transparent 100%), radial-gradient(1px 1px at 28% 74%, rgba(216,198,165,.8) 50%, transparent 100%), radial-gradient(1px 1px at 77% 24%, rgba(255,255,255,.7) 50%, transparent 100%), radial-gradient(1px 1px at 88% 66%, rgba(216,198,165,.7) 50%, transparent 100%), radial-gradient(1px 1px at 55% 12%, rgba(255,255,255,.6) 50%, transparent 100%), radial-gradient(1px 1px at 42% 89%, rgba(255,255,255,.55) 50%, transparent 100%);
+  background-size: 100% 100%; opacity: .65;
+}
+.solar-guide::before { inset: -8%; }
+.solar-guide::after { inset: 3%; opacity: .28; transform: rotate(21deg) scale(1.12); }
+.solar-guide-heading {
+  position: absolute; z-index: 4; left: 50%; top: clamp(96px, 15vh, 150px);
+  transform: translateX(-50%); width: min(90%, 600px); margin: 0; padding: 0; text-align: center;
+  transition: opacity .5s ease, transform .6s ease;
+}
+.solar-guide-heading .eyebrow { justify-content: center; margin-bottom: 12px; }
+.solar-guide-heading h2 { font-size: clamp(2.2rem, 5vw, 4.6rem); margin-bottom: 8px; }
+.solar-guide-hint { max-width: none; font-size: .8rem; letter-spacing: .03em; }
+.solar-system {
+  position: absolute; left: 50%; top: 53%; transform: translate(-50%,-50%);
+  width: min(78vw, 78vh, 760px); height: min(78vw, 78vh, 760px); margin: 0;
+  transition: width .6s ease, height .6s ease;
+}
+.solar-system::before { inset: 18%; background: radial-gradient(circle, rgba(216,198,165,.09), rgba(216,198,165,.025) 32%, transparent 70%); }
+.solar-orbit-one { width: 46%; height: 46%; border-color: rgba(216,198,165,.28); }
+.solar-orbit-two { width: 72%; height: 72%; }
+.solar-orbit-three { width: 98%; height: 98%; }
+.solar-star { width: clamp(68px, 10vw, 108px); height: clamp(68px, 10vw, 108px); pointer-events: auto; }
+.star-shape { inset: 19px; }
+.star-label { margin-top: 61px; font-size: .6rem; }
+.planet-link { width: clamp(66px, 9vw, 96px); height: clamp(66px, 9vw, 96px); pointer-events: auto; }
+.planet-body { width: 29px; height: 29px; }
+.planet-dawn { width: 37px; height: 37px; }
+.planet-release { width: 33px; height: 33px; }
+.planet-audience { width: 30px; height: 30px; }
+.planet-process { width: 25px; height: 25px; }
+.planet-label { font-size: .68rem; background: rgba(9,9,9,.78); }
+.solar-guide-footer {
+  position: absolute; z-index: 4; bottom: 46px; left: 50%; transform: translateX(-50%);
+  width: min(86%, 440px); justify-content: center; border-top: 0; padding: 0; font-size: .75rem;
+}
+.solar-chapter-counter {
+  position: absolute; z-index: 4; right: clamp(22px, 5vw, 76px); bottom: 42px;
+  display: flex; align-items: center; gap: 12px; color: var(--subtle);
+  font-size: .68rem; letter-spacing: .14em;
+}
+#solarChapterNumber { color: var(--accent-bright); }
+.solar-counter-rule { display: block; width: 42px; height: 1px; background: var(--line-accent); }
+.solar-mobile-key { display: none; }
+.experience-content { position: relative; z-index: 2; min-width: 0; pointer-events: none; }
+.experience-content > section { pointer-events: auto; min-height: 100svh; display: flex; align-items: center; position: relative; scroll-margin-top: 0; padding: clamp(100px, 13vh, 150px) 0; background: transparent; }
+.experience-content > section::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(90deg, rgba(6,6,7,.94) 0%, rgba(6,6,7,.8) 44%, rgba(6,6,7,.24) 100%);
+  opacity: .96; pointer-events: none;
+}
+.experience-content > section .container { width: min(100% - 64px, 1080px); margin-inline: auto; }
+.experience-content > .intro { padding-top: 150px; }
+.experience-content .intro-grid { grid-template-columns: minmax(0, 1fr) minmax(260px, .7fr); gap: clamp(30px, 8vw, 120px); }
+.experience-content .intro h2, .experience-content .section-heading h2, .experience-content .fit h2, .experience-content .process h2, .experience-content .faq h2 { font-size: clamp(2.4rem, 5.4vw, 5.3rem); }
+.experience-content .intro-copy { max-width: 430px; }
+.experience-content .principle-strip { margin-top: 54px; }
+.experience-content > .services { display: block; padding-top: 0; padding-bottom: 0; }
+.experience-content .services > .container { width: 100%; max-width: none; }
+.experience-content .services .section-heading { min-height: 100svh; display: flex; align-items: center; width: min(100% - 64px, 1080px); margin: auto; }
+.experience-content .service-grid { display: block; }
+.experience-content .planet-chapter {
+  min-height: 100svh; width: 100%; display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(100px, 14vh, 170px) max(32px, calc((100vw - 1080px)/2)) !important;
+  border: 0; border-radius: 0; background: transparent; position: relative; overflow: hidden;
+}
+.experience-content .planet-chapter::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(90deg, rgba(6,6,7,.96) 0%, rgba(6,6,7,.78) 48%, rgba(6,6,7,.12) 100%);
+}
+.experience-content .planet-chapter .service-card-top { margin-bottom: 30px; }
+.experience-content .planet-chapter .service-number { font-size: .85rem; letter-spacing: .2em; color: var(--accent); }
+.experience-content .planet-chapter h3 { font-size: clamp(3rem, 7.5vw, 7rem); line-height: .98; letter-spacing: -.065em; max-width: 800px; }
+.experience-content .planet-chapter p { font-size: clamp(1rem, 1.7vw, 1.3rem); line-height: 1.7; max-width: 540px; }
+.experience-content .planet-chapter .service-tag { margin-top: 24px; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; }
+.experience-content .service-footnote { display: none; }
+.experience-content > .fit::before, .experience-content > .process::before, .experience-content > .faq::before { background: rgba(6,6,7,.84); }
+.experience-content .fit-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: clamp(35px, 8vw, 120px); }
+.experience-content .fit-list { border-top: 1px solid var(--line); }
+.experience-content .fit-item { padding: 24px 0; }
+.experience-content .process-steps { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 38px; }
+.experience-content .faq-grid { grid-template-columns: minmax(0,.7fr) minmax(0,1fr); gap: clamp(35px,8vw,120px); }
+.experience-content > .application-section { min-height: 100svh; background: rgba(6,6,7,.96); }
+.experience-content > .application-section::before { background: radial-gradient(ellipse at 85% 40%, rgba(216,198,165,.08), transparent 40%), rgba(6,6,7,.96); }
+.experience-content .application-layout { grid-template-columns: minmax(0,.75fr) minmax(0,1fr); gap: clamp(30px,6vw,88px); }
+.experience-content .application-copy { position: sticky; top: 140px; align-self: start; }
+.experience-content .application-form { padding: 32px; }
+.experience-content .form-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 18px; }
+body.is-zooming .solar-system { width: min(125vw, 125vh, 1300px); height: min(125vw, 125vh, 1300px); }
+.planet-link.is-zooming .planet-body { animation: planet-arrival .9s cubic-bezier(.18,.75,.2,1) both; }
+@keyframes planet-arrival {
+  0% { transform: translate(-50%,-50%) scale(1); filter: brightness(1); }
+  52% { transform: translate(-50%,-50%) scale(5.5); filter: brightness(1.65); box-shadow: 0 0 90px rgba(216,198,165,.55); }
+  100% { transform: translate(-50%,-50%) scale(1.3); filter: brightness(1.2); }
+}
+@media (max-width: 760px) {
+  .solar-guide { height: 100svh; min-height: 0; max-height: none; }
+  .solar-guide-heading { top: 100px; width: 90%; }
+  .solar-guide-heading h2 { font-size: clamp(2.3rem, 10vw, 3.4rem); }
+  .solar-system { top: 53%; width: min(90vw, 66vh); height: min(90vw, 66vh); }
+  .solar-star { width: 64px; height: 64px; }
+  .star-shape { inset: 15px; }
+  .star-label { margin-top: 50px; font-size: .5rem; }
+  .planet-link { width: 56px; height: 56px; }
+  .planet-body, .planet-identity, .planet-release, .planet-content, .planet-audience, .planet-process, .planet-dawn { width: 20px; height: 20px; }
+  .planet-label { display: none; }
+  .solar-guide-footer { bottom: 30px; }
+  .solar-chapter-counter { right: 20px; bottom: 30px; }
+  .experience-content > section { padding: 120px 0 90px; }
+  .experience-content > section .container { width: min(100% - 40px, 620px); }
+  .experience-content > section::before { background: rgba(6,6,7,.87); }
+  .experience-content .intro-grid, .experience-content .fit-grid, .experience-content .faq-grid, .experience-content .application-layout { grid-template-columns: 1fr; gap: 30px; }
+  .experience-content .intro h2, .experience-content .section-heading h2, .experience-content .fit h2, .experience-content .process h2, .experience-content .faq h2 { font-size: clamp(2.4rem, 11vw, 4rem); }
+  .experience-content .services .section-heading { min-height: 80svh; width: min(100% - 40px, 620px); }
+  .experience-content .planet-chapter { padding: 120px 24px !important; }
+  .experience-content .planet-chapter h3 { font-size: clamp(2.8rem, 13vw, 5rem); }
+  .experience-content .process-steps { grid-template-columns: 1fr; gap: 24px; }
+  .experience-content .application-copy { position: static; }
+  .experience-content .application-form { padding: 24px 20px; }
+  .experience-content .form-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .planet-link.is-zooming .planet-body { animation: none !important; }
+  .solar-guide-heading, .solar-system { transition: none !important; }
+}
