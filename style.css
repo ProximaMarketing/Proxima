@@ -601,3 +601,14 @@ body.is-zooming .solar-system { width: min(125vw, 125vh, 1300px); height: min(12
   .solar-briefing-copy { max-width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .solar-briefing { animation: none !important; } .solar-guide.has-active-planet .solar-system { transform: translate(-50%,-50%); } }
+
+
+/* Keep the live galaxy and its briefing unobscured and interactive during planet chapters. */
+.experience-content > #approach,
+.experience-content > .services,
+.experience-content > #process,
+.experience-content .planet-chapter { pointer-events: none; }
+.experience-content > #approach::before,
+.experience-content > .services::before,
+.experience-content > #process::before,
+.experience-content .planet-chapter::before { background: transparent !important; opacity: 1 !important; }
