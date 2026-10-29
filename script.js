@@ -38,6 +38,22 @@
     label: link.querySelector(".planet-label")?.textContent.trim() || "Subject area"
   })).filter(item => item.target);
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const solarGuide = document.querySelector(".solar-guide");
+  const briefing = document.querySelector("#solarBriefing");
+  const briefingIndex = document.querySelector("#solarBriefingIndex");
+  const briefingTitle = document.querySelector("#solarBriefingTitle");
+  const briefingCopy = document.querySelector("#solarBriefingCopy");
+  const briefingMeta = document.querySelector("#solarBriefingMeta");
+  const chapterContent = {
+    approach: { title: "A direction of your own.", copy: "Identity, content and release strategy, connected around what makes you different.", meta: "A clear direction · A connected plan" },
+    identity: { title: "Artist identity", copy: "Clarify what makes you distinct, then give it a consistent creative direction.", meta: "Positioning · Visual direction" },
+    release: { title: "Release strategy", copy: "Plan the build-up, release and follow-through before the moment arrives.", meta: "Planning · Campaign structure" },
+    content: { title: "Content direction", copy: "Build content around your sound, not the algorithm of the week.", meta: "Creative direction · Content" },
+    audience: { title: "Audience development", copy: "Find the people your music speaks to and give them a reason to stay.", meta: "Discovery · Audience growth" },
+    process: { title: "Find the signal. Follow it forward.", copy: "We listen to your music, find the focus, build a practical plan, then learn and evolve with you.", meta: "Listen · Focus · Plan · Evolve" }
+  };
+  let activePlanetIndex = -1;
+  let lastZoomedId = "";
 
   const updateSolarSystem = () => {
     if (!solarSystem) return;
@@ -46,7 +62,9 @@
     const scrollSpan = Math.max(1, (journey ? journey.offsetHeight : 1) - window.innerHeight);
     const travelled = rect ? Math.min(scrollSpan, Math.max(0, -rect.top)) : 0;
     const progressRatio = Math.max(0, Math.min(1, travelled / scrollSpan));
-    const rotation = reducedMotion ? 0 : progressRatio * 390;
+    const rotation = activePlanetIndex >= 0
+      ? -(activePlanetIndex * 360 / planetLinks.length)
+      : (reducedMotion ? 0 : progressRatio * 390);
     const orbitRadius = solarSystem.clientWidth * 0.365;
     planetLinks.forEach((link, index) => {
       const angle = (index / planetLinks.length) * Math.PI * 2 - Math.PI / 2 + rotation * Math.PI / 180;
@@ -58,8 +76,12 @@
   window.addEventListener("resize", updateSolarSystem, { passive: true });
 
   const setActivePlanet = id => {
-    journeySections.forEach(item => {
-      const isActive = item.id === id;
+    const index = journeySections.findIndex(item => item.id === id);
+    if (index < 0) return;
+    const changed = activePlanetIndex !== index;
+    activePlanetIndex = index;
+    journeySections.forEach((item, itemIndex) => {
+      const isActive = itemIndex === index;
       item.link.classList.toggle("is-active", isActive);
       if (isActive) item.link.setAttribute("aria-current", "location");
       else item.link.removeAttribute("aria-current");
@@ -68,15 +90,52 @@
       if (link.dataset.target === id) link.setAttribute("aria-current", "location");
       else link.removeAttribute("aria-current");
     });
-    if (solarStatus) {
-      const active = journeySections.find(item => item.id === id);
-      solarStatus.textContent = active ? "Exploring: " + active.label : "Follow the orbit to explore.";
+    if (solarStatus) solarStatus.textContent = "Exploring: " + journeySections[index].label;
+    if (solarChapterNumber) solarChapterNumber.textContent = String(index + 1).padStart(2, "0");
+    const content = chapterContent[id];
+    if (content && briefing && briefingTitle && briefingCopy && briefingMeta) {
+      briefing.hidden = false;
+      briefingTitle.textContent = content.title;
+      briefingCopy.textContent = content.copy;
+      briefingMeta.textContent = content.meta;
+      if (briefingIndex) briefingIndex.textContent = String(index + 1).padStart(2, "0") + " / 06";
     }
+    if (solarGuide) {
+      solarGuide.classList.add("has-active-planet");
+      solarGuide.classList.remove("is-ended");
+    }
+    document.body.classList.remove("journey-complete");
+    updateSolarSystem();
+    if (changed && !reducedMotion) {
+      const link = journeySections[index].link;
+      link.classList.remove("is-zooming");
+      void link.offsetWidth;
+      link.classList.add("is-zooming");
+      window.setTimeout(() => link.classList.remove("is-zooming"), 950);
+    }
+    lastZoomedId = id;
   };
 
-  setActivePlanet("approach");
-  planetLinks.forEach(link => link.addEventListener("click", () => setActivePlanet(link.dataset.target)));
-  mobileKeyLinks.forEach(link => link.addEventListener("click", () => setActivePlanet(link.dataset.target)));
+  const endPlanetJourney = () => {
+    document.body.classList.add("journey-complete");
+    if (solarGuide) solarGuide.classList.add("is-ended");
+  };
+
+  if (briefing) briefing.hidden = true;
+  if (solarGuide) solarGuide.classList.remove("has-active-planet");
+  planetLinks.forEach(link => link.addEventListener("click", () => {
+    const id = link.dataset.target;
+    setActivePlanet(id);
+    const target = document.getElementById(id);
+    if (target) target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+  }));
+  mobileKeyLinks.forEach(link => link.addEventListener("click", () => {
+    const id = link.dataset.target;
+    setActivePlanet(id);
+    const target = document.getElementById(id);
+    if (target) target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+  }));
+
   if ("IntersectionObserver" in window) {
     const chapterTargets = [
       document.getElementById("approach"),
@@ -85,28 +144,21 @@
       document.getElementById("content"),
       document.getElementById("audience"),
       document.getElementById("process"),
+      document.getElementById("fit"),
       document.getElementById("faq"),
       document.getElementById("application")
     ].filter(Boolean);
-    let lastZoomedId = "";
     const sectionObserver = new IntersectionObserver(entries => {
-      const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      const visible = entries.filter(entry => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
       if (!visible) return;
       const id = visible.target.id;
-      const planetId = id === "faq" || id === "application" ? "process" : id;
-      setActivePlanet(planetId);
-      if (solarChapterNumber) solarChapterNumber.textContent = String(Math.max(1, chapterTargets.findIndex(item => item.id === id) + 1)).padStart(2, "0");
-      if (lastZoomedId !== id && !reducedMotion) {
-        const link = planetLinks.find(item => item.dataset.target === planetId);
-        if (link) {
-          link.classList.remove("is-zooming");
-          void link.offsetWidth;
-          link.classList.add("is-zooming");
-          window.setTimeout(() => link.classList.remove("is-zooming"), 950);
-        }
-        lastZoomedId = id;
+      if (chapterContent[id]) {
+        if (lastZoomedId !== id) setActivePlanet(id);
+      } else if (["fit", "faq", "application"].includes(id)) {
+        endPlanetJourney();
       }
-    }, { rootMargin: "-28% 0px -28% 0px", threshold: [0, .1, .25, .5, .75] });
+    }, { rootMargin: "-32% 0px -32% 0px", threshold: [0, .1, .25, .5, .75] });
     chapterTargets.forEach(target => sectionObserver.observe(target));
   }
   updateSolarSystem();
