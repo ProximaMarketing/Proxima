@@ -247,8 +247,10 @@ h1 { font-size: clamp(3.25rem, 6.5vw, 6.55rem); line-height: .99; letter-spacing
   .application-copy { position: static; }
   .application-note { max-width: 480px; margin: 24px 0; }
   .application-form { padding: 24px 20px; }
-  .footer-main { grid-template-columns: 1fr 1fr; gap: 40px 28px; }
-  .footer-brand { grid-column: 1 / -1; }
+  .footer-main { grid-template-columns: minmax(0,1fr); gap: 30px; }
+  .footer-brand { grid-column: 1; }
+  .footer-nav { grid-column: 1; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px 22px; }
+  .footer-nav .footer-label { grid-column:1 / -1; margin-bottom:4px; }
 }
 @media (max-width: 480px) {
   .container { width: min(100% - 32px, var(--container)); }
