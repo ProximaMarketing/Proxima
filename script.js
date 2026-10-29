@@ -12,7 +12,13 @@
   if (currentYear) currentYear.textContent = String(new Date().getFullYear());
 
   let ticking = false;
+  let previousScrollY = window.scrollY;
+  let lastScrollDirection = 0;
   const updateScrollUI = () => {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY > previousScrollY + 1) lastScrollDirection = 1;
+    else if (currentScrollY < previousScrollY - 1) lastScrollDirection = -1;
+    previousScrollY = currentScrollY;
     const scrollable = Math.max(1, stageMetrics.documentHeight - window.innerHeight);
     const scrollRatio = Math.min(1, Math.max(0, window.scrollY / scrollable));
     if (progress) progress.style.transform = "scaleX(" + scrollRatio.toFixed(4) + ")";
@@ -384,14 +390,14 @@
     if (!journeySections.length || !chapterDocumentTops.length) return;
     const scrollY = window.scrollY;
     const switchLine = scrollY + window.innerHeight * 0.32;
-    if (activePlanetIndex >= 0 && fitDocumentTop - scrollY <= 2) { endPlanetJourney(); return; }
+    if (activePlanetIndex >= 0 && !document.body.classList.contains("journey-complete") && fitDocumentTop - scrollY <= 2) { endPlanetJourney(); return; }
     if (document.body.classList.contains("journey-complete")) {
       if (scrollY <= 20) {
         clearActivePlanet();
         return;
       }
       // If the visitor scrolls back up from the first normal section, re-enter at the nearest planet.
-      if (scrollY < fitDocumentTop && scrollY > chapterDocumentTops[0]) {
+      if (lastScrollDirection < 0 && scrollY < fitDocumentTop && scrollY > chapterDocumentTops[0]) {
         document.body.classList.remove("journey-complete");
         document.documentElement.classList.add("planet-snapping");
         let returnIndex = 0;
