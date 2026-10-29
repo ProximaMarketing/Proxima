@@ -70,7 +70,6 @@
     process: { title: "Find the signal. Follow it forward.", copy: "Bring the moving parts together, choose the next practical step, then learn from the results and evolve the plan with purpose.", meta: "06 — Learn, refine, repeat" }
   };
   let activePlanetIndex = -1;
-  let planetProgress = 0; // Discrete index: one input selects one planet.
   let briefingTransitionToken = 0;
   let briefingSwapTimer = 0;
   let leaderTransitionTimer = 0;
@@ -294,7 +293,6 @@
     }
 
     activePlanetIndex = index;
-    planetProgress = index;
     journeySections.forEach((item, itemIndex) => {
       const isActive = itemIndex === index;
       item.link.classList.toggle("is-active", isActive);
@@ -362,7 +360,6 @@
 
   const clearActivePlanet = () => {
     activePlanetIndex = -1;
-    planetProgress = 0;
     lastRenderedPlanetIndex = -1;
     window.clearTimeout(briefingSwapTimer);
     window.clearTimeout(leaderTransitionTimer);
@@ -388,7 +385,24 @@
     const scrollY = window.scrollY;
     const switchLine = scrollY + window.innerHeight * 0.32;
     if (activePlanetIndex >= 0 && fitDocumentTop - scrollY <= 12) { endPlanetJourney(); return; }
-    if (document.body.classList.contains("journey-complete")) { if (scrollY <= 20) clearActivePlanet(); return; }
+    if (document.body.classList.contains("journey-complete")) {
+      if (scrollY <= 20) {
+        clearActivePlanet();
+        return;
+      }
+      // If the visitor scrolls back up from the first normal section, re-enter at the nearest planet.
+      if (scrollY < fitDocumentTop && scrollY > chapterDocumentTops[0]) {
+        document.body.classList.remove("journey-complete");
+        document.documentElement.classList.add("planet-snapping");
+        let returnIndex = 0;
+        for (let i = 1; i < chapterDocumentTops.length; i += 1) {
+          if (chapterDocumentTops[i] <= switchLine) returnIndex = i;
+          else break;
+        }
+        setActivePlanet(journeySections[returnIndex].id);
+      }
+      return;
+    }
     if (scrollY <= 20) {
       if (activePlanetIndex !== -1 || document.body.classList.contains("journey-started")) clearActivePlanet();
       return;
