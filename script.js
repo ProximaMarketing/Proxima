@@ -109,7 +109,10 @@
       const angle = (index / planetLinks.length) * Math.PI * 2 - Math.PI / 2;
       link.style.setProperty("--x", (Math.cos(angle) * stageMetrics.orbitRadius).toFixed(2) + "px");
       link.style.setProperty("--y", (Math.sin(angle) * stageMetrics.orbitRadius * 0.82).toFixed(2) + "px");
-      if (planetBodies[index]) planetBodies[index].style.setProperty("--focus-scale", "1");
+      if (planetBodies[index]) {
+        planetBodies[index].style.setProperty("--planet-render-size", stageMetrics.focusDiameter + "px");
+        planetBodies[index].style.setProperty("--focus-scale", (stageMetrics.baseDiameter / stageMetrics.focusDiameter).toFixed(4));
+      }
     });
     previousFocusIndices = [];
     stageMetrics.documentHeight = document.documentElement.scrollHeight;
@@ -156,9 +159,10 @@
 
     nextIndices.forEach(index => {
       const weight = index === leftIndex ? 1 - eased : eased;
-      const focusScale = 1 + weight * (focusDiameter / baseDiameter - 1);
+      const visibleDiameter = baseDiameter + weight * (focusDiameter - baseDiameter);
+      const focusScale = visibleDiameter / focusDiameter;
       const body = planetBodies[index];
-      if (body) body.style.setProperty("--focus-scale", focusScale.toFixed(3));
+      if (body) body.style.setProperty("--focus-scale", focusScale.toFixed(4));
       planetLinks[index].classList.toggle("is-near", weight > 0.55);
     });
     previousFocusIndices = nextIndices;
@@ -194,7 +198,7 @@
     const focusScale = parseFloat(body.style.getPropertyValue("--focus-scale")) || 1;
     const cx = stage.left + stage.width / 2 + rotatedX * scale;
     const cy = stage.top + stage.height / 2 + rotatedY * scale;
-    const radius = stageMetrics.baseDiameter * focusScale * scale * .485;
+    const radius = stageMetrics.focusDiameter * focusScale * scale * .485;
     const sx = cx + Math.cos(angle) * radius;
     const sy = cy + Math.sin(angle) * radius;
     let tx, ty, path;
