@@ -299,7 +299,8 @@ body { position: relative; }
 .journey-halo { stroke: rgba(216,198,165,.12); stroke-width: 18; filter: blur(14px); }
 .journey-path { stroke: rgba(216,198,165,.52); stroke-width: 1.15; stroke-dasharray: 6000; stroke-dashoffset: 6000; filter: drop-shadow(0 0 4px rgba(216,198,165,.16)); }
 .journey-stars circle { fill: #ead9b8; opacity: .65; filter: drop-shadow(0 0 7px rgba(216,198,165,.7)); }
-.site-header, main, .site-footer { position: relative; z-index: 1; }
+.site-header { position: fixed; inset: 0 0 auto; z-index: 1000; }
+main, .site-footer { position: relative; z-index: 1; }
 .intro { background: rgba(12,12,11,.79); }
 .services { background: rgba(9,9,9,.78); }
 .fit { background: rgba(19,18,15,.88); }
