@@ -273,7 +273,6 @@
     const switchLine = window.scrollY + window.innerHeight * 0.32;
     const topOf = target => target.getBoundingClientRect().top + window.scrollY;
     const fitTarget = document.getElementById("fit");
-    const fitTop = fitTarget ? topOf(fitTarget) : Number.POSITIVE_INFINITY;
 
     if (pendingNavigationId) {
       const pendingTarget = document.getElementById(pendingNavigationId);
