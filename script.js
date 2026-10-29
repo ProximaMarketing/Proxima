@@ -73,6 +73,7 @@
     }
   };
 
+  setActivePlanet("approach");
   planetLinks.forEach(link => link.addEventListener("click", () => setActivePlanet(link.dataset.target)));
   mobileKeyLinks.forEach(link => link.addEventListener("click", () => setActivePlanet(link.dataset.target)));
   if ("IntersectionObserver" in window) {
