@@ -391,8 +391,9 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
   transition:none; pointer-events:auto; will-change:transform;
 }
 .planet-body {
-  position:absolute; top:50%; left:50%; display:block; width:23px; height:23px; overflow:hidden; transform:translate(-50%,-50%) scale(var(--focus-scale,1));
-  border:1px solid rgba(255,255,255,.28); border-radius:50%; transform:translate(-50%,-50%); isolation:isolate;
+  position:absolute; top:50%; left:50%; display:block; width:23px; height:23px; overflow:hidden;
+  transform:translate(-50%,-50%) scale(var(--focus-scale,1));
+  border:1px solid rgba(255,255,255,.28); border-radius:50%; isolation:isolate;
   box-shadow:inset -5px -4px 7px rgba(0,0,0,.58),inset 3px 3px 5px rgba(255,255,255,.25),0 0 16px rgba(216,198,165,.08);
   transition:box-shadow .32s ease,filter .32s ease;
 }
@@ -469,7 +470,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
   transition:opacity .2s ease,transform .2s cubic-bezier(.2,.7,.2,1),filter .2s ease;
   will-change:opacity,transform,filter;
 }
-.solar-briefing-content.is-changing { opacity:.12; transform:translateY(7px); filter:blur(1.5px); }
+.solar-briefing-content.is-changing { opacity:.12; transform:translateY(7px); filter:blur(1.5px); transition-duration:.1s; }
 .solar-briefing[hidden] { display:none !important; }
 .solar-briefing::before { content:""; display:block; width:38px; height:2px; margin:0 0 18px; background:linear-gradient(90deg,var(--accent),rgba(216,198,165,0)); }
 .solar-briefing-index { display:flex; align-items:center; gap:12px; margin:0 0 18px; color:var(--accent); font-size:.68rem; font-weight:600; letter-spacing:.2em; line-height:1.5; }
