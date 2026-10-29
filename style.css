@@ -335,3 +335,19 @@ main, .site-footer { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) {
   .journey-path { stroke-dasharray: none; stroke-dashoffset: 0; }
 }
+
+
+/* Keep the service offer focused and give the constellation room to breathe. */
+.service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; border: 0; }
+.service-card { min-height: 245px; border: 1px solid var(--line); padding: 30px 32px; background: rgba(11,11,10,.52); }
+.service-card-top { margin-bottom: 28px; }
+.service-card::after { height: 1px; }
+.service-footnote { margin-top: 20px; }
+@media (max-width: 760px) {
+  .service-grid { gap: 10px; }
+  .service-card { padding: 22px 20px; }
+}
+@media (max-width: 480px) {
+  .service-grid { grid-template-columns: 1fr; }
+  .service-card { min-height: 0; }
+}
