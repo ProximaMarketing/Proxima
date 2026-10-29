@@ -29,6 +29,7 @@
   const solarSystem = document.querySelector("#solarSystem");
   const planetLinks = Array.from(document.querySelectorAll(".planet-link"));
   const solarStatus = document.querySelector("#solarStatus");
+  const solarChapterNumber = document.querySelector("#solarChapterNumber");
   const mobileKeyLinks = Array.from(document.querySelectorAll(".solar-key-link"));
   const journeySections = planetLinks.map(link => ({
     link,
@@ -77,11 +78,36 @@
   planetLinks.forEach(link => link.addEventListener("click", () => setActivePlanet(link.dataset.target)));
   mobileKeyLinks.forEach(link => link.addEventListener("click", () => setActivePlanet(link.dataset.target)));
   if ("IntersectionObserver" in window) {
+    const chapterTargets = [
+      document.getElementById("approach"),
+      document.getElementById("identity"),
+      document.getElementById("release"),
+      document.getElementById("content"),
+      document.getElementById("audience"),
+      document.getElementById("process"),
+      document.getElementById("faq"),
+      document.getElementById("application")
+    ].filter(Boolean);
+    let lastZoomedId = "";
     const sectionObserver = new IntersectionObserver(entries => {
       const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible) setActivePlanet(visible.target.id);
-    }, { rootMargin: "-35% 0px -45% 0px", threshold: [0, .1, .25, .5, .75, 1] });
-    journeySections.forEach(item => sectionObserver.observe(item.target));
+      if (!visible) return;
+      const id = visible.target.id;
+      const planetId = id === "faq" || id === "application" ? "process" : id;
+      setActivePlanet(planetId);
+      if (solarChapterNumber) solarChapterNumber.textContent = String(Math.max(1, chapterTargets.findIndex(item => item.id === id) + 1)).padStart(2, "0");
+      if (lastZoomedId !== id && !reducedMotion) {
+        const link = planetLinks.find(item => item.dataset.target === planetId);
+        if (link) {
+          link.classList.remove("is-zooming");
+          void link.offsetWidth;
+          link.classList.add("is-zooming");
+          window.setTimeout(() => link.classList.remove("is-zooming"), 950);
+        }
+        lastZoomedId = id;
+      }
+    }, { rootMargin: "-28% 0px -28% 0px", threshold: [0, .1, .25, .5, .75] });
+    chapterTargets.forEach(target => sectionObserver.observe(target));
   }
   updateSolarSystem();
   updateScrollUI();
