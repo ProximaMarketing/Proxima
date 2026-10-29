@@ -299,11 +299,12 @@
     const target = document.getElementById(id);
     if (!target) return;
     const targetDocumentTop = target.getBoundingClientRect().top + window.scrollY;
+    const targetScrollTop = Math.max(0, targetDocumentTop - window.innerHeight * 0.32);
     pendingNavigationId = id;
-    pendingNavigationDirection = targetDocumentTop > window.scrollY + 1 ? "down" : targetDocumentTop < window.scrollY - 1 ? "up" : "here";
+    pendingNavigationDirection = targetScrollTop > window.scrollY + 1 ? "down" : targetScrollTop < window.scrollY - 1 ? "up" : "here";
     continuousPlanetProgress = Math.max(0, journeySections.findIndex(item => item.id === id));
     setActivePlanet(id);
-    target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+    window.scrollTo({ top: targetScrollTop, behavior: reducedMotion ? "auto" : "smooth" });
   };
   planetLinks.forEach(link => link.addEventListener("click", event => {
     event.preventDefault();
@@ -368,8 +369,14 @@
     if (pendingNavigationId) {
       const pendingTarget = document.getElementById(pendingNavigationId);
       const targetViewportTop = pendingTarget ? pendingTarget.getBoundingClientRect().top : 0;
-      if (pendingTarget && pendingNavigationDirection === "down" && targetViewportTop > window.innerHeight * 0.32) return;
-      if (pendingTarget && pendingNavigationDirection === "up" && targetViewportTop < 0) return;
+      if (pendingTarget && pendingNavigationDirection === "down" && targetViewportTop > window.innerHeight * 0.32) {
+        continuousPlanetProgress = Math.max(0, journeySections.findIndex(item => item.id === pendingNavigationId));
+        return;
+      }
+      if (pendingTarget && pendingNavigationDirection === "up" && targetViewportTop < window.innerHeight * 0.32) {
+        continuousPlanetProgress = Math.max(0, journeySections.findIndex(item => item.id === pendingNavigationId));
+        return;
+      }
       pendingNavigationId = null;
       pendingNavigationDirection = null;
     }
