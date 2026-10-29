@@ -52,6 +52,8 @@
   const briefingTitle = document.querySelector("#solarBriefingTitle");
   const briefingCopy = document.querySelector("#solarBriefingCopy");
   const briefingMeta = document.querySelector("#solarBriefingMeta");
+  const briefingContent = document.querySelector("#solarBriefingContent");
+  const previousLeaderPath = document.querySelector("#planetLeaderPrevious");
   const annotation = document.querySelector("#planetAnnotation");
   const leaderPath = document.querySelector("#planetLeader");
   const anchorRing = document.querySelector("#planetAnchorRing");
@@ -75,21 +77,39 @@
     process: { title: "Find the signal. Follow it forward.", copy: "Bring the moving parts together, choose the next practical step, then learn from the results and evolve the plan with purpose.", meta: "06 — Learn, refine, repeat" }
   };
   let activePlanetIndex = -1;
+  let continuousPlanetProgress = 0;
+  let briefingTransitionToken = 0;
+  let briefingSwapTimer = 0;
+  let leaderTransitionTimer = 0;
 
   const updateSolarSystem = () => {
     if (!solarSystem) return;
-    // The selected planet is always brought to the same focal point.
-    // Rotation changes once per chapter, so the orbit glides instead of jittering with every scroll tick.
-    const rotation = activePlanetIndex < 0
-      ? 0
-      : 90 - activePlanetIndex * 360 / Math.max(1, planetLinks.length);
+    const progress = Math.max(0, Math.min(planetLinks.length - 1, continuousPlanetProgress));
+    const rotation = 90 - progress * 360 / Math.max(1, planetLinks.length);
     solarSystem.style.setProperty("--solar-rotation", rotation + "deg");
     const orbitRadius = Math.min(solarSystem.clientWidth, solarSystem.clientHeight) * 0.365;
+    const mobile = window.matchMedia("(max-width: 760px)").matches;
+    const baseDiameter = mobile ? 17 : 23;
+    const focusDiameter = mobile
+      ? Math.max(136, Math.min(168, window.innerWidth * 0.43, window.innerHeight * 0.25))
+      : Math.max(210, Math.min(360, window.innerWidth * 0.28, window.innerHeight * 0.46));
+    const leftIndex = Math.min(planetLinks.length - 1, Math.floor(progress));
+    const fraction = progress - leftIndex;
+    const leftWeight = Math.cos(fraction * Math.PI / 2);
+    const rightWeight = leftIndex < planetLinks.length - 1 ? Math.sin(fraction * Math.PI / 2) : 0;
+
     planetLinks.forEach((link, index) => {
       const angle = (index / planetLinks.length) * Math.PI * 2 - Math.PI / 2 + rotation * Math.PI / 180;
       link.style.setProperty("--x", (Math.cos(angle) * orbitRadius).toFixed(2) + "px");
       link.style.setProperty("--y", (Math.sin(angle) * orbitRadius * 0.82).toFixed(2) + "px");
       link.classList.toggle("label-left", Math.cos(angle) < -0.18);
+      let weight = 0;
+      if (index === leftIndex) weight = leftWeight;
+      else if (index === leftIndex + 1) weight = rightWeight;
+      const focusScale = 1 + weight * (focusDiameter / baseDiameter - 1);
+      const body = link.querySelector(".planet-body");
+      if (body) body.style.setProperty("--focus-scale", focusScale.toFixed(3));
+      link.style.setProperty("--focus-weight", weight.toFixed(3));
     });
   };
   const updatePlanetAnnotation = () => {
@@ -151,7 +171,7 @@
 
   const animatePlanetAnnotation = () => {
     if (!annotation || !leaderPath) return;
-    annotation.classList.remove("is-drawn");
+    annotation.classList.remove("is-drawn", "is-switching");
     updatePlanetAnnotation();
     requestAnimationFrame(() => {
       updatePlanetAnnotation();
@@ -161,17 +181,71 @@
     const started = performance.now();
     const followTransition = now => {
       updatePlanetAnnotation();
-      if (now - started < 820 && activePlanetIndex >= 0) requestAnimationFrame(followTransition);
+      if (now - started < 520 && activePlanetIndex >= 0) requestAnimationFrame(followTransition);
     };
     requestAnimationFrame(followTransition);
   };
 
   window.addEventListener("resize", updateScrollUI, { passive: true });
 
+  const populateBriefing = (content, index) => {
+    if (!content || !briefing || !briefingTitle || !briefingCopy || !briefingMeta) return;
+    briefing.hidden = false;
+    briefingTitle.textContent = content.title;
+    briefingCopy.textContent = content.copy;
+    briefingMeta.textContent = content.meta;
+    if (briefingIndex) briefingIndex.textContent = String(index + 1).padStart(2, "0") + " / 06";
+  };
+
+  const prepareLeaderCrossfade = () => {
+    if (!annotation || !leaderPath || !previousLeaderPath) return;
+    if (!annotation.classList.contains("is-switching")) {
+      const previousD = leaderPath.getAttribute("d");
+      if (previousD) previousLeaderPath.setAttribute("d", previousD);
+    }
+    annotation.classList.add("is-switching");
+    annotation.classList.remove("is-drawn");
+    window.clearTimeout(leaderTransitionTimer);
+  };
+
+  const finishLeaderCrossfade = () => {
+    if (!annotation) return;
+    requestAnimationFrame(() => {
+      updatePlanetAnnotation();
+      annotation.classList.add("is-drawn");
+      annotation.classList.remove("is-switching");
+    });
+    window.clearTimeout(leaderTransitionTimer);
+    leaderTransitionTimer = window.setTimeout(() => {
+      if (previousLeaderPath) previousLeaderPath.setAttribute("d", "");
+    }, 430);
+  };
+
   const setActivePlanet = id => {
     const index = journeySections.findIndex(item => item.id === id);
     if (index < 0) return;
     const changed = activePlanetIndex !== index;
+    const hasPreviousBriefing = Boolean(changed && briefing && !briefing.hidden && briefingTitle && briefingTitle.textContent);
+    const content = chapterContent[id];
+
+    if (hasPreviousBriefing) {
+      if (briefingContent) briefingContent.classList.add("is-changing");
+      prepareLeaderCrossfade();
+      briefingTransitionToken += 1;
+      const token = briefingTransitionToken;
+      window.clearTimeout(briefingSwapTimer);
+      briefingSwapTimer = window.setTimeout(() => {
+        if (token !== briefingTransitionToken) return;
+        populateBriefing(content, index);
+        if (briefingContent) briefingContent.classList.remove("is-changing");
+        updatePlanetAnnotation();
+        finishLeaderCrossfade();
+      }, reducedMotion ? 0 : 105);
+    } else {
+      populateBriefing(content, index);
+      if (briefingContent) briefingContent.classList.remove("is-changing");
+    }
+
     activePlanetIndex = index;
     journeySections.forEach((item, itemIndex) => {
       const isActive = itemIndex === index;
@@ -185,18 +259,6 @@
     });
     if (solarStatus) solarStatus.textContent = "Exploring: " + journeySections[index].label;
     if (solarChapterNumber) solarChapterNumber.textContent = String(index + 1).padStart(2, "0");
-    const content = chapterContent[id];
-    if (content && briefing && briefingTitle && briefingCopy && briefingMeta) {
-      if (changed) {
-        briefing.hidden = true;
-        void briefing.offsetWidth;
-      }
-      briefing.hidden = false;
-      briefingTitle.textContent = content.title;
-      briefingCopy.textContent = content.copy;
-      briefingMeta.textContent = content.meta;
-      if (briefingIndex) briefingIndex.textContent = String(index + 1).padStart(2, "0") + " / 06";
-    }
     document.body.classList.add("journey-started");
     if (solarGuide) {
       solarGuide.classList.add("has-active-planet");
@@ -204,8 +266,14 @@
     }
     document.body.classList.remove("journey-complete");
     updateSolarSystem();
-    updatePlanetAnnotation();
-    if (changed) animatePlanetAnnotation();
+
+    if (changed && !hasPreviousBriefing) {
+      updatePlanetAnnotation();
+      animatePlanetAnnotation();
+    } else if (hasPreviousBriefing) {
+      updatePlanetAnnotation();
+    }
+
     if (changed && !reducedMotion) {
       const link = journeySections[index].link;
       link.classList.remove("is-zooming");
@@ -217,7 +285,7 @@
   const endPlanetJourney = () => {
     document.body.classList.add("journey-complete");
     if (solarGuide) solarGuide.classList.add("is-ended");
-    if (annotation) annotation.classList.remove("is-drawn");
+    if (annotation) annotation.classList.remove("is-drawn", "is-switching");
   };
 
   if (briefing) briefing.hidden = true;
@@ -233,6 +301,7 @@
     const targetDocumentTop = target.getBoundingClientRect().top + window.scrollY;
     pendingNavigationId = id;
     pendingNavigationDirection = targetDocumentTop > window.scrollY + 1 ? "down" : targetDocumentTop < window.scrollY - 1 ? "up" : "here";
+    continuousPlanetProgress = Math.max(0, journeySections.findIndex(item => item.id === id));
     setActivePlanet(id);
     target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
   };
@@ -253,6 +322,10 @@
 
   const clearActivePlanet = () => {
     activePlanetIndex = -1;
+    continuousPlanetProgress = 0;
+    window.clearTimeout(briefingSwapTimer);
+    window.clearTimeout(leaderTransitionTimer);
+    if (briefingContent) briefingContent.classList.remove("is-changing");
     journeySections.forEach(item => {
       item.link.classList.remove("is-active", "is-zooming");
       item.link.removeAttribute("aria-current");
@@ -272,7 +345,25 @@
     if (!journeySections.length) return;
     const switchLine = window.scrollY + window.innerHeight * 0.32;
     const topOf = target => target.getBoundingClientRect().top + window.scrollY;
+    const positions = journeySections.map(item => topOf(item.target));
+    const stageStarts = positions.map(top => top - window.innerHeight * 0.32);
     const fitTarget = document.getElementById("fit");
+    const fitViewportTop = fitTarget ? fitTarget.getBoundingClientRect().top : Number.POSITIVE_INFINITY;
+
+    // Continuous progress drives the orbit and the hand-off of planet scale.
+    if (window.scrollY <= stageStarts[0]) {
+      continuousPlanetProgress = 0;
+    } else {
+      continuousPlanetProgress = journeySections.length - 1;
+      for (let i = 0; i < stageStarts.length - 1; i += 1) {
+        if (window.scrollY < stageStarts[i + 1]) {
+          const span = Math.max(1, stageStarts[i + 1] - stageStarts[i]);
+          const fraction = Math.max(0, Math.min(1, (window.scrollY - stageStarts[i]) / span));
+          continuousPlanetProgress = i + fraction;
+          break;
+        }
+      }
+    }
 
     if (pendingNavigationId) {
       const pendingTarget = document.getElementById(pendingNavigationId);
@@ -283,22 +374,19 @@
       pendingNavigationDirection = null;
     }
 
-    // Begin the hand-off as soon as the next section enters the lower edge of the viewport.
-    // This lets the galaxy disappear before the following section's heading reaches the briefing panel.
-    const fitViewportTop = fitTarget ? fitTarget.getBoundingClientRect().top : Number.POSITIVE_INFINITY;
     if (fitViewportTop <= window.innerHeight * 0.92) {
       endPlanetJourney();
       return;
     }
 
-    if (switchLine < topOf(journeySections[0].target)) {
+    if (switchLine < positions[0]) {
       if (activePlanetIndex !== -1 || document.body.classList.contains("journey-complete")) clearActivePlanet();
       return;
     }
 
     let selectedIndex = 0;
-    for (let i = 1; i < journeySections.length; i += 1) {
-      if (topOf(journeySections[i].target) <= switchLine) selectedIndex = i;
+    for (let i = 1; i < positions.length; i += 1) {
+      if (positions[i] <= switchLine) selectedIndex = i;
       else break;
     }
 
