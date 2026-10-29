@@ -156,7 +156,7 @@ h1 { font-size: clamp(3.25rem, 6.5vw, 6.55rem); line-height: .99; letter-spacing
 .application-copy { position: sticky; top: 115px; }
 .application-copy h2 { margin-bottom: 24px; }
 .application-copy > p:not(.eyebrow) { font-size: .98rem; line-height: 1.9; max-width: 420px; }
-.application-note { display: grid; grid-template-columns: 25px 1fr; gap: 14px; align-items: start; margin: 35px 0; padding: 20px; border: 1px solid var(--line); background: rgba(255,255,255,.018); }
+.application-note { display: block; min-width: 0; margin: 35px 0; padding: 20px; border: 1px solid var(--line); background: rgba(255,255,255,.015); }
 .note-icon { color: var(--accent); padding-top: 3px; }
 .application-note p { margin: 0; font-size: .87rem; line-height: 1.8; }
 .response-time { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .8rem; }
@@ -574,7 +574,8 @@ body.is-zooming .solar-system { width: min(125vw, 125vh, 1300px); height: min(12
   min-height: 680px;
   padding: 0;
   overflow: visible;
-  border-bottom: 0;
+  border: 0 !important;
+  box-shadow: none !important;
   background: transparent;
 }
 .hero-grid {
@@ -890,6 +891,9 @@ body.journey-complete .solar-guide { opacity: 0; visibility: hidden; pointer-eve
   display: flex;
   align-items: center;
   padding: clamp(90px, 12vh, 140px) 0;
+  border: 0 !important;
+  outline: 0;
+  box-shadow: none !important;
   background: transparent;
   scroll-margin-top: 0;
 }
