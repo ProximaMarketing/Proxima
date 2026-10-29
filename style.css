@@ -419,6 +419,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 .planet-audience { background:radial-gradient(circle at 28% 23%,#e0f8fb 0,#92d0d9 17%,#5b9eae 42%,#315d73 70%,#142634 100%); }
 .planet-process { background:radial-gradient(circle at 28% 23%,#fff2c1 0,#d8bb7a 18%,#a28a52 43%,#625333 71%,#211b10 100%); }
 .planet-link.is-near { z-index:12; }
+.planet-link.is-active { z-index:20; }
 .planet-link.is-active .planet-body { border-color:rgba(255,248,229,.52); }
 .planet-link.is-active .planet-body::before { opacity:1; }
 .planet-link:hover .planet-body,.planet-link:focus-visible .planet-body { border-color:rgba(255,248,229,.65); }
