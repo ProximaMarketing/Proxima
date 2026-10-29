@@ -52,12 +52,12 @@
   const briefingCopy = document.querySelector("#solarBriefingCopy");
   const briefingMeta = document.querySelector("#solarBriefingMeta");
   const chapterContent = {
-    approach: { title: "A direction of your own.", copy: "Identity, content and release strategy, connected around what makes you different.", meta: "A clear direction · A connected plan" },
-    identity: { title: "Artist identity", copy: "Clarify what makes you distinct, then give it a consistent creative direction.", meta: "Positioning · Visual direction" },
-    release: { title: "Release strategy", copy: "Plan the build-up, release and follow-through before the moment arrives.", meta: "Planning · Campaign structure" },
-    content: { title: "Content direction", copy: "Build content around your sound, not the algorithm of the week.", meta: "Creative direction · Content" },
-    audience: { title: "Audience development", copy: "Find the people your music speaks to and give them a reason to stay.", meta: "Discovery · Audience growth" },
-    process: { title: "Find the signal. Follow it forward.", copy: "We listen to your music, find the focus, build a practical plan, then learn and evolve with you.", meta: "Listen · Focus · Plan · Evolve" }
+    approach: { title: "A direction of your own.", copy: "Identity, content and release strategy — connected around what makes you different.", meta: "Strategy · Direction" },
+    identity: { title: "Artist identity", copy: "Define what makes you distinct, then express it through a consistent creative direction.", meta: "Positioning · Visuals" },
+    release: { title: "Release strategy", copy: "Build anticipation before release day, then keep the momentum moving afterwards.", meta: "Planning · Campaigns" },
+    content: { title: "Content direction", copy: "Create content that feels like you — not another trend you have to chase.", meta: "Creative · Content" },
+    audience: { title: "Audience development", copy: "Find the people your music connects with, and give them a reason to stay.", meta: "Discovery · Community" },
+    process: { title: "Find the signal. Follow it forward.", copy: "Listen, find the focus, build a practical plan, then learn and evolve together.", meta: "Listen · Plan · Evolve" }
   };
   let activePlanetIndex = -1;
 
