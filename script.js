@@ -36,7 +36,10 @@
     }
   }, { passive: true });
   const solarSystem = document.querySelector("#solarSystem");
+  const planetField = document.querySelector("#planetField");
   const planetLinks = Array.from(document.querySelectorAll(".planet-link"));
+  const planetBodies = planetLinks.map(link => link.querySelector(".planet-body"));
+  let previousFocusIndices = [];
   const solarStatus = document.querySelector("#solarStatus");
   const solarChapterNumber = document.querySelector("#solarChapterNumber");
   const mobileKeyLinks = Array.from(document.querySelectorAll(".solar-key-link"));
@@ -100,9 +103,16 @@
     stageMetrics.baseDiameter = stageMetrics.mobile ? 17 : 23;
     stageMetrics.focusDiameter = stageMetrics.mobile
       ? Math.max(136, Math.min(168, window.innerWidth * 0.43, window.innerHeight * 0.25))
-      : Math.max(210, Math.min(340, window.innerWidth * 0.265, window.innerHeight * 0.43));
+      : Math.max(190, Math.min(300, window.innerWidth * 0.245, window.innerHeight * 0.40));
     stageMetrics.systemWidth = solarSystem ? solarSystem.clientWidth : 0;
     stageMetrics.orbitRadius = stageMetrics.systemWidth * 0.365;
+    planetLinks.forEach((link, index) => {
+      const angle = (index / planetLinks.length) * Math.PI * 2 - Math.PI / 2;
+      link.style.setProperty("--x", (Math.cos(angle) * stageMetrics.orbitRadius).toFixed(2) + "px");
+      link.style.setProperty("--y", (Math.sin(angle) * stageMetrics.orbitRadius * 0.82).toFixed(2) + "px");
+      if (planetBodies[index]) planetBodies[index].style.setProperty("--focus-scale", "1");
+    });
+    previousFocusIndices = [];
     stageMetrics.documentHeight = document.documentElement.scrollHeight;
     chapterDocumentTops = journeySections.map(item => item.target.getBoundingClientRect().top + window.scrollY);
     const fitTarget = document.getElementById("fit");
@@ -113,31 +123,37 @@
   };
 
   const updateSolarSystem = () => {
-    if (!solarSystem) return;
+    if (!solarSystem || !planetLinks.length) return;
     const progress = Math.max(0, Math.min(planetLinks.length - 1, continuousPlanetProgress));
-    const rotation = 90 - progress * 360 / Math.max(1, planetLinks.length);
-    solarSystem.style.setProperty("--solar-rotation", rotation + "deg");
-    const orbitRadius = stageMetrics.orbitRadius;
-    const baseDiameter = stageMetrics.baseDiameter;
-    const focusDiameter = stageMetrics.focusDiameter;
+    const rotation = 90 - progress * 360 / planetLinks.length;
+    const rotationValue = rotation.toFixed(2) + "deg";
+    if (solarSystem.style.getPropertyValue("--solar-rotation") !== rotationValue) {
+      solarSystem.style.setProperty("--solar-rotation", rotationValue);
+    }
+
     const leftIndex = Math.min(planetLinks.length - 1, Math.floor(progress));
     const fraction = progress - leftIndex;
-    const leftWeight = Math.cos(fraction * Math.PI / 2);
-    const rightWeight = leftIndex < planetLinks.length - 1 ? Math.sin(fraction * Math.PI / 2) : 0;
+    const eased = fraction * fraction * (3 - 2 * fraction);
+    const rightIndex = Math.min(planetLinks.length - 1, leftIndex + 1);
+    const nextIndices = rightIndex === leftIndex ? [leftIndex] : [leftIndex, rightIndex];
+    const baseDiameter = stageMetrics.baseDiameter;
+    const focusDiameter = stageMetrics.focusDiameter;
 
-    planetLinks.forEach((link, index) => {
-      const angle = (index / planetLinks.length) * Math.PI * 2 - Math.PI / 2 + rotation * Math.PI / 180;
-      link.style.setProperty("--x", (Math.cos(angle) * orbitRadius).toFixed(2) + "px");
-      link.style.setProperty("--y", (Math.sin(angle) * orbitRadius * 0.82).toFixed(2) + "px");
-      link.classList.toggle("label-left", Math.cos(angle) < -0.18);
-      let weight = 0;
-      if (index === leftIndex) weight = leftWeight;
-      else if (index === leftIndex + 1) weight = rightWeight;
-      const focusScale = 1 + weight * (focusDiameter / baseDiameter - 1);
-      const body = link.querySelector(".planet-body");
-      if (body) body.style.setProperty("--focus-scale", focusScale.toFixed(3));
-      link.classList.toggle("is-near", weight > .55);
+    previousFocusIndices.forEach(index => {
+      if (!nextIndices.includes(index) && planetBodies[index]) {
+        planetBodies[index].style.setProperty("--focus-scale", "1");
+        planetLinks[index].classList.remove("is-near");
+      }
     });
+
+    nextIndices.forEach(index => {
+      const weight = index === leftIndex ? 1 - eased : eased;
+      const focusScale = 1 + weight * (focusDiameter / baseDiameter - 1);
+      const body = planetBodies[index];
+      if (body) body.style.setProperty("--focus-scale", focusScale.toFixed(3));
+      planetLinks[index].classList.toggle("is-near", weight > 0.55);
+    });
+    previousFocusIndices = nextIndices;
   };
   const updatePlanetAnnotation = () => {
     if (!annotation || !leaderPath || activePlanetIndex < 0 || !briefing || briefing.hidden ||
@@ -164,9 +180,12 @@
     const scale = stageMetrics.systemWidth ? stage.width / stageMetrics.systemWidth : 1;
     const localX = parseFloat(current.link.style.getPropertyValue("--x")) || 0;
     const localY = parseFloat(current.link.style.getPropertyValue("--y")) || 0;
+    const rotation = (parseFloat(solarSystem.style.getPropertyValue("--solar-rotation")) || 0) * Math.PI / 180;
+    const rotatedX = localX * Math.cos(rotation) - localY * Math.sin(rotation);
+    const rotatedY = localX * Math.sin(rotation) + localY * Math.cos(rotation);
     const focusScale = parseFloat(body.style.getPropertyValue("--focus-scale")) || 1;
-    const cx = stage.left + stage.width / 2 + localX * scale;
-    const cy = stage.top + stage.height / 2 + localY * scale;
+    const cx = stage.left + stage.width / 2 + rotatedX * scale;
+    const cy = stage.top + stage.height / 2 + rotatedY * scale;
     const radius = stageMetrics.baseDiameter * focusScale * scale * .485;
     const sx = cx + Math.cos(angle) * radius;
     const sy = cy + Math.sin(angle) * radius;
