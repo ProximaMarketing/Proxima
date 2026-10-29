@@ -214,7 +214,7 @@
 
   const handleResponsiveChange = () => {
     refreshLayoutCache();
-    lastRenderedPlanetIndex = -1;
+    lastRenderedPlanetIndex = -99;
     updateSolarSystem();
     briefingRectCache = null;
     solarRectCache = null;
@@ -342,19 +342,23 @@
     const target = document.getElementById(id);
     if (!target || !journeySections.some(item => item.id === id)) return;
     document.documentElement.classList.add("planet-snapping");
+    document.body.classList.remove("journey-complete");
     document.body.classList.add("journey-started");
-    target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+    if (solarGuide) solarGuide.classList.remove("is-ended");
+    setActivePlanet(id);
+    target.scrollIntoView({ behavior: "auto", block: "start" });
   };
 
-  planetLinks.forEach(link => link.addEventListener("click", event => { event.preventDefault(); travelToPlanet(link.dataset.target); }));
-  mobileKeyLinks.forEach(link => link.addEventListener("click", event => { event.preventDefault(); travelToPlanet(link.dataset.target); }));
-  document.querySelectorAll('a[href="#journey"], a[href="#approach"]').forEach(link => link.addEventListener("click", () => {
-    document.documentElement.classList.add("planet-snapping");
-    document.body.classList.add("journey-started");
-  }));
-  document.querySelectorAll('a[href="#application"]').forEach(link => link.addEventListener("click", () => {
-    if (document.body.classList.contains("journey-started")) endPlanetJourney();
-  }));
+  document.addEventListener("click", event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link) return;
+    const targetId = link.getAttribute("href").slice(1);
+    if (targetId === "journey") { event.preventDefault(); travelToPlanet("approach"); return; }
+    if (journeySections.some(item => item.id === targetId)) { event.preventDefault(); travelToPlanet(targetId); return; }
+    if (targetId === "application" && document.body.classList.contains("journey-started")) { endPlanetJourney(); return; }
+    if (targetId === "top" && document.body.classList.contains("journey-started")) { clearActivePlanet(); return; }
+    if (document.body.classList.contains("journey-started") && !document.body.classList.contains("journey-complete")) endPlanetJourney();
+  });
 
   const clearActivePlanet = () => {
     activePlanetIndex = -1;
@@ -390,6 +394,7 @@
       return;
     }
     if (switchLine < chapterDocumentTops[0]) return;
+    if (activePlanetIndex < 0) { setActivePlanet(journeySections[0].id); return; }
     let selectedIndex = 0;
     for (let i = 1; i < chapterDocumentTops.length; i += 1) {
       if (chapterDocumentTops[i] <= switchLine) selectedIndex = i; else break;
