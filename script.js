@@ -16,29 +16,67 @@
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
     const scrollRatio = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
     if (progress) progress.style.width = (scrollRatio * 100) + "%";
-    const journeyPath = document.querySelector(".journey-path");
-    if (journeyPath && journeyPath.dataset.length) {
-      journeyPath.style.strokeDashoffset = String(Number(journeyPath.dataset.length) * (1 - scrollRatio));
-    }
     if (header) header.classList.toggle("scrolled", window.scrollY > 18);
+    updateSolarSystem();
     ticking = false;
   };
+  window.addEventListener("resize", updateSolarSystem, { passive: true });
   window.addEventListener("scroll", () => {
     if (!ticking) {
       window.requestAnimationFrame(updateScrollUI);
       ticking = true;
     }
   }, { passive: true });
-  const journeyPath = document.querySelector(".journey-path");
-  if (journeyPath && typeof journeyPath.getTotalLength === "function" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    const length = journeyPath.getTotalLength();
-    journeyPath.dataset.length = String(length);
-    journeyPath.style.strokeDasharray = String(length);
-    journeyPath.style.strokeDashoffset = String(length);
-  } else if (journeyPath) {
-    journeyPath.style.strokeDasharray = "none";
-    journeyPath.style.strokeDashoffset = "0";
+  const solarSystem = document.querySelector("#solarSystem");
+  const planetLinks = Array.from(document.querySelectorAll(".planet-link"));
+  const solarStatus = document.querySelector("#solarStatus");
+  const journeySections = planetLinks.map(link => ({
+    link,
+    id: link.dataset.target,
+    target: document.getElementById(link.dataset.target),
+    label: link.querySelector(".planet-label")?.textContent.trim() || "Subject area"
+  })).filter(item => item.target);
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const updateSolarSystem = () => {
+    if (!solarSystem) return;
+    const journey = document.querySelector("#journey");
+    const rect = journey ? journey.getBoundingClientRect() : null;
+    const scrollSpan = Math.max(1, (journey ? journey.offsetHeight : 1) - window.innerHeight);
+    const travelled = rect ? Math.min(scrollSpan, Math.max(0, -rect.top)) : 0;
+    const progressRatio = Math.max(0, Math.min(1, travelled / scrollSpan));
+    const rotation = reducedMotion ? 0 : progressRatio * 390;
+    const orbitRadius = solarSystem.clientWidth * 0.365;
+    planetLinks.forEach((link, index) => {
+      const angle = (index / planetLinks.length) * Math.PI * 2 - Math.PI / 2 + rotation * Math.PI / 180;
+      link.style.setProperty("--x", (Math.cos(angle) * orbitRadius).toFixed(2) + "px");
+      link.style.setProperty("--y", (Math.sin(angle) * orbitRadius * 0.82).toFixed(2) + "px");
+      link.classList.toggle("label-left", Math.cos(angle) < -0.18);
+    });
+  };
+
+  const setActivePlanet = id => {
+    journeySections.forEach(item => {
+      const isActive = item.id === id;
+      item.link.classList.toggle("is-active", isActive);
+      if (isActive) item.link.setAttribute("aria-current", "location");
+      else item.link.removeAttribute("aria-current");
+    });
+    if (solarStatus) {
+      const active = journeySections.find(item => item.id === id);
+      solarStatus.textContent = active ? "Exploring: " + active.label : "Follow the orbit to explore.";
+    }
+  };
+
+  planetLinks.forEach(link => link.addEventListener("click", () => setActivePlanet(link.dataset.target)));
+  if ("IntersectionObserver" in window) {
+    const sectionObserver = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActivePlanet(visible.target.id);
+    }, { rootMargin: "-35% 0px -45% 0px", threshold: [0, .1, .25, .5, .75, 1] });
+    journeySections.forEach(item => sectionObserver.observe(item.target));
   }
+  updateSolarSystem();
   updateScrollUI();
 
   const closeMenu = () => {
