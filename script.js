@@ -14,7 +14,12 @@
   let ticking = false;
   const updateScrollUI = () => {
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-    if (progress) progress.style.width = (scrollable > 0 ? window.scrollY / scrollable * 100 : 0) + "%";
+    const scrollRatio = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+    if (progress) progress.style.width = (scrollRatio * 100) + "%";
+    const journeyPath = document.querySelector(".journey-path");
+    if (journeyPath && journeyPath.dataset.length) {
+      journeyPath.style.strokeDashoffset = String(Number(journeyPath.dataset.length) * (1 - scrollRatio));
+    }
     if (header) header.classList.toggle("scrolled", window.scrollY > 18);
     ticking = false;
   };
@@ -24,6 +29,16 @@
       ticking = true;
     }
   }, { passive: true });
+  const journeyPath = document.querySelector(".journey-path");
+  if (journeyPath && typeof journeyPath.getTotalLength === "function" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const length = journeyPath.getTotalLength();
+    journeyPath.dataset.length = String(length);
+    journeyPath.style.strokeDasharray = String(length);
+    journeyPath.style.strokeDashoffset = String(length);
+  } else if (journeyPath) {
+    journeyPath.style.strokeDasharray = "none";
+    journeyPath.style.strokeDashoffset = "0";
+  }
   updateScrollUI();
 
   const closeMenu = () => {
