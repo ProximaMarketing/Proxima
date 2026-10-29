@@ -1,156 +1,128 @@
-/*==========================================
-PROXIMA
-==========================================*/
+(() => {
+  const header = document.querySelector(".site-header");
+  const progress = document.querySelector(".scroll-progress");
+  const menuToggle = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".nav-links");
+  const form = document.querySelector("#applicationForm");
+  const submitButton = document.querySelector("#submitButton");
+  const status = document.querySelector("#formStatus");
+  const currentYear = document.querySelector("#currentYear");
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbwdbsCxqpj2l8xlcs9AzkHiYH5txcJfg3VkHI2OePnEGVMVXFUKAOvr6iWX_pkd1NA/exec";
 
+  if (currentYear) currentYear.textContent = String(new Date().getFullYear());
 
-/* Scroll Progress Bar */
+  let ticking = false;
+  const updateScrollUI = () => {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    if (progress) progress.style.width = (scrollable > 0 ? window.scrollY / scrollable * 100 : 0) + "%";
+    if (header) header.classList.toggle("scrolled", window.scrollY > 18);
+    ticking = false;
+  };
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateScrollUI);
+      ticking = true;
+    }
+  }, { passive: true });
+  updateScrollUI();
 
-const progressBar = document.querySelector(".scroll-progress");
+  const closeMenu = () => {
+    if (!menuToggle || !nav) return;
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Open navigation");
+    nav.classList.remove("is-open");
+    document.body.classList.remove("menu-open");
+  };
+  if (menuToggle && nav) {
+    menuToggle.addEventListener("click", () => {
+      const willOpen = menuToggle.getAttribute("aria-expanded") !== "true";
+      menuToggle.setAttribute("aria-expanded", String(willOpen));
+      menuToggle.setAttribute("aria-label", willOpen ? "Close navigation" : "Open navigation");
+      nav.classList.toggle("is-open", willOpen);
+      document.body.classList.toggle("menu-open", willOpen);
+    });
+    nav.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeMenu();
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 760) closeMenu();
+    });
+  }
 
-window.addEventListener("scroll", () => {
+  const revealItems = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -30px 0px" });
+    revealItems.forEach(item => observer.observe(item));
+  } else {
+    revealItems.forEach(item => item.classList.add("is-visible"));
+  }
 
-    const scrollTop = window.scrollY;
+  if (!form || !submitButton || !status) return;
+  const setStatus = (message, kind) => {
+    status.textContent = message;
+    status.className = "form-status is-visible " + (kind === "success" ? "is-success" : "is-error");
+  };
+  const clearStatus = () => {
+    status.textContent = "";
+    status.className = "form-status";
+  };
+  const requiredFields = Array.from(form.querySelectorAll("[required]"));
+  requiredFields.forEach(field => {
+    field.addEventListener("input", () => {
+      field.removeAttribute("aria-invalid");
+      if (field.checkValidity()) clearStatus();
+    });
+  });
 
-    const pageHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-
-    const progress = (scrollTop / pageHeight) * 100;
-
-    progressBar.style.width = progress + "%";
-
-});
-
-
-/* Floating Navigation */
-
-const navbar = document.querySelector(".navbar");
-
-window.addEventListener("scroll", () => {
-
-    if(window.scrollY > 100){
-
-        navbar.classList.add("scrolled");
-
-    }else{
-
-        navbar.classList.remove("scrolled");
-
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+    clearStatus();
+    requiredFields.forEach(field => field.removeAttribute("aria-invalid"));
+    const invalid = requiredFields.find(field => !field.checkValidity());
+    if (invalid) {
+      invalid.setAttribute("aria-invalid", "true");
+      invalid.reportValidity();
+      setStatus("Please check the highlighted required fields and try again.", "error");
+      invalid.focus();
+      return;
     }
 
-});
-
-
-/* Reveal Animation */
-
-const reveals = document.querySelectorAll(
-
-".intro, .capabilities, .process, .cta, .footer"
-
-);
-
-const observer = new IntersectionObserver(entries=>{
-
-    entries.forEach(entry=>{
-
-        if(entry.isIntersecting){
-
-            entry.target.classList.add("active");
-
-        }
-
-    });
-
-},{
-    threshold:.15
-});
-
-reveals.forEach(section=>{
-
-    section.classList.add("reveal");
-
-    observer.observe(section);
-
-});
-
-
-/* Smooth Scroll */
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
-
-    anchor.addEventListener("click",function(e){
-
-        e.preventDefault();
-
-        const target=document.querySelector(this.getAttribute("href"));
-
-        if(target){
-
-            target.scrollIntoView({
-
-                behavior:"smooth"
-
-            });
-
-        }
-
-    });
-
-});
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwdbsCxqpj2l8xlcs9AzkHiYH5txcJfg3VkHI2OePnEGVMVXFUKAOvr6iWX_pkd1NA/exec";
-
-const form = document.getElementById("applicationForm");
-const button = document.getElementById("submitButton");
-const success = document.getElementById("successMessage");
-
-if(form){
-
-    form.addEventListener("submit", async function(e){
-
-        e.preventDefault();
-
-        button.disabled = true;
-        button.textContent = "Submitting...";
-
-        const formData = Object.fromEntries(
-            new FormData(form).entries()
-        );
-
-        try{
-
-            const response = await fetch(SCRIPT_URL,{
-                method:"POST",
-                body:new URLSearchParams(formData)
-            });
-
-            const result = await response.json();
-
-            if(result.success){
-
-                form.reset();
-
-                success.classList.add("show");
-
-                success.scrollIntoView({
-                    behavior:"smooth"
-                });
-
-            }else{
-
-                alert("Something went wrong.");
-
-            }
-
-        }catch(error){
-
-            console.error(error);
-
-            alert("Unable to submit application.");
-
-        }
-
-        button.disabled = false;
-        button.textContent = "Submit Application";
-
-    });
-
-}
+    const originalButton = submitButton.innerHTML;
+    submitButton.disabled = true;
+    submitButton.innerHTML = "<span>Sending application…</span><span aria-hidden=\"true\">···</span>";
+    submitButton.setAttribute("aria-busy", "true");
+    try {
+      const response = await fetch(scriptUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: new URLSearchParams(new FormData(form)),
+        redirect: "follow"
+      });
+      if (!response.ok) throw new Error("The application service returned an error.");
+      const result = await response.json();
+      if (result && result.success === true) {
+        form.reset();
+        setStatus("Application received. Thank you for telling us about your project. We aim to respond within 3–5 business days.", "success");
+        status.focus();
+      } else {
+        throw new Error("The application service did not confirm receipt.");
+      }
+    } catch (error) {
+      console.error("PROXIMA application submission:", error);
+      setStatus("We couldn’t confirm that your application was received. Your information may not have been sent. Please try again shortly. If this keeps happening, let us know through the channel you used to find PROXIMA.", "error");
+      status.focus();
+    } finally {
+      submitButton.disabled = false;
+      submitButton.innerHTML = originalButton;
+      submitButton.removeAttribute("aria-busy");
+    }
+  });
+})();
