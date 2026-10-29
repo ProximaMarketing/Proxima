@@ -15,10 +15,15 @@
   const updateScrollUI = () => {
     const scrollable = Math.max(1, stageMetrics.documentHeight - window.innerHeight);
     const scrollRatio = Math.min(1, Math.max(0, window.scrollY / scrollable));
-    if (progress) progress.style.width = (scrollRatio * 100) + "%";
+    if (progress) progress.style.transform = "scaleX(" + scrollRatio.toFixed(4) + ")";
     if (header) header.classList.toggle("scrolled", window.scrollY > 18);
     syncPlanetFromScroll();
-    if (activePlanetIndex >= 0 && document.body.classList.contains("journey-started")) {
+    if (
+      activePlanetIndex >= 0 &&
+      document.body.classList.contains("journey-started") &&
+      !document.body.classList.contains("journey-complete") &&
+      !(solarGuide && solarGuide.classList.contains("is-ended"))
+    ) {
       updateSolarSystem();
       updatePlanetAnnotation();
     }
@@ -35,12 +40,6 @@
   const solarStatus = document.querySelector("#solarStatus");
   const solarChapterNumber = document.querySelector("#solarChapterNumber");
   const mobileKeyLinks = Array.from(document.querySelectorAll(".solar-key-link"));
-  planetLinks.forEach(link => {
-    const body = link.querySelector(".planet-body");
-    if (body) body.addEventListener("animationend", event => {
-      if (event.animationName === "planet-arrival") link.classList.remove("is-zooming");
-    });
-  });
   const journeySections = planetLinks.map(link => ({
     link,
     id: link.dataset.target,
@@ -137,6 +136,7 @@
       const focusScale = 1 + weight * (focusDiameter / baseDiameter - 1);
       const body = link.querySelector(".planet-body");
       if (body) body.style.setProperty("--focus-scale", focusScale.toFixed(3));
+      link.style.zIndex = weight > .55 ? "12" : "4";
       link.style.setProperty("--focus-weight", weight.toFixed(3));
     });
   };
@@ -316,10 +316,6 @@
     }
 
     if (changed && !reducedMotion) {
-      const link = journeySections[index].link;
-      link.classList.remove("is-zooming");
-      void link.offsetWidth;
-      link.classList.add("is-zooming");
     }
   };
 
