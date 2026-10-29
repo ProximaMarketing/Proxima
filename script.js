@@ -13,13 +13,15 @@
 
   let ticking = false;
   const updateScrollUI = () => {
-    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollRatio = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+    const scrollable = Math.max(1, stageMetrics.documentHeight - window.innerHeight);
+    const scrollRatio = Math.min(1, Math.max(0, window.scrollY / scrollable));
     if (progress) progress.style.width = (scrollRatio * 100) + "%";
     if (header) header.classList.toggle("scrolled", window.scrollY > 18);
     syncPlanetFromScroll();
-    updateSolarSystem();
-    updatePlanetAnnotation();
+    if (activePlanetIndex >= 0 && document.body.classList.contains("journey-started")) {
+      updateSolarSystem();
+      updatePlanetAnnotation();
+    }
     ticking = false;
   };
   window.addEventListener("scroll", () => {
@@ -81,18 +83,44 @@
   let briefingTransitionToken = 0;
   let briefingSwapTimer = 0;
   let leaderTransitionTimer = 0;
+  const stageMetrics = {
+    mobile: false,
+    baseDiameter: 23,
+    focusDiameter: 320,
+    orbitRadius: 0,
+    systemWidth: 0,
+    documentHeight: 0
+  };
+  let chapterDocumentTops = [];
+  let fitDocumentTop = Number.POSITIVE_INFINITY;
+  let solarRectCache = null;
+  let briefingRectCache = null;
+
+  const refreshLayoutCache = () => {
+    stageMetrics.mobile = window.matchMedia("(max-width: 760px)").matches;
+    stageMetrics.baseDiameter = stageMetrics.mobile ? 17 : 23;
+    stageMetrics.focusDiameter = stageMetrics.mobile
+      ? Math.max(136, Math.min(168, window.innerWidth * 0.43, window.innerHeight * 0.25))
+      : Math.max(210, Math.min(340, window.innerWidth * 0.265, window.innerHeight * 0.43));
+    stageMetrics.systemWidth = solarSystem ? solarSystem.clientWidth : 0;
+    stageMetrics.orbitRadius = stageMetrics.systemWidth * 0.365;
+    stageMetrics.documentHeight = document.documentElement.scrollHeight;
+    chapterDocumentTops = journeySections.map(item => item.target.getBoundingClientRect().top + window.scrollY);
+    const fitTarget = document.getElementById("fit");
+    fitDocumentTop = fitTarget ? fitTarget.getBoundingClientRect().top + window.scrollY : Number.POSITIVE_INFINITY;
+    solarRectCache = solarSystem ? solarSystem.getBoundingClientRect() : null;
+    briefingRectCache = briefing && !briefing.hidden ? briefing.getBoundingClientRect() : null;
+    if (annotation) annotation.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
+  };
 
   const updateSolarSystem = () => {
     if (!solarSystem) return;
     const progress = Math.max(0, Math.min(planetLinks.length - 1, continuousPlanetProgress));
     const rotation = 90 - progress * 360 / Math.max(1, planetLinks.length);
     solarSystem.style.setProperty("--solar-rotation", rotation + "deg");
-    const orbitRadius = Math.min(solarSystem.clientWidth, solarSystem.clientHeight) * 0.365;
-    const mobile = window.matchMedia("(max-width: 760px)").matches;
-    const baseDiameter = mobile ? 17 : 23;
-    const focusDiameter = mobile
-      ? Math.max(136, Math.min(168, window.innerWidth * 0.43, window.innerHeight * 0.25))
-      : Math.max(210, Math.min(360, window.innerWidth * 0.28, window.innerHeight * 0.46));
+    const orbitRadius = stageMetrics.orbitRadius;
+    const baseDiameter = stageMetrics.baseDiameter;
+    const focusDiameter = stageMetrics.focusDiameter;
     const leftIndex = Math.min(planetLinks.length - 1, Math.floor(progress));
     const fraction = progress - leftIndex;
     const leftWeight = Math.cos(fraction * Math.PI / 2);
@@ -122,22 +150,32 @@
     const current = journeySections[activePlanetIndex];
     const profile = current && anchorProfiles[current.id];
     const body = current && current.link.querySelector(".planet-body");
-    if (!profile || !body) return;
+    if (!profile || !body || !solarSystem) return;
 
-    const planet = body.getBoundingClientRect();
-    const card = briefing.getBoundingClientRect();
-    const frame = annotation.getBoundingClientRect();
-    if (!planet.width || !planet.height || !card.width || !card.height || !frame.width || !frame.height) return;
+    // These two boxes are cached and invalidated only when the viewport or briefing content changes.
+    // The planet position itself comes from the same orbit coordinates being written this frame.
+    if (!solarRectCache) solarRectCache = solarSystem.getBoundingClientRect();
+    if (!briefingRectCache) briefingRectCache = briefing.getBoundingClientRect();
+    const stage = solarRectCache;
+    const card = briefingRectCache;
+    if (!stage.width || !stage.height || !card.width || !card.height) return;
 
-    const mobile = window.matchMedia("(max-width: 760px)").matches;
+    const mobile = stageMetrics.mobile;
     const angle = (mobile ? profile.mobile : profile.desktop) * Math.PI / 180;
-    const sx = planet.left + planet.width / 2 + Math.cos(angle) * planet.width * .485 - frame.left;
-    const sy = planet.top + planet.height / 2 + Math.sin(angle) * planet.height * .485 - frame.top;
+    const scale = stageMetrics.systemWidth ? stage.width / stageMetrics.systemWidth : 1;
+    const localX = parseFloat(current.link.style.getPropertyValue("--x")) || 0;
+    const localY = parseFloat(current.link.style.getPropertyValue("--y")) || 0;
+    const focusScale = parseFloat(body.style.getPropertyValue("--focus-scale")) || 1;
+    const cx = stage.left + stage.width / 2 + localX * scale;
+    const cy = stage.top + stage.height / 2 + localY * scale;
+    const radius = stageMetrics.baseDiameter * focusScale * scale * .485;
+    const sx = cx + Math.cos(angle) * radius;
+    const sy = cy + Math.sin(angle) * radius;
     let tx, ty, path;
+
     if (mobile) {
-      // Land on a different point along the card's top edge for each planet.
-      tx = card.left + card.width * profile.targetX - frame.left;
-      ty = card.top - 1 - frame.top;
+      tx = card.left + card.width * profile.targetX;
+      ty = card.top - 1;
       const spanY = Math.max(24, ty - sy);
       const c1x = sx + (tx - sx) * .12;
       const c1y = sy + spanY * .58;
@@ -148,9 +186,8 @@
         ", " + c2x.toFixed(1) + " " + c2y.toFixed(1) +
         ", " + tx.toFixed(1) + " " + ty.toFixed(1);
     } else {
-      // On desktop, the annotation connects the planet's left rim to the glass panel's right edge.
-      tx = card.right + 1 - frame.left;
-      ty = card.top + Math.min(card.height - 26, Math.max(80, card.height * profile.targetY)) - frame.top;
+      tx = card.right + 1;
+      ty = card.top + Math.min(card.height - 26, Math.max(80, card.height * profile.targetY));
       const spanX = Math.max(24, sx - tx);
       const c1x = sx - spanX * .28;
       const c2x = tx + spanX * .24;
@@ -160,7 +197,6 @@
         ", " + tx.toFixed(1) + " " + ty.toFixed(1);
     }
 
-    annotation.setAttribute("viewBox", "0 0 " + frame.width + " " + frame.height);
     leaderPath.setAttribute("d", path);
     [[anchorRing, sx, sy], [anchorDot, sx, sy], [leaderEnd, tx, ty]].forEach(([node, x, y]) => {
       if (!node) return;
@@ -172,25 +208,29 @@
   const animatePlanetAnnotation = () => {
     if (!annotation || !leaderPath) return;
     annotation.classList.remove("is-drawn", "is-switching");
-    updatePlanetAnnotation();
     requestAnimationFrame(() => {
+      if (activePlanetIndex < 0) return;
       updatePlanetAnnotation();
       annotation.classList.add("is-drawn");
     });
-    if (reducedMotion) return;
-    const started = performance.now();
-    const followTransition = now => {
-      updatePlanetAnnotation();
-      if (now - started < 520 && activePlanetIndex >= 0) requestAnimationFrame(followTransition);
-    };
-    requestAnimationFrame(followTransition);
   };
 
-  window.addEventListener("resize", updateScrollUI, { passive: true });
+  const handleResponsiveChange = () => {
+    refreshLayoutCache();
+    updateScrollUI();
+  };
+  window.addEventListener("resize", handleResponsiveChange, { passive: true });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      refreshLayoutCache();
+      updateScrollUI();
+    });
+  }
 
   const populateBriefing = (content, index) => {
     if (!content || !briefing || !briefingTitle || !briefingCopy || !briefingMeta) return;
     briefing.hidden = false;
+    briefingRectCache = null;
     briefingTitle.textContent = content.title;
     briefingCopy.textContent = content.copy;
     briefingMeta.textContent = content.meta;
@@ -263,6 +303,7 @@
     if (solarGuide) {
       solarGuide.classList.add("has-active-planet");
       solarGuide.classList.remove("is-ended");
+      solarRectCache = null;
     }
     document.body.classList.remove("journey-complete");
     updateSolarSystem();
@@ -343,61 +384,56 @@
   };
 
   const syncPlanetFromScroll = () => {
-    if (!journeySections.length) return;
-    const switchLine = window.scrollY + window.innerHeight * 0.32;
-    const topOf = target => target.getBoundingClientRect().top + window.scrollY;
-    const positions = journeySections.map(item => topOf(item.target));
-    const stageStarts = positions.map(top => top - window.innerHeight * 0.32);
-    const fitTarget = document.getElementById("fit");
-    const fitViewportTop = fitTarget ? fitTarget.getBoundingClientRect().top : Number.POSITIVE_INFINITY;
+    if (!journeySections.length || !chapterDocumentTops.length) return;
+    const scrollY = window.scrollY;
+    const activationOffset = window.innerHeight * 0.32;
+    const switchLine = scrollY + activationOffset;
+    const stageStartsAt = index => chapterDocumentTops[index] - activationOffset;
 
-    // Continuous progress drives the orbit and the hand-off of planet scale.
-    if (window.scrollY <= stageStarts[0]) {
+    if (scrollY <= stageStartsAt(0)) {
       continuousPlanetProgress = 0;
     } else {
       continuousPlanetProgress = journeySections.length - 1;
-      for (let i = 0; i < stageStarts.length - 1; i += 1) {
-        if (window.scrollY < stageStarts[i + 1]) {
-          const span = Math.max(1, stageStarts[i + 1] - stageStarts[i]);
-          const fraction = Math.max(0, Math.min(1, (window.scrollY - stageStarts[i]) / span));
-          continuousPlanetProgress = i + fraction;
+      for (let i = 0; i < journeySections.length - 1; i += 1) {
+        const start = stageStartsAt(i);
+        const end = stageStartsAt(i + 1);
+        if (scrollY < end) {
+          const span = Math.max(1, end - start);
+          continuousPlanetProgress = i + Math.min(1, Math.max(0, (scrollY - start) / span));
           break;
         }
       }
     }
 
     if (pendingNavigationId) {
-      const pendingTarget = document.getElementById(pendingNavigationId);
-      const targetViewportTop = pendingTarget ? pendingTarget.getBoundingClientRect().top : 0;
-      if (pendingTarget && pendingNavigationDirection === "down" && targetViewportTop > window.innerHeight * 0.32) {
-        continuousPlanetProgress = Math.max(0, journeySections.findIndex(item => item.id === pendingNavigationId));
+      const pendingIndex = journeySections.findIndex(item => item.id === pendingNavigationId);
+      const targetViewportTop = pendingIndex >= 0 ? chapterDocumentTops[pendingIndex] - scrollY : 0;
+      if (pendingIndex >= 0 && pendingNavigationDirection === "down" && targetViewportTop > activationOffset) {
+        continuousPlanetProgress = pendingIndex;
         return;
       }
-      if (pendingTarget && pendingNavigationDirection === "up" && targetViewportTop < window.innerHeight * 0.32) {
-        continuousPlanetProgress = Math.max(0, journeySections.findIndex(item => item.id === pendingNavigationId));
+      if (pendingIndex >= 0 && pendingNavigationDirection === "up" && targetViewportTop < activationOffset) {
+        continuousPlanetProgress = pendingIndex;
         return;
       }
       pendingNavigationId = null;
       pendingNavigationDirection = null;
     }
 
-    if (fitViewportTop <= window.innerHeight * 0.92) {
+    if (fitDocumentTop - scrollY <= window.innerHeight * 0.92) {
       endPlanetJourney();
       return;
     }
 
-    if (switchLine < positions[0]) {
+    if (switchLine < chapterDocumentTops[0]) {
       if (activePlanetIndex !== -1 || document.body.classList.contains("journey-complete")) clearActivePlanet();
       return;
     }
 
-    // Switch the briefing slightly before the orbit completes its hand-off,
-    // so the new planet's arrival and the copy transition feel like one continuous movement.
-    const selectedIndex = Math.max(
-      0,
-      Math.min(journeySections.length - 1, Math.floor(continuousPlanetProgress + 0.38))
-    );
-
+    const selectedIndex = Math.max(0, Math.min(
+      journeySections.length - 1,
+      Math.floor(continuousPlanetProgress + 0.38)
+    ));
     if (
       selectedIndex !== activePlanetIndex ||
       document.body.classList.contains("journey-complete") ||
@@ -407,6 +443,7 @@
     }
   };
 
+  refreshLayoutCache();
   updateSolarSystem();
   updateScrollUI();
 
