@@ -18,15 +18,6 @@
     if (progress) progress.style.transform = "scaleX(" + scrollRatio.toFixed(4) + ")";
     if (header) header.classList.toggle("scrolled", window.scrollY > 18);
     syncPlanetFromScroll();
-    if (
-      activePlanetIndex >= 0 &&
-      document.body.classList.contains("journey-started") &&
-      !document.body.classList.contains("journey-complete") &&
-      !(solarGuide && solarGuide.classList.contains("is-ended"))
-    ) {
-      updateSolarSystem();
-      updatePlanetAnnotation();
-    }
     ticking = false;
   };
   window.addEventListener("scroll", () => {
@@ -124,48 +115,28 @@
     if (annotation) annotation.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
   };
 
+  let lastRenderedPlanetIndex = -1;
   const updateSolarSystem = () => {
     if (!solarSystem || !planetLinks.length) return;
-    const progress = Math.max(0, Math.min(planetLinks.length - 1, continuousPlanetProgress));
-    const rotation = 90 - progress * 360 / planetLinks.length;
+    const index = Math.max(0, Math.min(planetLinks.length - 1, Math.round(continuousPlanetProgress)));
+    if (lastRenderedPlanetIndex === index) return;
+
+    const rotation = 90 - index * 360 / planetLinks.length;
     const rotationValue = rotation.toFixed(2) + "deg";
-    if (solarSystem.style.getPropertyValue("--solar-rotation") !== rotationValue) {
-      solarSystem.style.setProperty("--solar-rotation", rotationValue);
-    }
+    solarSystem.style.setProperty("--solar-rotation", rotationValue);
 
-    const directionDegrees = rotation * Math.PI / 180;
-    planetLinks.forEach((link, index) => {
-      const baseAngle = (index / planetLinks.length) * Math.PI * 2 - Math.PI / 2;
-      const shouldLabelLeft = Math.cos(baseAngle + directionDegrees) < -0.18;
-      if (link.classList.contains("label-left") !== shouldLabelLeft) {
-        link.classList.toggle("label-left", shouldLabelLeft);
-      }
+    const angleOffset = rotation * Math.PI / 180;
+    planetLinks.forEach((link, planetIndex) => {
+      const baseAngle = (planetIndex / planetLinks.length) * Math.PI * 2 - Math.PI / 2;
+      const labelOnLeft = Math.cos(baseAngle + angleOffset) < -0.18;
+      link.classList.toggle("label-left", labelOnLeft);
+      const body = planetBodies[planetIndex];
+      const scale = planetIndex === index ? 1 : stageMetrics.baseDiameter / stageMetrics.focusDiameter;
+      if (body) body.style.setProperty("--focus-scale", scale.toFixed(4));
+      link.classList.toggle("is-near", planetIndex === index);
     });
-
-    const leftIndex = Math.min(planetLinks.length - 1, Math.floor(progress));
-    const fraction = progress - leftIndex;
-    const eased = fraction * fraction * (3 - 2 * fraction);
-    const rightIndex = Math.min(planetLinks.length - 1, leftIndex + 1);
-    const nextIndices = rightIndex === leftIndex ? [leftIndex] : [leftIndex, rightIndex];
-    const baseDiameter = stageMetrics.baseDiameter;
-    const focusDiameter = stageMetrics.focusDiameter;
-
-    previousFocusIndices.forEach(index => {
-      if (!nextIndices.includes(index) && planetBodies[index]) {
-        planetBodies[index].style.setProperty("--focus-scale", "1");
-        planetLinks[index].classList.remove("is-near");
-      }
-    });
-
-    nextIndices.forEach(index => {
-      const weight = index === leftIndex ? 1 - eased : eased;
-      const visibleDiameter = baseDiameter + weight * (focusDiameter - baseDiameter);
-      const focusScale = visibleDiameter / focusDiameter;
-      const body = planetBodies[index];
-      if (body) body.style.setProperty("--focus-scale", focusScale.toFixed(4));
-      planetLinks[index].classList.toggle("is-near", weight > 0.55);
-    });
-    previousFocusIndices = nextIndices;
+    previousFocusIndices = [index];
+    lastRenderedPlanetIndex = index;
   };
   const updatePlanetAnnotation = () => {
     if (!annotation || !leaderPath || activePlanetIndex < 0 || !briefing || briefing.hidden ||
@@ -247,13 +218,23 @@
 
   const handleResponsiveChange = () => {
     refreshLayoutCache();
+    lastRenderedPlanetIndex = -1;
+    updateSolarSystem();
+    briefingRectCache = null;
+    solarRectCache = null;
     updateScrollUI();
+    updatePlanetAnnotation();
   };
   window.addEventListener("resize", handleResponsiveChange, { passive: true });
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {
       refreshLayoutCache();
+      lastRenderedPlanetIndex = -1;
+      updateSolarSystem();
+      briefingRectCache = null;
+      solarRectCache = null;
       updateScrollUI();
+      updatePlanetAnnotation();
     });
   }
 
@@ -317,6 +298,7 @@
     }
 
     activePlanetIndex = index;
+    continuousPlanetProgress = index;
     journeySections.forEach((item, itemIndex) => {
       const isActive = itemIndex === index;
       item.link.classList.toggle("is-active", isActive);
@@ -362,17 +344,31 @@
   });
   let pendingNavigationId = null;
   let pendingNavigationDirection = null;
-  const travelToPlanet = id => {
+  let nextPlanetInputAt = 0;
+  let touchStartY = null;
+  let touchStartTarget = null;
+  let captureTouchGesture = false;
+
+  const travelToPlanet = (id, fromInput = false) => {
     const target = document.getElementById(id);
-    if (!target) return;
-    const targetDocumentTop = target.getBoundingClientRect().top + window.scrollY;
+    const index = journeySections.findIndex(item => item.id === id);
+    if (!target || index < 0) return false;
+    const targetDocumentTop = chapterDocumentTops[index] || (target.getBoundingClientRect().top + window.scrollY);
     const targetScrollTop = Math.max(0, targetDocumentTop - window.innerHeight * 0.32);
     pendingNavigationId = id;
     pendingNavigationDirection = targetScrollTop > window.scrollY + 1 ? "down" : targetScrollTop < window.scrollY - 1 ? "up" : "here";
-    continuousPlanetProgress = Math.max(0, journeySections.findIndex(item => item.id === id));
+    continuousPlanetProgress = index;
     setActivePlanet(id);
-    window.scrollTo({ top: targetScrollTop, behavior: reducedMotion ? "auto" : "smooth" });
+    if (Math.abs(window.scrollY - targetScrollTop) > 3) {
+      window.scrollTo({ top: targetScrollTop, behavior: reducedMotion ? "auto" : "smooth" });
+    } else {
+      pendingNavigationId = null;
+      pendingNavigationDirection = null;
+    }
+    if (fromInput) nextPlanetInputAt = performance.now() + (reducedMotion ? 180 : 720);
+    return true;
   };
+
   planetLinks.forEach(link => link.addEventListener("click", event => {
     event.preventDefault();
     travelToPlanet(link.dataset.target);
@@ -381,16 +377,118 @@
     event.preventDefault();
     travelToPlanet(link.dataset.target);
   }));
-  const cancelPendingNavigation = () => {
-    pendingNavigationId = null;
-    pendingNavigationDirection = null;
-  };
-  window.addEventListener("wheel", cancelPendingNavigation, { passive: true });
-  window.addEventListener("touchmove", cancelPendingNavigation, { passive: true });
 
+  const isPlanetJourneyActive = () =>
+    activePlanetIndex >= 0 &&
+    document.body.classList.contains("journey-started") &&
+    !document.body.classList.contains("journey-complete") &&
+    !(solarGuide && solarGuide.classList.contains("is-ended"));
+
+  const stepPlanet = direction => {
+    if (!isPlanetJourneyActive()) return false;
+    const now = performance.now();
+    if (now < nextPlanetInputAt) return true;
+
+    const nextIndex = activePlanetIndex + direction;
+    nextPlanetInputAt = now + (reducedMotion ? 220 : 760);
+
+    if (nextIndex < 0) {
+      pendingNavigationId = null;
+      pendingNavigationDirection = null;
+      clearActivePlanet();
+      window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+      return true;
+    }
+
+    if (nextIndex >= journeySections.length) {
+      pendingNavigationId = null;
+      pendingNavigationDirection = null;
+      endPlanetJourney();
+      const nextTop = Math.max(0, fitDocumentTop - window.innerHeight * 0.18);
+      window.scrollTo({ top: nextTop, behavior: reducedMotion ? "auto" : "smooth" });
+      return true;
+    }
+
+    travelToPlanet(journeySections[nextIndex].id, true);
+    return true;
+  };
+
+  const handleWheel = event => {
+    if (!isPlanetJourneyActive() || event.ctrlKey || Math.abs(event.deltaY) < 12) return;
+    const direction = event.deltaY > 0 ? 1 : -1;
+    event.preventDefault();
+    stepPlanet(direction);
+  };
+  window.addEventListener("wheel", handleWheel, { passive: false });
+
+  const isControlTarget = target => Boolean(target && target.closest(
+    'input, textarea, select, button, summary, .menu-toggle, .solar-briefing-link, a[href="#application"]'
+  ));
+  window.addEventListener("touchstart", event => {
+    if (!isPlanetJourneyActive() || event.touches.length !== 1 || isControlTarget(event.target)) {
+      touchStartY = null;
+      captureTouchGesture = false;
+      return;
+    }
+    touchStartY = event.touches[0].clientY;
+    touchStartTarget = event.target;
+    captureTouchGesture = true;
+  }, { passive: true });
+
+  window.addEventListener("touchmove", event => {
+    if (!captureTouchGesture || touchStartY === null || !isPlanetJourneyActive()) return;
+    // Let the briefing scroll internally only when it actually has overflow in the swiped direction.
+    const panel = touchStartTarget && touchStartTarget.closest(".solar-briefing");
+    if (panel && panel.scrollHeight > panel.clientHeight) {
+      const currentY = event.touches[0].clientY;
+      const delta = touchStartY - currentY;
+      const canScrollWithinPanel = delta > 0
+        ? panel.scrollTop + panel.clientHeight < panel.scrollHeight - 2
+        : panel.scrollTop > 2;
+      if (canScrollWithinPanel) {
+        captureTouchGesture = false;
+        return;
+      }
+    }
+    event.preventDefault();
+  }, { passive: false });
+
+  window.addEventListener("touchend", event => {
+    if (!captureTouchGesture || touchStartY === null) {
+      touchStartY = null;
+      touchStartTarget = null;
+      captureTouchGesture = false;
+      return;
+    }
+    const endY = event.changedTouches[0] ? event.changedTouches[0].clientY : touchStartY;
+    const delta = touchStartY - endY;
+    touchStartY = null;
+    touchStartTarget = null;
+    captureTouchGesture = false;
+    if (Math.abs(delta) >= 42) stepPlanet(delta > 0 ? 1 : -1);
+  }, { passive: true });
+  window.addEventListener("touchcancel", () => {
+    touchStartY = null;
+    touchStartTarget = null;
+    captureTouchGesture = false;
+  }, { passive: true });
+
+  window.addEventListener("keydown", event => {
+    if (!isPlanetJourneyActive() || isControlTarget(event.target) || event.altKey || event.ctrlKey || event.metaKey) return;
+    const downKeys = ["ArrowDown", "PageDown", " "];
+    const upKeys = ["ArrowUp", "PageUp"];
+    if (downKeys.includes(event.key)) {
+      event.preventDefault();
+      stepPlanet(1);
+    } else if (upKeys.includes(event.key)) {
+      event.preventDefault();
+      stepPlanet(-1);
+    }
+  });
   const clearActivePlanet = () => {
     activePlanetIndex = -1;
     continuousPlanetProgress = 0;
+    lastRenderedPlanetIndex = -1;
     window.clearTimeout(briefingSwapTimer);
     window.clearTimeout(leaderTransitionTimer);
     if (briefingContent) briefingContent.classList.remove("is-changing");
@@ -414,39 +512,17 @@
     const scrollY = window.scrollY;
     const activationOffset = window.innerHeight * 0.32;
     const switchLine = scrollY + activationOffset;
-    const stageStartsAt = index => chapterDocumentTops[index] - activationOffset;
 
-    if (scrollY <= stageStartsAt(0)) {
-      continuousPlanetProgress = 0;
-    } else {
-      continuousPlanetProgress = journeySections.length - 1;
-      for (let i = 0; i < journeySections.length - 1; i += 1) {
-        const start = stageStartsAt(i);
-        const end = stageStartsAt(i + 1);
-        if (scrollY < end) {
-          const span = Math.max(1, end - start);
-          continuousPlanetProgress = i + Math.min(1, Math.max(0, (scrollY - start) / span));
-          break;
-        }
-      }
-    }
-
+    // Smooth programmatic travel is held on the requested planet until the target reaches its docking point.
     if (pendingNavigationId) {
       const pendingIndex = journeySections.findIndex(item => item.id === pendingNavigationId);
       const targetViewportTop = pendingIndex >= 0 ? chapterDocumentTops[pendingIndex] - scrollY : 0;
-      if (pendingIndex >= 0 && pendingNavigationDirection === "down" && targetViewportTop > activationOffset) {
-        continuousPlanetProgress = pendingIndex;
-        return;
-      }
-      if (pendingIndex >= 0 && pendingNavigationDirection === "up" && targetViewportTop < activationOffset) {
-        continuousPlanetProgress = pendingIndex;
-        return;
-      }
+      if (pendingIndex >= 0 && Math.abs(targetViewportTop - activationOffset) > 5) return;
       pendingNavigationId = null;
       pendingNavigationDirection = null;
     }
 
-    if (fitDocumentTop - scrollY <= window.innerHeight * 0.92) {
+    if (fitDocumentTop - scrollY <= window.innerHeight * 0.14) {
       endPlanetJourney();
       return;
     }
@@ -456,10 +532,12 @@
       return;
     }
 
-    const selectedIndex = Math.max(0, Math.min(
-      journeySections.length - 1,
-      Math.floor(continuousPlanetProgress + 0.5)
-    ));
+    let selectedIndex = 0;
+    for (let i = 1; i < chapterDocumentTops.length; i += 1) {
+      if (chapterDocumentTops[i] <= switchLine) selectedIndex = i;
+      else break;
+    }
+    continuousPlanetProgress = selectedIndex;
     if (
       selectedIndex !== activePlanetIndex ||
       document.body.classList.contains("journey-complete") ||
