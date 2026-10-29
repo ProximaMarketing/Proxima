@@ -636,9 +636,9 @@ body.is-zooming .solar-system { width: min(125vw, 125vh, 1300px); height: min(12
   visibility: hidden;
   border: 0;
   box-shadow: none;
-  transition: opacity .65s ease, visibility .65s ease;
+  transition: opacity .5s ease, visibility 0s linear .5s;
 }
-body.journey-started .solar-guide { opacity: 1; visibility: visible; }
+body.journey-started .solar-guide { opacity: 1; visibility: visible; transition: opacity .5s ease; }
 .solar-guide::before,
 .solar-guide::after {
   content: "";
@@ -841,7 +841,21 @@ body.journey-started .solar-guide { opacity: 1; visibility: visible; }
 .solar-guide.has-active-planet .solar-guide-heading { opacity: 0; visibility: hidden; transform: translate(-50%,-18px); }
 .solar-guide.has-active-planet .solar-system { left: 65%; transform: translate(-50%,-50%) scale(.82); }
 .solar-guide.is-ended,
-body.journey-complete .solar-guide { opacity: 0; visibility: hidden; pointer-events: none; }
+body.journey-complete .solar-guide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .2s ease, visibility 0s linear .2s;
+}
+.solar-guide.is-ended .solar-briefing,
+body.journey-complete .solar-guide .solar-briefing {
+  opacity: 0;
+  transition: opacity .14s ease;
+}
+.solar-guide.is-ended .solar-system,
+body.journey-complete .solar-guide .solar-system {
+  transform: translate(-50%,-50%) scale(1.04);
+}
 
 /* Each planet swaps the contents of this one shared briefing. */
 .solar-briefing {
@@ -1034,4 +1048,21 @@ body.journey-complete .solar-guide { opacity: 0; visibility: hidden; pointer-eve
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .solar-guide, .solar-guide-heading, .solar-system, .solar-orbit, .planet-link, .planet-body, .solar-briefing { transition: none !important; animation: none !important; }
+}
+
+/* Small interaction details: make planet controls feel deliberate, not decorative. */
+.planet-link:focus-visible .planet-body,
+.planet-link:hover .planet-body {
+  box-shadow: inset -5px -4px 7px rgba(0,0,0,.42), inset 3px 3px 5px rgba(255,255,255,.22), 0 0 22px rgba(216,198,165,.26), 0 0 42px rgba(216,198,165,.12);
+  filter: brightness(1.14);
+}
+.planet-link.is-active:hover .planet-body { filter: brightness(1.12) saturate(1.1); }
+.solar-guide.is-ended .solar-guide-heading,
+body.journey-complete .solar-guide .solar-guide-heading { opacity: 0; visibility: hidden; }
+@media (max-width: 760px) {
+  /* Keep the final panel entirely above the browser-safe bottom area. */
+  .solar-briefing { bottom: max(22px, env(safe-area-inset-bottom)); }
+  .solar-guide.is-ended, body.journey-complete .solar-guide {
+    transition: opacity .16s ease, visibility 0s linear .16s;
+  }
 }
