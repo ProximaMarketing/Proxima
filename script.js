@@ -391,11 +391,12 @@
       return;
     }
 
-    let selectedIndex = 0;
-    for (let i = 1; i < positions.length; i += 1) {
-      if (positions[i] <= switchLine) selectedIndex = i;
-      else break;
-    }
+    // Switch the briefing slightly before the orbit completes its hand-off,
+    // so the new planet's arrival and the copy transition feel like one continuous movement.
+    const selectedIndex = Math.max(
+      0,
+      Math.min(journeySections.length - 1, Math.floor(continuousPlanetProgress + 0.38))
+    );
 
     if (
       selectedIndex !== activePlanetIndex ||
