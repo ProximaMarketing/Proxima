@@ -136,8 +136,7 @@
       const focusScale = 1 + weight * (focusDiameter / baseDiameter - 1);
       const body = link.querySelector(".planet-body");
       if (body) body.style.setProperty("--focus-scale", focusScale.toFixed(3));
-      link.style.zIndex = weight > .55 ? "12" : "4";
-      link.style.setProperty("--focus-weight", weight.toFixed(3));
+      link.classList.toggle("is-near", weight > .55);
     });
   };
   const updatePlanetAnnotation = () => {
