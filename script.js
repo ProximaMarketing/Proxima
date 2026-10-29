@@ -57,14 +57,31 @@
 
   const updateSolarSystem = () => {
     if (!solarSystem) return;
-    const journey = document.querySelector("#journey");
-    const rect = journey ? journey.getBoundingClientRect() : null;
-    const scrollSpan = Math.max(1, (journey ? journey.offsetHeight : 1) - window.innerHeight);
-    const travelled = rect ? Math.min(scrollSpan, Math.max(0, -rect.top)) : 0;
-    const progressRatio = Math.max(0, Math.min(1, travelled / scrollSpan));
-    const rotation = activePlanetIndex >= 0
-      ? -(activePlanetIndex * 360 / planetLinks.length)
-      : (reducedMotion ? 0 : progressRatio * 390);
+    // Use the viewport's position between chapter anchors to move the orbit continuously.
+    const focusY = window.scrollY + window.innerHeight * 0.5;
+    const stops = journeySections.map(item => ({
+      id: item.id,
+      y: item.target.getBoundingClientRect().top + window.scrollY + item.target.offsetHeight * 0.5
+    }));
+    let travelIndex = 0;
+    if (stops.length > 1 && focusY > stops[0].y) {
+      const last = stops.length - 1;
+      if (focusY >= stops[last].y) {
+        travelIndex = last;
+      } else {
+        for (let i = 0; i < last; i += 1) {
+          if (focusY >= stops[i].y && focusY <= stops[i + 1].y) {
+            const span = Math.max(1, stops[i + 1].y - stops[i].y);
+            const amount = (focusY - stops[i].y) / span;
+            travelIndex = i + amount;
+            break;
+          }
+        }
+      }
+    }
+    const rotation = reducedMotion
+      ? 90 - Math.round(travelIndex) * 360 / planetLinks.length
+      : 90 - travelIndex * 360 / planetLinks.length;
     const orbitRadius = solarSystem.clientWidth * 0.365;
     planetLinks.forEach((link, index) => {
       const angle = (index / planetLinks.length) * Math.PI * 2 - Math.PI / 2 + rotation * Math.PI / 180;
