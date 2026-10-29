@@ -350,7 +350,7 @@
     document.body.classList.add("journey-started");
     if (solarGuide) solarGuide.classList.remove("is-ended");
     setActivePlanet(id);
-    target.scrollIntoView({ behavior: "auto", block: "start" });
+    target.scrollIntoView({ behavior: "instant", block: "start" });
   };
 
   document.addEventListener("click", event => {
