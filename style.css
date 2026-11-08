@@ -1079,7 +1079,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
   .pricing-detail { grid-template-columns:minmax(0,1fr); gap:13px; }
   .pricing-availability { align-items:flex-start; flex-direction:column; }
 }
-@media (max-width:520px) {
+@media (max-width:640px) {
   .pricing-grid { grid-template-columns:minmax(0,1fr); }
   .pricing-card { padding:24px; }
   .pricing-for { min-height:0; }
