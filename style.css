@@ -298,7 +298,9 @@ html.planet-snapping .hero,
 html.planet-snapping .experience-content > #approach,
 html.planet-snapping .experience-content .planet-chapter,
 html.planet-snapping .experience-content > #process,
-html.planet-snapping .experience-content > #pricing {
+html.planet-snapping .experience-content > #pricing,
+html.planet-snapping .experience-content > #faq,
+html.planet-snapping .experience-content > #application {
   scroll-snap-align:start;
   scroll-snap-stop:always;
 }
