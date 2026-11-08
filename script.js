@@ -69,12 +69,12 @@
     process: { desktop: 216, mobile: 62, targetX: .23, targetY: .77 }
   };
   const chapterContent = {
-    approach: { title: "A direction of your own.", copy: "Independent artists often manage music, visuals and promotion as separate jobs. The aim is to make those decisions support the same direction.", meta: "01 — Set the direction" },
-    identity: { title: "Make the project recognisable.", copy: "Decide what people should recognise: the feeling, story and visual cues that belong to this artist.", meta: "02 — Define the identity" },
-    release: { title: "Give the release a clear rhythm.", copy: "Plan the run-up, launch and follow-through around what the artist can sustain and what listeners need to know.", meta: "03 — Shape the release" },
-    content: { title: "Create with purpose, not pressure.", copy: "Develop a handful of formats the artist can return to and adapt, without making every post from scratch.", meta: "04 — Build a content language" },
-    audience: { title: "Notice what makes people care.", copy: "Look beyond follower totals. Where data is available, notice which moments earn saves, shares, replies and clicks.", meta: "05 — Read the response" },
-    process: { title: "Make the next move count.", copy: "Start with a conversation, agree the priorities, then use real feedback to decide what should happen next.", meta: "06 — Review and adjust" }
+    approach: { title: "A bit more headspace.", copy: "We take care of the regular promotional work around your music.", meta: "01" },
+    identity: { title: "Get to know your sound.", copy: "We learn what makes your project yours and who you want to reach.", meta: "02" },
+    release: { title: "Keep releases moving.", copy: "Short clips and posts built around the music you’re putting out.", meta: "03" },
+    content: { title: "Content, ready to post.", copy: "We edit your footage and write the captions.", meta: "04" },
+    audience: { title: "Find new places to share it.", copy: "We research music communities and platforms that fit your sound.", meta: "05" },
+    process: { title: "Simple, direct support.", copy: "Apply, agree a plan and we’ll get to work.", meta: "06" }
   };
   let activePlanetIndex = -1;
   let briefingTransitionToken = 0;
