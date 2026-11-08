@@ -395,7 +395,8 @@
     const switchLine = scrollY + window.innerHeight * 0.32;
     // Read the current position on every scroll: content above this point can
     // change height as fonts, media or responsive layouts finish loading.
-    const journeyEndTarget = document.querySelector(".experience-content > #pricing") ||
+    const journeyEndTarget = document.querySelector(".experience-content > #destinations") ||
+      document.querySelector(".experience-content > #pricing") ||
       document.querySelector(".experience-content > #faq") ||
       document.querySelector(".experience-content > #application");
     const journeyEndDocumentTop = journeyEndTarget
