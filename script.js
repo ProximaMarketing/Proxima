@@ -88,7 +88,7 @@
     documentHeight: 0
   };
   let chapterDocumentTops = [];
-  let fitDocumentTop = Number.POSITIVE_INFINITY;
+  let journeyEndDocumentTop = Number.POSITIVE_INFINITY;
   let solarRectCache = null;
   let briefingRectCache = null;
 
@@ -111,8 +111,12 @@
     });
     stageMetrics.documentHeight = document.documentElement.scrollHeight;
     chapterDocumentTops = journeySections.map(item => item.target.getBoundingClientRect().top + window.scrollY);
-    const fitTarget = document.getElementById("fit");
-    fitDocumentTop = fitTarget ? fitTarget.getBoundingClientRect().top + window.scrollY : Number.POSITIVE_INFINITY;
+    const journeyEndTarget = document.querySelector(".experience-content > #pricing") ||
+      document.querySelector(".experience-content > #faq") ||
+      document.querySelector(".experience-content > #application");
+    journeyEndDocumentTop = journeyEndTarget
+      ? journeyEndTarget.getBoundingClientRect().top + window.scrollY
+      : Number.POSITIVE_INFINITY;
     solarRectCache = solarSystem ? solarSystem.getBoundingClientRect() : null;
     briefingRectCache = briefing && !briefing.hidden ? briefing.getBoundingClientRect() : null;
     if (annotation) annotation.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
@@ -350,7 +354,7 @@
     document.body.classList.add("journey-started");
     if (solarGuide) solarGuide.classList.remove("is-ended");
     setActivePlanet(id);
-    target.scrollIntoView({ behavior: "instant", block: "start" });
+    target.scrollIntoView({ behavior: "auto", block: "start" });
   };
 
   document.addEventListener("click", event => {
@@ -390,14 +394,18 @@
     if (!journeySections.length || !chapterDocumentTops.length) return;
     const scrollY = window.scrollY;
     const switchLine = scrollY + window.innerHeight * 0.32;
-    if (activePlanetIndex >= 0 && !document.body.classList.contains("journey-complete") && fitDocumentTop - scrollY <= 2) { endPlanetJourney(); return; }
+    const hasReachedJourneyEnd = Number.isFinite(journeyEndDocumentTop) && scrollY >= journeyEndDocumentTop - 2;
+    if (hasReachedJourneyEnd) {
+      if (!document.body.classList.contains("journey-complete")) endPlanetJourney();
+      return;
+    }
     if (document.body.classList.contains("journey-complete")) {
       if (scrollY <= 20) {
         clearActivePlanet();
         return;
       }
       // If the visitor scrolls back up from the first normal section, re-enter at the nearest planet.
-      if (lastScrollDirection < 0 && scrollY < fitDocumentTop && scrollY > chapterDocumentTops[0]) {
+      if (lastScrollDirection < 0 && scrollY < journeyEndDocumentTop && scrollY > chapterDocumentTops[0]) {
         document.body.classList.remove("journey-complete");
         document.documentElement.classList.add("planet-snapping");
         let returnIndex = 0;
