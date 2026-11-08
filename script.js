@@ -88,7 +88,6 @@
     documentHeight: 0
   };
   let chapterDocumentTops = [];
-  let journeyEndDocumentTop = Number.POSITIVE_INFINITY;
   let solarRectCache = null;
   let briefingRectCache = null;
 
@@ -111,12 +110,6 @@
     });
     stageMetrics.documentHeight = document.documentElement.scrollHeight;
     chapterDocumentTops = journeySections.map(item => item.target.getBoundingClientRect().top + window.scrollY);
-    const journeyEndTarget = document.querySelector(".experience-content > #pricing") ||
-      document.querySelector(".experience-content > #faq") ||
-      document.querySelector(".experience-content > #application");
-    journeyEndDocumentTop = journeyEndTarget
-      ? journeyEndTarget.getBoundingClientRect().top + window.scrollY
-      : Number.POSITIVE_INFINITY;
     solarRectCache = solarSystem ? solarSystem.getBoundingClientRect() : null;
     briefingRectCache = briefing && !briefing.hidden ? briefing.getBoundingClientRect() : null;
     if (annotation) annotation.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
@@ -394,6 +387,14 @@
     if (!journeySections.length || !chapterDocumentTops.length) return;
     const scrollY = window.scrollY;
     const switchLine = scrollY + window.innerHeight * 0.32;
+    // Read the current position on every scroll: content above this point can
+    // change height as fonts, media or responsive layouts finish loading.
+    const journeyEndTarget = document.querySelector(".experience-content > #pricing") ||
+      document.querySelector(".experience-content > #faq") ||
+      document.querySelector(".experience-content > #application");
+    const journeyEndDocumentTop = journeyEndTarget
+      ? journeyEndTarget.getBoundingClientRect().top + scrollY
+      : Number.POSITIVE_INFINITY;
     const hasReachedJourneyEnd = Number.isFinite(journeyEndDocumentTop) && scrollY >= journeyEndDocumentTop - 2;
     if (hasReachedJourneyEnd) {
       if (!document.body.classList.contains("journey-complete")) endPlanetJourney();
