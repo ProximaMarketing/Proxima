@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090909">
+  <meta name="description" content="Tell PROXIMA about your music and explore whether independent music promotion is right for your project.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Apply as an artist | PROXIMA Marketing">
+  <meta property="og:description" content="Tell PROXIMA about your music and explore whether independent music promotion is right for your project.">
+  <title>Apply as an artist | PROXIMA Marketing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261108-restructure-01">
+  <link rel="stylesheet" href="site-pages.css?v=20261108-restructure-01">
+  <script src="script.js?v=20261108-restructure-01" defer></script>
+  
+</head>
+<body class="subpage-body">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Main navigation">
+      <a class="wordmark" href="index.html#top" aria-label="PROXIMA home">PROXIMA</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNavigation" aria-label="Open navigation">
+        <span></span><span></span>
+      </button>
+      <div class="nav-links" id="primaryNavigation">
+        <a href="index.html#journey">Explore</a>
+        <a href="examples.html">Our work</a>
+        <a href="journey.html">The journey</a>
+        <a href="views.html">Views so far</a>
+        <a class="nav-cta" href="application.html">Apply as an artist</a>
+      </div>
+    </nav>
+  </header>
+  <main id="main" class="subpage-main">
+    
+    <section class="page-intro container">
+      <p class="eyebrow">Artist applications</p>
+      <h1>Start with<br><span class="serif-accent">your music.</span></h1>
+      <p>Share a few details about your project. I'll review your enquiry and get back to you personally.</p>
+    </section>
+    <section class="application-section section-pad" id="application">
+      <div class="application-glow" aria-hidden="true"></div>
+      <div class="container application-layout">
+        <div class="application-copy reveal">
+          <p class="eyebrow">Artist applications</p>
+          <h2>Tell us about<br><span class="serif-accent">your music.</span></h2>
+          <p>A few details help me understand your project and what kind of support would suit you. Applying is just the start of a conversation, not a booking.</p>
+          <div class="response-time"><span class="response-dot" aria-hidden="true"></span><span>Reply time: <strong>3–5 business days</strong></span></div>
+        </div>
+
+        <form id="applicationForm" class="application-form reveal" novalidate>
+          <div class="form-heading"><span>YOUR DETAILS</span></div>
+          <div class="form-grid">
+            <div class="form-group"><label for="fullName">Your name <span>*</span></label><input id="fullName" type="text" name="fullName" autocomplete="name" placeholder="Your name" required></div>
+            <div class="form-group"><label for="artistName">Artist or project <span>*</span></label><input id="artistName" type="text" name="artistName" autocomplete="organization-title" placeholder="Artist name" required></div>
+            <div class="form-group"><label for="email">Email address <span>*</span></label><input id="email" type="email" name="email" autocomplete="email" placeholder="you@example.com" required></div>
+            <div class="form-group"><label for="spotify">Music link <span>*</span></label><input id="spotify" type="url" name="spotify" placeholder="Spotify or another link" required></div>
+          </div>
+          <div class="form-divider"></div>
+          <div class="form-heading"><span>OPTIONAL</span></div>
+          <div class="form-grid">
+            <div class="form-group"><label for="instagram">Instagram</label><input id="instagram" type="url" name="instagram" placeholder="https://instagram.com/..."></div>
+            <div class="form-group"><label for="tiktok">TikTok</label><input id="tiktok" type="url" name="tiktok" placeholder="https://tiktok.com/@..."></div>
+            <div class="form-group">
+              <label for="packageInterest">Package</label>
+              <select id="packageInterest" name="packageInterest">
+                <option value="">Not decided</option>
+                <option>Artist Promotion — £119/month</option>
+                <option>Artist Growth — £229/month</option>
+                <option>I'd like some guidance first</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="supportNeeded">What do you need help with?</label>
+              <select id="supportNeeded" name="supportNeeded">
+                <option value="">Not sure yet</option>
+                <option>Promotional posting</option>
+                <option>Promoting an upcoming release</option>
+                <option>Content ideas and direction</option>
+                <option>Ongoing marketing support</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label for="about">A little about your music <small>Optional</small></label><textarea id="about" name="about" rows="3" placeholder="Your sound, influences or plans for an upcoming release."></textarea></div>
+          <input type="hidden" name="phone" value="">
+          <input type="hidden" name="goals" value="">
+          <input type="hidden" name="why" value="">
+          <input type="hidden" name="primaryGoal" value="">
+          <input type="hidden" name="startTimeline" value="">
+          <input type="hidden" name="releaseStatus" value="">
+          <input type="hidden" name="releaseDate" value="">
+          <p class="privacy-note">Your details are used to review this enquiry only. Applying is not a booking. See our <a href="privacy.html">Privacy Notice</a> and <a href="terms.html">Terms</a>.</p>
+          <button class="button button-primary submit-button" type="submit" id="submitButton"><span>Send your application</span></button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite" tabindex="-1"></p>
+          <p class="form-footnote">Only the four fields above are required.</p>
+        </form>
+      </div>
+    </section>
+    <div class="container page-bottom-note"><a class="inline-link" href="journey.html">Not sure yet? See the packages and how it works <span aria-hidden="true">→</span></a></div>
+  </main>
+  
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-brand">
+        <a class="wordmark footer-wordmark" href="index.html#top">PROXIMA</a>
+        <p>Not chasing the old. Creating the new.</p>
+        <p class="footer-positioning">Personal music marketing for independent artists.</p>
+        <p class="footer-positioning">Based in Manchester, United Kingdom.</p>
+      </div>
+      <div class="footer-nav">
+        <span class="footer-label">Explore</span>
+        <a href="index.html#journey">Solar system</a>
+        <a href="journey.html">The journey and pricing</a>
+        <a href="views.html">Views so far</a>
+        <a href="examples.html">Clips and examples</a>
+        <a href="application.html">Apply as an artist</a>
+      </div>
+      <div class="footer-nav footer-legal-nav">
+        <span class="footer-label">Information</span>
+        <a href="about.html">About PROXIMA</a>
+        <a href="privacy.html">Privacy notice</a>
+        <a href="terms.html">Terms of service</a>
+        <a href="cookies.html">Cookie policy</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <a href="mailto:marketingproximatoday@gmail.com">marketingproximatoday@gmail.com</a>
+      <span>© <span id="currentYear">2026</span> PROXIMA Marketing · Operated by Louis Cadman, sole trader.</span>
+      <a href="index.html#top">Back to top</a>
+    </div>
+  </footer>
+</body>
+</html>
