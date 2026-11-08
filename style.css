@@ -1254,3 +1254,23 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 @media (prefers-reduced-motion:reduce) {
   .pricing-card { transition:none !important; }
 }
+
+
+/* Final client-facing polish */
+.hero-reassurance {
+  max-width: 43ch;
+  margin: -12px 0 28px;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.7;
+}
+.service-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 1000px) {
+  .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .service-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero-reassurance { margin-top: -8px; font-size: .78rem; }
+}
