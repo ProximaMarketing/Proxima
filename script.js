@@ -19,7 +19,8 @@
     if (currentScrollY > previousScrollY + 1) lastScrollDirection = 1;
     else if (currentScrollY < previousScrollY - 1) lastScrollDirection = -1;
     previousScrollY = currentScrollY;
-    const scrollable = Math.max(1, stageMetrics.documentHeight - window.innerHeight);
+    const pageHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    const scrollable = Math.max(1, pageHeight - window.innerHeight);
     const scrollRatio = Math.min(1, Math.max(0, window.scrollY / scrollable));
     if (progress) progress.style.transform = "scaleX(" + scrollRatio.toFixed(4) + ")";
     if (header) header.classList.toggle("scrolled", window.scrollY > 18);
@@ -347,7 +348,7 @@
     document.body.classList.add("journey-started");
     if (solarGuide) solarGuide.classList.remove("is-ended");
     setActivePlanet(id);
-    target.scrollIntoView({ behavior: "auto", block: "start" });
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   document.addEventListener("click", event => {
@@ -384,7 +385,12 @@
   };
 
   const syncPlanetFromScroll = () => {
-    if (!journeySections.length || !chapterDocumentTops.length) return;
+    if (!journeySections.length) return;
+    // Re-measure the chapter anchors as the page changes size, so the planet
+    // sequence stays aligned with the content on mobile, desktop and after load.
+    chapterDocumentTops = journeySections.map(item =>
+      item.target.getBoundingClientRect().top + window.scrollY
+    );
     const scrollY = window.scrollY;
     const switchLine = scrollY + window.innerHeight * 0.32;
     // Read the current position on every scroll: content above this point can
@@ -406,7 +412,7 @@
         return;
       }
       // If the visitor scrolls back up from the first normal section, re-enter at the nearest planet.
-      if (lastScrollDirection < 0 && scrollY < journeyEndDocumentTop && scrollY > chapterDocumentTops[0]) {
+      if (lastScrollDirection < 0 && scrollY < journeyEndDocumentTop - 72 && scrollY > chapterDocumentTops[0]) {
         document.body.classList.remove("journey-complete");
         document.documentElement.classList.add("planet-snapping");
         let returnIndex = 0;
