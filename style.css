@@ -1456,3 +1456,11 @@ html.planet-snapping {
   }
   .hero-bottom { position: absolute; }
 }
+
+
+/* Let page scrolling continue naturally when a briefing panel reaches its end. */
+.solar-briefing {
+  overscroll-behavior-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
