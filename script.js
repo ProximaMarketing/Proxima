@@ -39,12 +39,7 @@
   const solarStatus = document.querySelector("#solarStatus");
   const solarChapterNumber = document.querySelector("#solarChapterNumber");
   const mobileKeyLinks = Array.from(document.querySelectorAll(".solar-key-link"));
-  const journeySections = planetLinks.map(link => ({
-    link,
-    id: link.dataset.target,
-    target: document.getElementById(link.dataset.target),
-    label: link.querySelector(".planet-label")?.textContent.trim() || "Subject area"
-  })).filter(item => item.target);
+  const journeySections = []; // Standard page flow: no scroll hijacking or chapter snapping.
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const solarGuide = document.querySelector(".solar-guide");
   const briefing = document.querySelector("#solarBriefing");
