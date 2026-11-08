@@ -101,3 +101,41 @@
 @media (prefers-reduced-motion: reduce) {
   .destination-card { transition: none; }
 }
+
+/* Release-campaign walkthrough and separate research allocation. */
+.campaign-sequence { display:grid; gap:16px; }
+.campaign-post { display:grid; grid-template-columns:minmax(230px,.72fr) minmax(0,1.28fr); border:1px solid var(--line); background:var(--panel); }
+.campaign-visual { min-height:260px; display:flex; flex-direction:column; justify-content:space-between; padding:24px; position:relative; isolation:isolate; overflow:hidden; }
+.campaign-visual::before,.campaign-visual::after { content:""; position:absolute; z-index:-1; border:1px solid rgba(216,198,165,.2); border-radius:50%; }
+.campaign-visual::before { width:300px; height:300px; right:-90px; top:-115px; }
+.campaign-visual::after { width:210px; height:210px; right:-44px; top:-65px; }
+.campaign-visual > span { color:var(--accent); font-size:.64rem; font-weight:700; letter-spacing:.16em; }
+.campaign-visual > strong { max-width:10ch; font:750 clamp(2rem,4vw,3.25rem)/.98 "Manrope",sans-serif; letter-spacing:-.07em; }
+.campaign-visual > small { color:rgba(242,238,229,.7); font-size:.76rem; }
+.campaign-visual-clip { background:radial-gradient(ellipse at 78% 22%,rgba(164,141,104,.38),transparent 46%),#151412; }
+.campaign-visual-intro { background:radial-gradient(ellipse at 78% 22%,rgba(102,119,126,.34),transparent 46%),#101213; }
+.campaign-visual-release { background:radial-gradient(ellipse at 78% 22%,rgba(146,113,97,.34),transparent 46%),#151110; }
+.campaign-post-copy { padding:clamp(22px,3vw,34px); align-self:center; }
+.campaign-post-label { margin:0 0 9px; color:var(--accent); font-size:.66rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+.campaign-post-copy h3 { margin:0 0 14px; font:700 clamp(1.2rem,2.2vw,1.65rem)/1.18 "Manrope",sans-serif; letter-spacing:-.04em; }
+.campaign-post-copy p:not(.campaign-post-label) { color:var(--muted); font-size:.87rem; line-height:1.7; margin:10px 0 0; }
+.campaign-post-copy p strong { color:var(--text); font-weight:650; }
+.campaign-side-note,.portfolio-next { margin-top:18px; padding:19px 21px; border-left:2px solid var(--line-accent); background:rgba(255,255,255,.025); }
+.campaign-side-note p,.portfolio-next p { margin:0; color:var(--muted); font-size:.87rem; line-height:1.75; }
+.campaign-side-note strong,.portfolio-next strong { color:var(--text); }
+.research-allocation { margin:34px 0 18px; padding:clamp(22px,3vw,34px); border:1px solid var(--line-accent); background:linear-gradient(140deg,rgba(216,198,165,.075),rgba(255,255,255,.015)); }
+.research-allocation h3 { margin:0 0 10px; font:700 clamp(1.35rem,2.5vw,1.8rem)/1.2 "Manrope",sans-serif; }
+.research-allocation > p:not(.eyebrow) { max-width:72ch; color:var(--muted); font-size:.88rem; line-height:1.75; }
+.research-allocation-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; max-width:480px; margin:22px 0; }
+.research-allocation-grid > div { display:flex; flex-direction:column; gap:4px; padding:18px; border:1px solid var(--line); background:rgba(0,0,0,.15); }
+.research-allocation-grid strong { font:750 1.8rem/1 "Manrope",sans-serif; letter-spacing:-.05em; }
+.research-allocation-grid span { color:var(--muted); font-size:.75rem; }
+.research-allocation .research-output { margin-bottom:0; }
+.clip-meta { margin-top:12px !important; color:var(--subtle) !important; font-size:.74rem !important; }
+@media (max-width:760px) {
+  .campaign-post { grid-template-columns:1fr; }
+  .campaign-visual { min-height:210px; }
+}
+@media (max-width:480px) {
+  .research-allocation-grid { grid-template-columns:1fr; }
+}
