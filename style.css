@@ -1496,46 +1496,9 @@ html.planet-snapping {
 }
 
 
-/* 2026 clean editorial pass: restore a normal, accessible page flow. */
-.solar-guide { display:none !important; }
-.experience-layout { display:block !important; width:100%; }
-.experience-content { display:block !important; width:100%; }
-.experience-content > section {
-  display:block !important;
-  width:100%;
-  height:auto !important;
-  min-height:0 !important;
-  padding:clamp(64px,8vw,112px) 0 !important;
-  align-items:initial !important;
-  pointer-events:auto !important;
-  scroll-margin-top:88px !important;
-}
-.experience-content > #approach { padding-top:clamp(76px,9vw,120px) !important; }
-.experience-content > #approach > .container,
-.experience-content > #process > .container { display:grid !important; }
-.experience-content > #approach > .container { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(28px,6vw,88px); align-items:start; }
-.experience-content > #approach > .container > *,
-.experience-content .planet-chapter > * { display:block !important; }
-.experience-content .services .section-heading { display:flex !important; height:auto !important; min-height:0 !important; overflow:visible !important; margin-bottom:34px !important; }
-.experience-content .services > .container { width:min(calc(100% - 48px),var(--container)) !important; max-width:var(--container) !important; margin-inline:auto !important; }
-.experience-content .service-grid { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:0 !important; }
-.experience-content .planet-chapter { width:auto !important; height:auto !important; min-height:0 !important; margin:0 !important; padding:30px !important; border:1px solid var(--line) !important; border-radius:3px !important; overflow:visible !important; pointer-events:auto !important; }
-.experience-content .planet-chapter::before,
-.experience-content .planet-chapter::after { content:none !important; display:none !important; }
-.experience-content > #process > .container { display:block !important; }
-.experience-content > #faq .faq-grid,
-.experience-content > #application .application-layout { display:grid !important; }
-.experience-content .application-copy { position:static !important; }
-.experience-content > #faq,
-.experience-content > #application { background:transparent !important; }
-.hero { height:auto !important; min-height:min(820px,100svh) !important; }
-html { scroll-behavior:smooth; scroll-padding-top:92px; }
-html.planet-snapping { scroll-snap-type:none !important; }
-body { overflow-y:auto !important; }
-@media (max-width:760px) {
-  .experience-content > #approach > .container { grid-template-columns:minmax(0,1fr) !important; gap:24px; }
-  .experience-content .service-grid { grid-template-columns:minmax(0,1fr) !important; }
-  .experience-content .planet-chapter { padding:24px !important; }
-  .experience-content > section { padding:64px 0 !important; }
-  .experience-content > #approach { padding-top:72px !important; }
-}
+
+/* PROXIMA: restrained colour treatment while retaining the orbital identity. */
+:root { --accent: #b8a98f; }
+.planet-link .planet-body { filter: saturate(.78); }
+.planet-link.is-active .planet-body { border-color:rgba(222,211,190,.48); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
