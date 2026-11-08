@@ -945,7 +945,7 @@ body.journey-started .solar-guide { opacity:1; visibility:visible; transition:op
 }
 .pricing-grid {
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-columns:repeat(3,minmax(0,1fr));
   align-items:stretch;
   gap:14px;
 }
