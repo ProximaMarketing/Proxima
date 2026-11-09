@@ -515,7 +515,7 @@
 
     const originalButton = submitButton.innerHTML;
     submitButton.disabled = true;
-    submitButton.innerHTML = "<span>Sending application…</span><span aria-hidden=\"true\">···</span>";
+    submitButton.innerHTML = "<span>Sending enquiry…</span><span aria-hidden=\"true\">···</span>";
     submitButton.setAttribute("aria-busy", "true");
     try {
       const response = await fetch(scriptUrl, {
@@ -524,18 +524,18 @@
         body: new URLSearchParams(new FormData(form)),
         redirect: "follow"
       });
-      if (!response.ok) throw new Error("The application service returned an error.");
+      if (!response.ok) throw new Error("The enquiry service returned an error.");
       const result = await response.json();
       if (result && result.success === true) {
         form.reset();
-        setStatus("Application received. Thank you for telling us about your project. We aim to respond within 3–5 business days.", "success");
+        setStatus("Enquiry received. Thanks for telling us about your project. We aim to respond within 3–5 business days.", "success");
         status.focus();
       } else {
-        throw new Error("The application service did not confirm receipt.");
+        throw new Error("The enquiry service did not confirm receipt.");
       }
     } catch (error) {
-      console.error("PROXIMA application submission:", error);
-      setStatus("We couldn’t confirm that your application was received. Your information may not have been sent. Please try again shortly. If this keeps happening, let us know through the channel you used to find PROXIMA.", "error");
+      console.error("PROXIMA enquiry submission:", error);
+      setStatus("We couldn’t confirm that your enquiry was received. Your information may not have been sent. Please try again shortly, or email marketingproximatoday@gmail.com.", "error");
       status.focus();
     } finally {
       submitButton.disabled = false;
