@@ -476,3 +476,123 @@
 @media (max-width:520px) {
   .label-pilot-steps { grid-template-columns:1fr; }
 }
+
+
+/* PROXIMA / SUBPAGE VISUAL FINISH — one editorial system across every destination. */
+.subpage-body{background:radial-gradient(ellipse at 90% 8%,rgba(98,129,163,.085),transparent 31%),linear-gradient(180deg,#080b10,#090d12 48%,#080b10)}
+.subpage-main{padding-top:88px}
+.page-intro{position:relative;padding-top:clamp(82px,10vw,132px);padding-bottom:clamp(48px,6vw,78px);isolation:isolate}
+.page-intro::after{content:"";position:absolute;z-index:-1;top:22%;right:3%;width:clamp(150px,22vw,310px);aspect-ratio:1;border:1px solid rgba(205,187,155,.08);border-radius:50%;box-shadow:0 0 0 28px rgba(205,187,155,.018),0 0 0 58px rgba(126,157,187,.018);pointer-events:none}
+.page-intro h1{max-width:900px;font:600 clamp(3rem,7vw,6rem)/.98 "Space Grotesk",sans-serif;letter-spacing:-.075em}
+.page-intro>p:last-child{max-width:60ch;color:#b6c0c9;font-size:clamp(1rem,1.35vw,1.12rem);line-height:1.8}
+.page-section{border-top-color:rgba(218,229,238,.085);padding-block:clamp(68px,8.5vw,112px)}
+.page-section-muted{background:linear-gradient(145deg,rgba(18,27,37,.75),rgba(8,12,18,.75))}
+.page-section-heading h2{font:600 clamp(2.3rem,4.5vw,4.2rem)/1.02 "Space Grotesk",sans-serif;letter-spacing:-.07em}
+.page-section-heading>p:last-child{color:#aeb8c2}
+.page-bottom-note{padding-bottom:88px}.page-bottom-note .button{min-width:210px}
+.destination-index,.format-number,.release-walkthrough-number{color:#d7c5a4}
+.release-engine-section{background:linear-gradient(180deg,rgba(16,24,33,.5),rgba(8,11,16,.4))}
+.release-engine-heading-compact{max-width:900px;margin-bottom:36px}
+.release-engine-heading-compact h2{font:600 clamp(2.5rem,5vw,4.3rem)/.98 "Space Grotesk",sans-serif;letter-spacing:-.07em}
+.release-flip-grid{gap:15px}
+.release-flip-card{height:205px;border-radius:18px}
+.release-flip-face{padding:clamp(22px,2.7vw,29px);border-color:rgba(205,187,155,.17);border-radius:18px;box-shadow:0 18px 48px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.035)}
+.release-flip-front{background:radial-gradient(ellipse at 100% 100%,rgba(110,143,176,.13),transparent 45%),linear-gradient(145deg,#151e28,#0e141c 78%)}
+.release-flip-front::after{width:210px;height:210px;right:-88px;bottom:-130px;border-color:rgba(205,187,155,.28);box-shadow:0 0 0 30px rgba(205,187,155,.025),0 0 0 60px rgba(130,158,183,.02)}
+.release-flip-number{color:#d7c4a2}
+.release-flip-front strong{font:600 clamp(1.28rem,2vw,1.72rem)/1.08 "Space Grotesk",sans-serif}
+.release-flip-back{border-color:rgba(205,187,155,.4);background:radial-gradient(ellipse at 100% 0%,rgba(108,140,171,.14),transparent 44%),linear-gradient(145deg,#1a2632,#111923)}
+.release-flip-back p{color:#e4e7e8;font-size:.82rem}.release-flip-back>span{color:#d9c8a8}
+.release-engine-note{color:#8e9ba7}
+.release-channel-strip{max-width:900px;padding:18px 20px 0;border-top-color:rgba(205,187,155,.25)}
+.release-channel-strip p{color:#b1bbc5}
+.release-walkthrough-section{background:radial-gradient(ellipse at 6% 30%,rgba(103,135,169,.075),transparent 36%),linear-gradient(180deg,#0a1017,#0b1016)}
+.release-walkthrough-heading{max-width:900px}
+.release-walkthrough-heading h2{font:600 clamp(2.5rem,5vw,4.35rem)/1 "Space Grotesk",sans-serif;letter-spacing:-.07em}
+.release-walkthrough-heading>p:last-child{color:#aeb8c2}
+.release-walkthrough-grid{gap:15px}
+.release-walkthrough-card{min-height:220px;padding:clamp(24px,3vw,32px);border:1px solid rgba(205,187,155,.17);border-radius:18px;background:radial-gradient(ellipse at 100% 0%,rgba(111,143,175,.12),transparent 45%),linear-gradient(145deg,rgba(24,34,45,.95),rgba(12,18,26,.95));box-shadow:0 18px 48px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.035);transition:transform .25s ease,border-color .25s ease}
+.release-walkthrough-card:hover{transform:translateY(-4px);border-color:rgba(205,187,155,.4)}
+.release-walkthrough-card h3{font:600 1.35rem "Space Grotesk",sans-serif}
+.release-walkthrough-card p{color:#b4bec8}
+.release-walkthrough-card small{color:#d4c19d;text-transform:uppercase}
+.release-route-panel{border-color:rgba(205,187,155,.27);border-radius:18px;background:radial-gradient(ellipse at 0% 0%,rgba(205,187,155,.095),transparent 48%),linear-gradient(145deg,#17232e,#0d141c);box-shadow:0 22px 58px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.04)}
+.release-route-panel h3{font-family:"Space Grotesk",sans-serif}
+.release-route-steps span{color:#c1cbd3}.release-route-steps b{color:#dcc9a7}
+.release-walkthrough-notes p{color:#9eabb6}.release-walkthrough-notes strong{color:#e7e0d3}
+.pricing-section{background:radial-gradient(ellipse at 90% 6%,rgba(103,135,169,.1),transparent 34%),linear-gradient(180deg,#090e14,#0b1016)}
+.pricing-intro h2{font:600 clamp(2.5rem,5vw,4.2rem)/1 "Space Grotesk",sans-serif;letter-spacing:-.07em}
+.pricing-grid{gap:18px}
+.pricing-card{min-height:370px;padding:clamp(26px,3.5vw,38px);border:1px solid rgba(205,187,155,.19);border-radius:20px;background:radial-gradient(ellipse at 100% 0%,rgba(103,135,169,.11),transparent 43%),linear-gradient(145deg,rgba(22,32,43,.95),rgba(11,17,24,.98));box-shadow:0 24px 65px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.04)}
+.pricing-card-featured{border-color:rgba(205,187,155,.52);background:radial-gradient(ellipse at 100% 0%,rgba(205,187,155,.13),transparent 44%),linear-gradient(145deg,#1b2732,#101720)}
+.pricing-card h3{font:600 1.45rem "Space Grotesk",sans-serif}
+.pricing-price{color:#ead9b8;font:600 clamp(2.2rem,3.2vw,2.8rem)/1 "Space Grotesk",sans-serif}
+.pricing-features li{color:#c4cdd5}.pricing-button{min-height:49px;border-radius:999px;font-size:.77rem}
+.package-count-note{color:#aeb9c3}
+.research-allocation{border-color:rgba(205,187,155,.28);border-radius:18px;background:linear-gradient(145deg,rgba(205,187,155,.075),rgba(17,25,34,.55))}
+.research-allocation h3{font-family:"Space Grotesk",sans-serif}
+.research-allocation-grid>div{border-color:rgba(205,187,155,.16);border-radius:12px;background:rgba(5,9,14,.25)}
+.research-allocation-grid strong{font-family:"Space Grotesk",sans-serif}
+.package-boundaries{color:#8e9ba7}
+.label-pilot-panel{border-color:rgba(205,187,155,.3);border-radius:20px;background:radial-gradient(ellipse at 0% 0%,rgba(205,187,155,.09),transparent 46%),linear-gradient(145deg,#15212c,#0d141c);box-shadow:0 24px 60px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.04)}
+.label-pilot-intro h3,.label-pilot-steps strong{font-family:"Space Grotesk",sans-serif}
+.label-pilot-steps>div{border-color:rgba(205,187,155,.15);border-radius:12px;background:rgba(5,9,14,.22)}
+.faq{background:linear-gradient(180deg,#0d141b,#090d12)}
+.faq h2,.faq-list summary{font-family:"Space Grotesk",sans-serif}
+.faq-list{border-top-color:rgba(205,187,155,.3)}.faq-list details{border-bottom-color:rgba(218,229,238,.1)}
+.results-intro{padding-top:clamp(82px,10vw,132px);padding-bottom:clamp(45px,6vw,74px)}
+.results-intro h1{font:600 clamp(3rem,7vw,6rem)/.98 "Space Grotesk",sans-serif;letter-spacing:-.075em}
+.results-proof-card{border-color:rgba(205,187,155,.34);border-radius:20px;background:radial-gradient(ellipse at 100% 0%,rgba(108,141,173,.16),transparent 54%),linear-gradient(145deg,#17232e,#0d141c);box-shadow:0 22px 60px rgba(0,0,0,.17),inset 0 1px 0 rgba(255,255,255,.05)}
+.results-proof-card>strong{font-family:"Space Grotesk",sans-serif;color:#f0e2c4}
+.results-case-study-section{background:linear-gradient(180deg,rgba(100,132,165,.045),rgba(8,12,17,.15))}
+.results-case-study-top h2{font:600 clamp(1.75rem,3.4vw,2.7rem)/1.08 "Space Grotesk",sans-serif;letter-spacing:-.055em}
+.results-case-study-stat{min-height:180px;border-color:rgba(205,187,155,.15);border-radius:17px;background:linear-gradient(145deg,rgba(20,30,41,.95),rgba(11,17,24,.95));box-shadow:0 17px 48px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.035)}
+.results-case-study-stat-featured{border-color:rgba(205,187,155,.44);background:radial-gradient(ellipse at 100% 0%,rgba(205,187,155,.14),transparent 48%),linear-gradient(145deg,#1a2631,#0f1720)}
+.results-case-study-stat>strong{font-family:"Space Grotesk",sans-serif;color:#eee0c3}
+.results-case-study-audience .results-card,.results-card{border-color:rgba(205,187,155,.14);border-radius:17px;background:linear-gradient(145deg,rgba(20,30,41,.96),rgba(11,17,24,.96));box-shadow:0 18px 50px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.03)}
+.results-market-grid>div{border-radius:9px;border-color:rgba(205,187,155,.13);background:rgba(4,8,13,.2)}
+.results-stat-card{border-radius:15px;border-color:rgba(205,187,155,.14);background:linear-gradient(145deg,#17222d,#0d141c)}
+.results-stat-featured{border-color:rgba(205,187,155,.42)}
+.results-stat-card>strong,.results-engagement-number{font-family:"Space Grotesk",sans-serif;color:#eee1c7}
+.results-tablist{border-bottom-color:rgba(205,187,155,.18)}.results-tab{font-family:"Space Grotesk",sans-serif}
+.results-tab.is-active{border-bottom-color:#e2cfad;color:#f3eddf}
+.results-disclaimer{border-color:rgba(205,187,155,.16);border-radius:12px;background:rgba(18,27,37,.62)}
+.results-report-section{background:linear-gradient(180deg,rgba(8,12,17,.1),rgba(15,23,32,.35))}
+.results-bottom-cta h2{font:600 clamp(2.3rem,4.7vw,3.8rem)/1.02 "Space Grotesk",sans-serif}
+.results-bottom-cta .inline-link{color:#dfcba8}
+.about-intro{background:radial-gradient(ellipse at 80% 30%,rgba(108,142,174,.14),transparent 39%),radial-gradient(ellipse at 12% 88%,rgba(205,187,155,.08),transparent 34%),#080d13}
+.about-intro h1{font:600 clamp(3rem,6.5vw,5.8rem)/.98 "Space Grotesk",sans-serif;letter-spacing:-.075em}
+.founder{background:linear-gradient(180deg,#101823,#0c121a)}
+.founder-copy h2{font:600 clamp(2rem,4vw,3rem)/1.08 "Space Grotesk",sans-serif;letter-spacing:-.06em}
+.founder-copy>p:not(.eyebrow):not(.founder-project-name){color:#b6c0c9}
+.founder-honesty{border-top-color:rgba(205,187,155,.25);color:#d4d1c8}
+.founder-copy .button{margin-top:14px}
+.application-copy h2{font:600 clamp(2.65rem,4.5vw,4rem)/1.02 "Space Grotesk",sans-serif}
+.application-copy>p:not(.eyebrow){color:#b5c0ca}
+.application-section .response-time{padding:14px 0;border-top:1px solid rgba(205,187,155,.18)}
+.form-heading span{color:#d7c5a3}.form-footnote,.privacy-note{color:#8d9aa6}.form-status{border-radius:10px}
+.legal-hero{background:radial-gradient(ellipse at 83% 30%,rgba(108,140,171,.12),transparent 40%),linear-gradient(180deg,#080d13,#0a1017)}
+.legal-hero h1{font:600 clamp(2.8rem,6vw,5.2rem)/1 "Space Grotesk",sans-serif}
+.legal-content{background:linear-gradient(180deg,rgba(15,23,32,.3),transparent)}
+.legal-copy h2,.legal-copy h3{font-family:"Space Grotesk",sans-serif}
+.legal-contact,.legal-form{border-radius:15px;border-color:rgba(205,187,155,.19);background:linear-gradient(145deg,rgba(20,30,41,.85),rgba(10,15,21,.85))}
+.examples-note{border-left-color:var(--accent);border-radius:0 12px 12px 0;background:rgba(19,29,39,.7)}
+.clip-card,.format-card{border-radius:16px;border-color:rgba(205,187,155,.15);background:linear-gradient(145deg,#16212c,#0d141c)}
+.clip-art{border-radius:15px 15px 0 0}.clip-card-copy h2{font-family:"Space Grotesk",sans-serif}
+@media(max-width:1050px){.results-case-study-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+ .subpage-main{padding-top:72px}.page-intro{padding-top:62px}.page-intro::after{right:-10%;top:13%;opacity:.55}
+ .release-flip-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.release-flip-card{height:185px}
+ .release-walkthrough-grid,.release-route-panel,.release-walkthrough-notes{grid-template-columns:1fr}
+ .label-pilot-panel,.results-intro,.results-case-study-audience,.application-layout{grid-template-columns:1fr}
+ .results-proof-card{max-width:none}
+}
+@media(max-width:520px){
+ .page-intro h1{font-size:clamp(2.55rem,11vw,3.6rem)}
+ .release-flip-grid,.pricing-grid{grid-template-columns:1fr}.release-flip-card{height:175px}
+ .pricing-card{min-height:0}.results-case-study-grid{grid-template-columns:1fr 1fr}
+ .results-case-study-stat{min-height:150px;padding:17px}.results-case-study-stat>strong{font-size:1.8rem}
+ .results-market-grid{grid-template-columns:1fr}.results-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .results-post-row{grid-template-columns:22px minmax(0,1fr) 52px 52px;gap:7px}.application-form{padding:23px 17px}
+}
+@media(prefers-reduced-motion:reduce){.release-walkthrough-card,.destination-card,.release-flip-inner{transition:none!important}}
