@@ -522,6 +522,10 @@
     });
   });
 
+  // Add the enhancement flag only after the page interactions are initialised.
+  // If this script fails earlier, the stylesheet keeps the page content visible.
+  document.documentElement.classList.add("js");
+
   if (!form || !submitButton || !status) return;
   const setStatus = (message, kind) => {
     status.textContent = message;
