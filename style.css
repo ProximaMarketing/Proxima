@@ -1690,3 +1690,15 @@ html:not(.js) .experience-content .planet-chapter > * {
     grid-template-columns:minmax(0,1fr);
   }
 }
+
+.noscript-note {
+  margin:0 0 24px;
+  padding:16px 18px;
+  border:1px solid var(--line-accent);
+  border-radius:12px;
+  background:rgba(205,187,155,.07);
+  color:var(--muted);
+  font-size:.84rem;
+  line-height:1.7;
+}
+.noscript-note a { color:var(--accent-bright); text-decoration:underline; text-underline-offset:3px; }
