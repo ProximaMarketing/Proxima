@@ -45,7 +45,13 @@
     target: document.getElementById(link.dataset.target),
     label: link.querySelector(".planet-label")?.textContent.trim() || "Subject area"
   })).filter(item => item.target);
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let reducedMotion = motionPreference.matches;
+  if (typeof motionPreference.addEventListener === "function") {
+    motionPreference.addEventListener("change", event => {
+      reducedMotion = event.matches;
+    });
+  }
   const solarGuide = document.querySelector(".solar-guide");
   const briefing = document.querySelector("#solarBriefing");
   const briefingIndex = document.querySelector("#solarBriefingIndex");
@@ -86,7 +92,6 @@
     focusDiameter: 320,
     orbitRadius: 0,
     systemWidth: 0,
-    documentHeight: 0
   };
   let chapterDocumentTops = [];
   let solarRectCache = null;
@@ -109,7 +114,6 @@
         planetBodies[index].style.setProperty("--focus-scale", (stageMetrics.baseDiameter / stageMetrics.focusDiameter).toFixed(4));
       }
     });
-    stageMetrics.documentHeight = document.documentElement.scrollHeight;
     chapterDocumentTops = journeySections.map(item => item.target.getBoundingClientRect().top + window.scrollY);
     solarRectCache = solarSystem ? solarSystem.getBoundingClientRect() : null;
     briefingRectCache = briefing && !briefing.hidden ? briefing.getBoundingClientRect() : null;
@@ -352,7 +356,11 @@
   };
 
   document.addEventListener("click", event => {
-    const link = event.target.closest('a[href^="#"]');
+    const clickedElement = event.target instanceof Element
+      ? event.target
+      : event.target?.parentElement;
+    if (!clickedElement) return;
+    const link = clickedElement.closest('a[href^="#"]');
     if (!link) return;
     const targetId = link.getAttribute("href").slice(1);
     if (targetId === "journey") { event.preventDefault(); travelToPlanet("approach"); return; }
@@ -444,12 +452,13 @@
   updateSolarSystem();
   updateScrollUI();
 
-  const closeMenu = () => {
+  const closeMenu = (restoreFocus = false) => {
     if (!menuToggle || !nav) return;
     menuToggle.setAttribute("aria-expanded", "false");
     menuToggle.setAttribute("aria-label", "Open navigation");
     nav.classList.remove("is-open");
     document.body.classList.remove("menu-open");
+    if (restoreFocus) menuToggle.focus();
   };
   if (menuToggle && nav) {
     menuToggle.addEventListener("click", () => {
@@ -458,10 +467,33 @@
       menuToggle.setAttribute("aria-label", willOpen ? "Close navigation" : "Open navigation");
       nav.classList.toggle("is-open", willOpen);
       document.body.classList.toggle("menu-open", willOpen);
+      if (willOpen) {
+        const firstLink = nav.querySelector("a[href]");
+        if (firstLink) firstLink.focus();
+      } else {
+        menuToggle.focus();
+      }
     });
-    nav.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+    nav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => closeMenu()));
     document.addEventListener("keydown", event => {
-      if (event.key === "Escape") closeMenu();
+      const menuIsOpen = menuToggle.getAttribute("aria-expanded") === "true";
+      if (event.key === "Escape" && menuIsOpen) {
+        closeMenu(true);
+        return;
+      }
+      if (event.key !== "Tab" || !menuIsOpen) return;
+      const focusable = [menuToggle, ...nav.querySelectorAll("a[href]")].filter(
+        element => element.getClientRects().length > 0
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     });
     window.addEventListener("resize", () => {
       if (window.innerWidth > 760) closeMenu();
@@ -503,7 +535,7 @@
   requiredFields.forEach(field => {
     field.addEventListener("input", () => {
       field.removeAttribute("aria-invalid");
-      if (field.checkValidity()) clearStatus();
+      if (requiredFields.every(requiredField => requiredField.checkValidity())) clearStatus();
     });
   });
 
@@ -524,12 +556,17 @@
     submitButton.disabled = true;
     submitButton.innerHTML = "<span>Sending enquiry…</span><span aria-hidden=\"true\">···</span>";
     submitButton.setAttribute("aria-busy", "true");
+    const controller = typeof AbortController === "function" ? new AbortController() : null;
+    const timeoutId = controller
+      ? window.setTimeout(() => controller.abort(), 30000)
+      : null;
     try {
       const response = await fetch(scriptUrl, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
         body: new URLSearchParams(new FormData(form)),
-        redirect: "follow"
+        redirect: "follow",
+        signal: controller ? controller.signal : undefined
       });
       if (!response.ok) throw new Error("The enquiry service returned an error.");
       const result = await response.json();
@@ -542,9 +579,15 @@
       }
     } catch (error) {
       console.error("PROXIMA enquiry submission:", error);
-      setStatus("We couldn’t confirm that your enquiry was received. Your information may not have been sent. Please try again shortly, or email marketingproximatoday@gmail.com.", "error");
+      setStatus(
+        error && error.name === "AbortError"
+          ? "The request took longer than expected, so we couldn’t confirm receipt. Please check for a confirmation before submitting again, or email marketingproximatoday@gmail.com."
+          : "We couldn’t confirm receipt. Please check for a confirmation before submitting again to avoid duplicates, or email marketingproximatoday@gmail.com.",
+        "error"
+      );
       status.focus();
     } finally {
+      if (timeoutId !== null) window.clearTimeout(timeoutId);
       submitButton.disabled = false;
       submitButton.innerHTML = originalButton;
       submitButton.removeAttribute("aria-busy");
