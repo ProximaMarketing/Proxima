@@ -516,11 +516,23 @@
   }
 
   document.querySelectorAll(".release-flip-card").forEach(card => {
+    const front = card.querySelector(".release-flip-front");
+    const back = card.querySelector(".release-flip-back");
     card.addEventListener("click", () => {
       const flipped = card.classList.toggle("is-flipped");
       card.setAttribute("aria-expanded", String(flipped));
+      if (front) front.setAttribute("aria-hidden", String(flipped));
+      if (back) back.setAttribute("aria-hidden", String(!flipped));
     });
   });
+
+  const enquiryParams = new URLSearchParams(window.location.search);
+  if (form && enquiryParams.get("type") === "label") {
+    const packageInterest = document.querySelector("#packageInterest");
+    const supportNeeded = document.querySelector("#supportNeeded");
+    if (packageInterest) packageInterest.value = "One-release label pilot — scope separately";
+    if (supportNeeded) supportNeeded.value = "Promotion for a label or artist roster";
+  }
 
   // Add the enhancement flag only after the page interactions are initialised.
   // If this script fails earlier, the stylesheet keeps the page content visible.
