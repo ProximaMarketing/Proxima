@@ -226,3 +226,36 @@
   .release-flip-card { height:150px; }
 }
 @media (prefers-reduced-motion:reduce) { .release-flip-inner { transition:none; } }
+
+
+/* Cleaner page hierarchy and compact information blocks. */
+.compact-process-inner { display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.compact-process-inner > .eyebrow { flex:0 0 auto; margin:0; }
+.compact-process-steps { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:12px 24px; }
+.compact-process-steps span { color:var(--muted); font-size:.78rem; white-space:nowrap; }
+.compact-process-steps b { margin-right:7px; color:var(--accent); font-size:.66rem; letter-spacing:.08em; }
+.compact-research { display:grid; grid-template-columns:1fr auto; align-items:center; gap:8px 24px; margin-top:22px; padding:22px 24px; }
+.compact-research h3 { margin:0; font:650 1.1rem/1.2 "Manrope",sans-serif; }
+.compact-research .eyebrow { margin-bottom:7px; }
+.compact-research .research-allocation-grid { display:flex; gap:24px; }
+.compact-research .research-allocation-grid > div { display:flex; flex-direction:column; gap:2px; }
+.compact-research .research-allocation-grid strong { font:700 1.5rem/1 "Manrope",sans-serif; }
+.compact-research .research-allocation-grid span { color:var(--muted); font-size:.7rem; }
+.compact-research > p:last-child { grid-column:1/-1; margin:4px 0 0; color:var(--muted); font-size:.78rem; line-height:1.6; }
+.package-boundaries { margin:14px 0 0; color:var(--muted); font-size:.75rem; line-height:1.6; text-align:center; }
+.label-enquiry-line { display:flex; justify-content:space-between; align-items:center; gap:18px; margin-top:18px; padding-top:14px; border-top:1px solid var(--line); color:var(--muted); font-size:.78rem; }
+.label-enquiry-line a { color:var(--accent); text-decoration:none; white-space:nowrap; }
+.label-enquiry-line a:hover { text-decoration:underline; }
+.views-simple { max-width:600px; }
+.views-simple .metric-card { min-height:220px; }
+.views-simple > p { margin:14px 0 0; color:var(--muted); font-size:.78rem; line-height:1.6; text-align:center; }
+.portfolio-intro { min-height:58vh; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; }
+.portfolio-intro .button { margin-top:18px; }
+@media (max-width:760px) {
+ .compact-process-inner { align-items:flex-start; flex-direction:column; gap:14px; }
+ .compact-process-steps { justify-content:flex-start; gap:10px 16px; }
+ .compact-research { grid-template-columns:1fr; padding:19px; }
+ .compact-research .research-allocation-grid { gap:30px; }
+ .label-enquiry-line { align-items:flex-start; flex-direction:column; gap:8px; }
+ .views-simple .metric-card { min-height:180px; }
+}
