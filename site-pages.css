@@ -400,3 +400,35 @@
   .results-proof-card { max-width:100%; width:100%; padding:21px 23px; }
   .results-proof-card > strong { font-size:3.8rem; }
 }
+
+
+/* Jean White portfolio case study: separate founder-project evidence from report preview data. */
+.results-case-study-section { background:linear-gradient(180deg,rgba(216,198,165,.025),transparent 55%); }
+.results-case-study-top { align-items:flex-start; }
+.results-case-study-top > div { max-width:760px; }
+.results-case-study-top .results-case-study-lede { max-width:68ch; margin:14px 0 0; color:var(--muted); font-size:.9rem; line-height:1.75; }
+.results-case-study-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+.results-case-study-stat { min-width:0; min-height:170px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; border:1px solid var(--line); border-radius:10px; background:var(--panel); }
+.results-case-study-stat-featured { border-color:var(--line-accent); background:linear-gradient(145deg,rgba(216,198,165,.12),rgba(255,255,255,.018)); }
+.results-case-study-stat > span { color:var(--muted); font-size:.62rem; font-weight:700; letter-spacing:.12em; }
+.results-case-study-stat > strong { display:block; margin:18px 0 10px; font:750 clamp(1.8rem,3.2vw,2.6rem)/1 "Manrope",sans-serif; letter-spacing:-.065em; overflow-wrap:anywhere; }
+.results-case-study-stat > small { color:var(--subtle); font-size:.72rem; line-height:1.55; }
+.results-case-study-audience { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; margin-top:13px; }
+.results-case-study-audience .results-card h3 { margin:0 0 22px; font:650 1.2rem/1.25 "Manrope",sans-serif; }
+.results-market-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.results-market-grid > div { min-width:0; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 14px; border:1px solid var(--line); background:rgba(255,255,255,.018); }
+.results-market-grid span { color:var(--muted); font-size:.8rem; }
+.results-market-grid strong { color:var(--text); font:700 .95rem "Manrope",sans-serif; font-variant-numeric:tabular-nums; white-space:nowrap; }
+@media (max-width:900px) {
+  .results-case-study-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:760px) {
+  .results-case-study-top { gap:14px; }
+  .results-case-study-audience { grid-template-columns:1fr; }
+}
+@media (max-width:520px) {
+  .results-case-study-grid { gap:8px; }
+  .results-case-study-stat { min-height:148px; padding:16px; }
+  .results-case-study-stat > strong { font-size:1.85rem; }
+  .results-market-grid { grid-template-columns:1fr; }
+}
