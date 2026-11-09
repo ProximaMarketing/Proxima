@@ -20,7 +20,7 @@ Public site: https://proximamarketing.github.io/Proxima/
 - `site-pages.css` — styles for the content, results, enquiry and examples pages.
 - `script.js` — navigation, scroll journey, reveal effects, content-card interactions and enquiry submission.
 
-The project uses Google Fonts for DM Sans, Space Grotesk and DM Serif Display. The site should remain readable if web fonts do not load.
+The project uses Google Fonts for DM Sans (body copy), Instrument Sans (headings) and Newsreader (editorial accents). The site should remain readable if web fonts do not load.
 
 ## Enquiry form
 
