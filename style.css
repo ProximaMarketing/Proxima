@@ -1525,8 +1525,8 @@ html.planet-snapping {
 }
 html{background:var(--bg)}
 body{background:radial-gradient(ellipse at 8% 18%,rgba(63,91,121,.11),transparent 34%),radial-gradient(ellipse at 92% 74%,rgba(139,113,75,.07),transparent 32%),var(--bg);color:var(--text);font-family:"DM Sans",sans-serif}
-h1,h2,h3,.wordmark,.destination-title,.pricing-card h3,.founder-copy h2{font-family:"Space Grotesk","Manrope",sans-serif}
-.serif-accent{font-family:"DM Serif Display",Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.045em;color:var(--accent-bright)}
+h1,h2,h3,.wordmark,.destination-title,.pricing-card h3,.founder-copy h2{font-family:"Instrument Sans","Manrope",sans-serif}
+.serif-accent{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.045em;color:var(--accent-bright)}
 p{color:var(--muted)}
 .container{width:min(100% - 56px,var(--container))}
 ::selection{color:#071018;background:var(--accent-bright)}
@@ -1552,7 +1552,7 @@ p{color:var(--muted)}
 .hero-grid{position:absolute;z-index:2;top:49%;left:50%;right:auto;bottom:auto;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(300px,.94fr);align-items:center;gap:clamp(24px,4vw,70px);width:min(calc(100% - 64px),var(--container));margin:0;padding:0;transform:translate(-50%,-47%)}
 .hero-copy{max-width:720px;position:relative;z-index:3}
 .hero-copy .eyebrow{margin-bottom:24px;color:#d8c7a8}
-.hero-copy h1{max-width:760px;margin:0 0 24px;font:600 clamp(3.35rem,6vw,6.25rem)/.98 "Space Grotesk",sans-serif;letter-spacing:-.075em;text-wrap:balance}
+.hero-copy h1{max-width:760px;margin:0 0 24px;font:600 clamp(3.35rem,6vw,6.25rem)/.98 "Instrument Sans",sans-serif;letter-spacing:-.075em;text-wrap:balance}
 .hero-lede{max-width:45ch;margin:0 0 30px;color:#c0c7ce;font-size:clamp(1rem,1.3vw,1.14rem);line-height:1.75}
 .hero-actions{gap:14px 26px}
 .hero-actions .text-link{color:#d7dde2;font-size:.83rem}
@@ -1567,7 +1567,7 @@ p{color:var(--muted)}
 .hero-art-orbit-three{width:96%;height:37%;transform:rotate(8deg);border-style:dashed;border-color:rgba(205,187,155,.14)}
 .hero-art-core{position:relative;z-index:2;width:36%;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(234,220,193,.7);border-radius:50%;background:radial-gradient(circle at 34% 26%,rgba(255,255,255,.27),transparent 24%),radial-gradient(circle at 34% 30%,#4a5968 0,#202b36 43%,#0d131a 76%);box-shadow:0 0 28px rgba(145,170,193,.17),0 0 90px rgba(145,170,193,.1),inset 0 0 36px rgba(255,255,255,.055)}
 .hero-art-core::after{content:"";position:absolute;inset:9%;border:1px solid rgba(241,230,210,.12);border-radius:50%}
-.hero-art-core-mark{color:#f1e6d1;font:600 clamp(2.2rem,4.5vw,3.6rem)/.9 "Space Grotesk",sans-serif;letter-spacing:-.1em}
+.hero-art-core-mark{color:#f1e6d1;font:600 clamp(2.2rem,4.5vw,3.6rem)/.9 "Instrument Sans",sans-serif;letter-spacing:-.1em}
 .hero-art-core-name{margin-top:12px;color:#d1c5b1;font-size:.48rem;font-weight:700;letter-spacing:.28em}
 .hero-art-node{position:absolute;z-index:3;width:13px;height:13px;border:1px solid rgba(239,226,201,.76);border-radius:50%;background:radial-gradient(circle at 32% 27%,#fff6df,#b5a17d 53%,#5c6871);box-shadow:0 0 23px rgba(205,187,155,.38)}
 .hero-art-node-one{top:23%;left:21%}.hero-art-node-two{top:37%;right:8%;width:9px;height:9px}.hero-art-node-three{bottom:17%;left:33%;width:7px;height:7px}
@@ -1575,25 +1575,25 @@ p{color:var(--muted)}
 .hero-art-label-top{top:6%;left:50%;transform:translateX(-50%)}.hero-art-label-right{top:48%;right:-1%}.hero-art-label-bottom{bottom:6%;left:50%;transform:translateX(-50%)}.hero-art-label-left{top:48%;left:-2%}
 .hero-art-caption{position:absolute;right:9%;bottom:12%;display:flex;flex-direction:column;gap:4px;padding:12px 15px;border:1px solid rgba(205,187,155,.21);border-radius:10px;background:rgba(9,13,19,.74);box-shadow:0 16px 44px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.05);backdrop-filter:blur(14px)}
 .hero-art-caption span{color:#8997a4;font-size:.48rem;font-weight:700;letter-spacing:.18em}
-.hero-art-caption strong{color:#f0e7d7;font:500 1.02rem "DM Serif Display",serif;font-style:italic}
+.hero-art-caption strong{color:#f0e7d7;font:500 1.02rem "Newsreader",serif;font-style:italic}
 .hero-art-caption span:last-child{color:#b6ad9c}
 .intro{background:radial-gradient(ellipse at 78% 12%,rgba(96,128,160,.08),transparent 38%),linear-gradient(180deg,#0b1016,#0b0f14)}
-.intro h2,.section-heading h2,.fit h2,.faq h2,.application-copy h2{font-family:"Space Grotesk",sans-serif;font-weight:500;letter-spacing:-.07em}
+.intro h2,.section-heading h2,.fit h2,.faq h2,.application-copy h2{font-family:"Instrument Sans",sans-serif;font-weight:500;letter-spacing:-.07em}
 .intro-copy p{color:#aeb8c2;line-height:1.9}
 .services{background:linear-gradient(180deg,#090d12,#0b1016)}
 .service-grid{gap:10px;border:0}
 .service-card{min-height:260px;padding:30px;border:1px solid rgba(206,220,232,.1);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));box-shadow:0 22px 58px rgba(0,0,0,.11)}
 .service-card::after{height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
 .service-symbol{color:var(--accent)}
-.service-card h3{font:600 1.18rem "Space Grotesk",sans-serif}
+.service-card h3{font:600 1.18rem "Instrument Sans",sans-serif}
 .service-card p{color:#aab5bf}
 .process{background:linear-gradient(180deg,#0b0f14,#090d12)}
-.step-number{color:#d3c2a4;font-family:"Space Grotesk",sans-serif}
+.step-number{color:#d3c2a4;font-family:"Instrument Sans",sans-serif}
 .step-line{background:linear-gradient(90deg,rgba(205,187,155,.52),rgba(205,187,155,.06))}
 .destination-section{background:radial-gradient(ellipse at 85% 30%,rgba(104,136,170,.1),transparent 33%),linear-gradient(180deg,#090d12,#070a0e)}
 .destination-card{min-height:205px;padding:clamp(26px,3.3vw,38px);border-color:rgba(205,187,155,.16);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012))}
 .destination-card:hover{border-color:rgba(205,187,155,.48);background:linear-gradient(145deg,rgba(205,187,155,.09),rgba(255,255,255,.018))}
-.destination-title{font-family:"Space Grotesk",sans-serif}
+.destination-title{font-family:"Instrument Sans",sans-serif}
 .site-footer{background:radial-gradient(ellipse at 10% 0%,rgba(98,127,157,.08),transparent 40%),#070a0e;border-top-color:rgba(205,187,155,.2)}
 .footer-wordmark{color:#f5f0e6}.footer-brand p{color:#9aa5af}.footer-label{color:#d3c1a0}.footer-bottom{color:#74808c}.footer-bottom a{color:#bec7ce}
 .application-section{background:radial-gradient(ellipse at 10% 10%,rgba(104,136,170,.11),transparent 36%),linear-gradient(145deg,#0b1016,#090d12)}
@@ -1605,10 +1605,10 @@ p{color:var(--muted)}
 .response-time{color:#aeb8c2}.response-time strong{color:#f2eadb}
 .founder-art{border-color:rgba(205,187,155,.28);border-radius:20px;background:radial-gradient(ellipse at 50% 46%,rgba(120,151,180,.16),transparent 48%),radial-gradient(ellipse at 50% 65%,rgba(205,187,155,.09),transparent 62%),#0a1017;box-shadow:0 28px 80px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.05)}
 .founder-art-core{border-color:rgba(234,220,193,.7);background:radial-gradient(circle at 34% 28%,#4a5968,#18212b 68%,#0a1017)}
-.founder-art-core span{font-family:"Space Grotesk",sans-serif}.founder-project-name{color:#d4c19e}
-.founder-statline strong{color:#eee0c2;font-family:"Space Grotesk",sans-serif}
+.founder-art-core span{font-family:"Instrument Sans",sans-serif}.founder-project-name{color:#d4c19e}
+.founder-statline strong{color:#eee0c2;font-family:"Instrument Sans",sans-serif}
 .faq{background:linear-gradient(180deg,#0b1016,#080b10)}
-.faq-list{border-top-color:rgba(205,187,155,.3)}.faq-list details{border-bottom-color:rgba(218,229,238,.1)}.faq-list summary{font-family:"Space Grotesk",sans-serif}
+.faq-list{border-top-color:rgba(205,187,155,.3)}.faq-list details{border-bottom-color:rgba(218,229,238,.1)}.faq-list summary{font-family:"Instrument Sans",sans-serif}
 @media(max-width:1000px) and (min-width:761px){.hero-grid{grid-template-columns:minmax(0,1.02fr) minmax(260px,.8fr);width:min(calc(100% - 52px),var(--container));gap:24px}.hero-copy h1{font-size:clamp(3rem,5.3vw,4.5rem)}}
 @media(max-width:760px){
  .container{width:calc(100% - 40px)}
@@ -1709,3 +1709,11 @@ html:not(.js) .experience-content .planet-chapter > * {
   line-height:1.7;
 }
 .noscript-note a { color:var(--accent-bright); text-decoration:underline; text-underline-offset:3px; }
+
+
+/* Clearer, more natural typography and shorter labels. */
+.eyebrow{font-size:.66rem;font-weight:600;letter-spacing:.095em}
+h1,h2,h3{font-family:"Instrument Sans","DM Sans",sans-serif;font-weight:600;letter-spacing:-.045em}
+.serif-accent{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.035em}
+.hero-copy h1{font-family:"Instrument Sans","DM Sans",sans-serif;letter-spacing:-.055em;font-weight:600}
+.nav-links{letter-spacing:0}
