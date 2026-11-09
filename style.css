@@ -1644,6 +1644,13 @@ html:not(.js) .experience-content > section {
   padding:clamp(64px,8vw,104px) 0;
   pointer-events:auto;
 }
+html:not(.js) .experience-content > #approach,
+html:not(.js) .experience-content > #process {
+  height:auto;
+  min-height:0;
+  padding:clamp(64px,8vw,104px) 0;
+  pointer-events:auto;
+}
 html:not(.js) .experience-content > #approach > .container,
 html:not(.js) .experience-content .services .section-heading,
 html:not(.js) .experience-content .planet-chapter > *,
