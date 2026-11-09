@@ -43,7 +43,7 @@ The form has client-side required-field validation, a 30-second request timeout,
 
 There is no automated build pipeline at present. Before considering a change complete:
 
-- Check that all nine HTML pages have balanced markup, unique IDs and valid local links.
+- Check that all HTML pages have balanced markup, unique IDs and valid local links.
 - Check that every form field has a matching label and every ARIA reference points to an existing element.
 - Check JavaScript syntax with `node --check script.js`.
 - Test the mobile menu with mouse, keyboard and Escape; check keyboard focus returns to the menu button.
