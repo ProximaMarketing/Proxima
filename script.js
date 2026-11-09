@@ -489,6 +489,10 @@
     });
   });
 
+  document.querySelectorAll(".release-flip-card").forEach(card => {
+    card.addEventListener("click", () => card.classList.toggle("is-flipped"));
+  });
+
   if (!form || !submitButton || !status) return;
   const setStatus = (message, kind) => {
     status.textContent = message;
