@@ -1627,3 +1627,66 @@ p{color:var(--muted)}
  .hero-actions{align-items:stretch}.hero-actions .button{width:100%}.hero-actions .text-link{align-self:center}
  .footer-main{grid-template-columns:1fr 1fr;gap:28px 18px}.footer-nav a{font-size:.75rem}
 }
+
+
+/* Progressive enhancement: keep core content readable when JavaScript is unavailable. */
+html:not(.js) .reveal {
+  opacity:1;
+  transform:none;
+}
+html:not(.js) .solar-guide {
+  display:none !important;
+}
+html:not(.js) .experience-content > section {
+  display:block;
+  height:auto;
+  min-height:0;
+  padding:clamp(64px,8vw,104px) 0;
+  pointer-events:auto;
+}
+html:not(.js) .experience-content > #approach > .container,
+html:not(.js) .experience-content .services .section-heading,
+html:not(.js) .experience-content .planet-chapter > *,
+html:not(.js) .experience-content > #process > .container {
+  display:block !important;
+}
+html:not(.js) .experience-content > .services {
+  display:block;
+  padding:clamp(64px,8vw,104px) 0;
+}
+html:not(.js) .experience-content .services > .container {
+  width:min(calc(100% - 64px),1080px);
+  max-width:1080px;
+  margin-inline:auto;
+}
+html:not(.js) .experience-content .section-heading {
+  height:auto;
+  min-height:0;
+  margin:0 0 34px;
+  overflow:visible;
+}
+html:not(.js) .experience-content .service-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+html:not(.js) .experience-content .planet-chapter {
+  width:auto;
+  height:auto;
+  min-height:0;
+  margin:0;
+  padding:28px !important;
+  overflow:visible;
+  border:1px solid var(--line) !important;
+  border-radius:16px;
+  pointer-events:auto;
+  background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.012)) !important;
+}
+html:not(.js) .experience-content .planet-chapter > * {
+  display:block !important;
+}
+@media(max-width:640px) {
+  html:not(.js) .experience-content .service-grid {
+    grid-template-columns:minmax(0,1fr);
+  }
+}
