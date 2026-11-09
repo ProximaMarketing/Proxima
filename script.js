@@ -485,12 +485,9 @@
 
   document.querySelectorAll(".release-flip-card").forEach(card => {
     card.addEventListener("click", () => {
-      card.classList.toggle("is-flipped");
+      const flipped = card.classList.toggle("is-flipped");
+      card.setAttribute("aria-expanded", String(flipped));
     });
-  });
-
-  document.querySelectorAll(".release-flip-card").forEach(card => {
-    card.addEventListener("click", () => card.classList.toggle("is-flipped"));
   });
 
   if (!form || !submitButton || !status) return;
