@@ -1507,3 +1507,9 @@ html.planet-snapping {
 /* Clear post-count note beneath the package cards. */
 .package-count-note { max-width:860px; margin:20px auto 8px; color:var(--muted); font-size:.8rem; line-height:1.75; text-align:center; }
 @media (max-width:760px) { .package-count-note { text-align:left; margin-top:16px; } }
+
+
+/* Public-facing pre-contract note on the legal information pages. */
+.legal-note { margin:0 0 24px; padding:18px 20px; border-left:2px solid var(--line-accent); background:rgba(255,255,255,.025); }
+.legal-note strong { display:block; margin-bottom:5px; color:var(--text); }
+.legal-note p { margin:0; color:var(--muted); font-size:.84rem; line-height:1.75; }
