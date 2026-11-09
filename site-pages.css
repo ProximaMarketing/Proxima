@@ -169,3 +169,16 @@
 .clip-storyboard small { display:block; color:var(--muted); font-size:.72rem; line-height:1.55; }
 .clip-caption { padding:12px 14px; border-left:2px solid var(--line-accent); background:rgba(255,255,255,.02); }
 @media (max-width:760px) { .clip-storyboard { grid-template-columns:1fr; } }
+
+
+/* Final readability and consistency refinements. */
+.clip-meta strong { color:var(--text); font-weight:650; }
+.channel-routing article,.label-pilot-grid article { border-radius:10px; }
+.label-pilot { border-radius:14px; }
+.clip-storyboard > div { border-radius:8px; }
+.research-allocation { border-radius:14px; }
+@media (max-width:760px) {
+  .page-section-heading { margin-bottom:26px; }
+  .campaign-post-copy { padding:22px; }
+  .channel-routing article { padding:20px; }
+}
