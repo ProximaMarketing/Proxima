@@ -432,3 +432,47 @@
   .results-case-study-stat > strong { font-size:1.85rem; }
   .results-market-grid { grid-template-columns:1fr; }
 }
+
+
+/* Practical release walkthrough and one-release label pilot. */
+.release-walkthrough-section { background:linear-gradient(180deg,rgba(216,198,165,.025),transparent 55%); }
+.release-walkthrough-heading { max-width:760px; }
+.release-walkthrough-heading h2 { text-wrap:balance; }
+.release-walkthrough-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; }
+.release-walkthrough-card { min-width:0; min-height:205px; display:flex; flex-direction:column; align-items:flex-start; padding:clamp(22px,3vw,30px); border:1px solid var(--line); background:var(--panel); }
+.release-walkthrough-number { color:var(--accent); font-size:.65rem; font-weight:700; letter-spacing:.14em; }
+.release-walkthrough-card h3 { margin:34px 0 9px; font:700 1.22rem/1.2 "Manrope",sans-serif; letter-spacing:-.04em; }
+.release-walkthrough-card p { margin:0 0 20px; color:var(--muted); font-size:.87rem; line-height:1.7; }
+.release-walkthrough-card small { margin-top:auto; color:var(--accent); font-size:.7rem; letter-spacing:.04em; }
+.release-route-panel { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:28px; margin-top:14px; padding:clamp(22px,3vw,32px); border:1px solid var(--line-accent); background:linear-gradient(145deg,rgba(216,198,165,.075),rgba(255,255,255,.012)); }
+.release-route-panel .eyebrow { margin:0 0 10px; }
+.release-route-panel h3 { margin:0; font:700 clamp(1.25rem,2.5vw,1.8rem)/1.17 "Manrope",sans-serif; letter-spacing:-.04em; }
+.release-route-steps { display:grid; gap:11px; align-content:center; }
+.release-route-steps span { display:flex; gap:13px; align-items:flex-start; color:var(--muted); font-size:.85rem; line-height:1.55; }
+.release-route-steps b { flex:0 0 28px; color:var(--accent); font-size:.7rem; letter-spacing:.08em; }
+.release-walkthrough-notes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:23px; }
+.release-walkthrough-notes p { margin:0; color:var(--muted); font-size:.79rem; line-height:1.7; }
+.release-walkthrough-notes strong { color:var(--text); }
+.label-pilot-panel { display:grid; grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr); gap:26px 42px; margin-top:28px; padding:clamp(24px,3vw,36px); border:1px solid var(--line-accent); background:linear-gradient(145deg,rgba(216,198,165,.075),rgba(255,255,255,.012)); }
+.label-pilot-intro .eyebrow { margin:0 0 11px; }
+.label-pilot-intro h3 { margin:0 0 12px; font:700 clamp(1.5rem,2.8vw,2.15rem)/1.1 "Manrope",sans-serif; letter-spacing:-.05em; }
+.label-pilot-intro > p:last-child { margin:0; color:var(--muted); font-size:.87rem; line-height:1.75; }
+.label-pilot-steps { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.label-pilot-steps > div { display:flex; flex-direction:column; align-items:flex-start; min-width:0; padding:17px; border:1px solid var(--line); background:rgba(0,0,0,.13); }
+.label-pilot-steps b { color:var(--accent); font-size:.66rem; letter-spacing:.1em; }
+.label-pilot-steps strong { margin:14px 0 6px; font:650 .94rem/1.25 "Manrope",sans-serif; }
+.label-pilot-steps span { color:var(--muted); font-size:.77rem; line-height:1.6; }
+.label-pilot-panel > .page-footnote { grid-column:1/-1; margin:0; }
+@media (max-width:900px) {
+  .release-walkthrough-grid { grid-template-columns:1fr; }
+  .release-walkthrough-card { min-height:unset; }
+  .release-walkthrough-card h3 { margin-top:22px; }
+  .label-pilot-panel { grid-template-columns:1fr; }
+}
+@media (max-width:760px) {
+  .release-route-panel { grid-template-columns:1fr; }
+  .release-walkthrough-notes { grid-template-columns:1fr; gap:12px; }
+}
+@media (max-width:520px) {
+  .label-pilot-steps { grid-template-columns:1fr; }
+}
