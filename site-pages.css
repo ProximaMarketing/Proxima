@@ -159,3 +159,13 @@
 @media (max-width:900px) { .label-pilot-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width:760px) { .channel-routing { grid-template-columns:1fr; } }
 @media (max-width:480px) { .label-pilot-grid { grid-template-columns:1fr; } }
+
+
+/* Static storyboard for an illustrative artist release clip. */
+.clip-storyboard { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:15px 0 4px; }
+.clip-storyboard > div { min-width:0; padding:13px; border:1px solid var(--line); background:rgba(255,255,255,.025); }
+.clip-storyboard span { display:block; color:var(--accent); font-size:.65rem; font-weight:700; letter-spacing:.08em; }
+.clip-storyboard strong { display:block; margin:9px 0 5px; font:700 .82rem/1.2 "Manrope",sans-serif; letter-spacing:.025em; }
+.clip-storyboard small { display:block; color:var(--muted); font-size:.72rem; line-height:1.55; }
+.clip-caption { padding:12px 14px; border-left:2px solid var(--line-accent); background:rgba(255,255,255,.02); }
+@media (max-width:760px) { .clip-storyboard { grid-template-columns:1fr; } }
