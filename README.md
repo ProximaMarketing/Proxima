@@ -11,6 +11,7 @@ Public site: https://proximamarketing.github.io/Proxima/
 - `views.html` — Jean White project evidence and the illustrative monthly report preview.
 - `about.html` — founder and project background.
 - `application.html` — artist and label enquiry form.
+- `labels.html` — separately scoped release campaigns for independent record labels.
 - `examples.html` — portfolio placeholder.
 - `privacy.html`, `terms.html`, `cookies.html` — legal information.
 
@@ -20,7 +21,7 @@ Public site: https://proximamarketing.github.io/Proxima/
 - `site-pages.css` — styles for the content, results, enquiry and examples pages.
 - `script.js` — navigation, scroll journey, reveal effects, content-card interactions and enquiry submission.
 
-The project uses Google Fonts for DM Sans (body copy), Instrument Sans (headings) and Newsreader (editorial accents). The site should remain readable if web fonts do not load.
+The site uses a standard Arial / Helvetica sans-serif stack throughout. No external web fonts are required.
 
 ## Enquiry form
 
@@ -46,7 +47,8 @@ There is no automated build pipeline at present. Before considering a change com
 - Check that every form field has a matching label and every ARIA reference points to an existing element.
 - Check JavaScript syntax with `node --check script.js`.
 - Test the mobile menu with mouse, keyboard and Escape; check keyboard focus returns to the menu button.
-- Test the solar-system journey, the release flip cards, the results tabs and reduced-motion behaviour.
+- Test the solar-system journey, the release-format flip cards, the results tabs and reduced-motion behaviour.
+- Check the artist pricing page and the separate record-label page; the label enquiry link should preselect the label campaign options.
 - Check the home page at desktop and mobile widths, including with JavaScript disabled.
 - Test the enquiry form only with an agreed test destination or a controlled test row. Confirm the Sheet receives the expected fields and the response JSON is `success: true`.
 
