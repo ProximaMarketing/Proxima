@@ -75,12 +75,12 @@
     process: { desktop: 216, mobile: 62, targetX: .23, targetY: .77 }
   };
   const chapterContent = {
-    approach: { title: "A bit more headspace.", copy: "We take care of the regular promotional work around your music.", meta: "01" },
-    identity: { title: "Get to know your sound.", copy: "We learn what makes your project yours and who you want to reach.", meta: "02" },
-    release: { title: "Keep releases moving.", copy: "Short clips and posts built around the music you’re putting out.", meta: "03" },
-    content: { title: "Content, ready to post.", copy: "We edit your footage and write the captions.", meta: "04" },
-    audience: { title: "Find new places to share it.", copy: "We research music communities and platforms that fit your sound.", meta: "05" },
-    process: { title: "Simple, direct support.", copy: "Apply, agree a plan and we’ll get to work.", meta: "06" }
+    approach: { title: "More time for music.", copy: "We handle the editing, captions and regular posting.", meta: "01" },
+    identity: { title: "Artist features.", copy: "Introduce the artist, their sound and the story behind the release.", meta: "02" },
+    release: { title: "Release content.", copy: "Short clips, lyric edits, artwork and release-day posts.", meta: "03" },
+    content: { title: "Music culture.", copy: "We post around music trends and conversations when they fit.", meta: "04" },
+    audience: { title: "Research for each release.", copy: "We look for audiences and conversations that fit your sound.", meta: "05" },
+    process: { title: "Four steps to get started.", copy: "Send your music, agree the posts, approve the edits and we publish.", meta: "06" }
   };
   let activePlanetIndex = -1;
   let briefingTransitionToken = 0;
@@ -385,7 +385,7 @@
     if (solarGuide) solarGuide.classList.remove("has-active-planet", "is-ended");
     document.body.classList.remove("journey-complete", "journey-started");
     document.documentElement.classList.remove("planet-snapping");
-    if (solarStatus) solarStatus.textContent = "Scroll to travel between worlds.";
+    if (solarStatus) solarStatus.textContent = "Scroll to see what we do.";
     if (solarChapterNumber) solarChapterNumber.textContent = "01";
     if (annotation) annotation.classList.remove("is-drawn");
     updateSolarSystem();
