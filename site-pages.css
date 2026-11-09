@@ -814,7 +814,7 @@
 }
 .label-page-intro h1 { max-width:900px; }
 .label-page-intro > p:last-child { max-width:62ch; }
-@media(max-width:1000px) {
+@media(max-width:850px) {
   .release-flip-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .label-process-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
@@ -829,7 +829,7 @@
   .label-scope-panel { grid-template-columns:1fr; gap:20px; }
   .label-scope-panel > .page-footnote { grid-column:auto; }
 }
-@media(max-width:430px) {
+@media(max-width:350px) {
   .release-flip-grid { grid-template-columns:1fr; }
   .release-flip-card { height:170px; }
   .label-process-grid { grid-template-columns:1fr; }
