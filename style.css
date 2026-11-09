@@ -1502,3 +1502,8 @@ html.planet-snapping {
 .planet-link .planet-body { filter: saturate(.78); }
 .planet-link.is-active .planet-body { border-color:rgba(222,211,190,.48); }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+
+
+/* Clear post-count note beneath the package cards. */
+.package-count-note { max-width:860px; margin:20px auto 8px; color:var(--muted); font-size:.8rem; line-height:1.75; text-align:center; }
+@media (max-width:760px) { .package-count-note { text-align:left; margin-top:16px; } }
